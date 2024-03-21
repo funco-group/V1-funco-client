@@ -1,8 +1,11 @@
-import '@/App.css';
-import HomePage from '@/pages/HomePage';
+import "@/App.css";
+import { RecoilRoot } from "recoil";
+import RoutesComponent from "./routes/Routes";
 
-function App() {
-  return <HomePage />;
+export default function App() {
+  return (
+    <RecoilRoot>
+      <RoutesComponent />
+    </RecoilRoot>
+  );
 }
-
-export default App;

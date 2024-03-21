@@ -1,0 +1,49 @@
+import styled from "styled-components";
+import palette from "@/lib/palette";
+import { fadeIn } from "./NotiDropdown.styled";
+
+export const ProfileDropdownContainer = styled.div`
+  width: 12.5rem;
+  padding: 0.75rem;
+  background-color: ${palette.brandWhite};
+
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
+
+  position: fixed;
+  z-index: 1000;
+
+  top: 4.375rem;
+  right: 1.875rem;
+
+  animation: ${fadeIn} 0.5s ease forwards;
+`;
+
+export const ProfileDiv = styled.div`
+  padding: 0 10px;
+  p {
+    font-weight: bold;
+    color: ${palette.brandBlack};
+  }
+
+  border-bottom: 1px solid ${palette.borderGray};
+`;
+
+export const ProfileDropdownButton = styled.button`
+  display: block;
+  width: 100%;
+
+  border: none;
+  margin-top: 10px;
+  padding: 10px;
+
+  background-color: transparent;
+
+  text-align: left;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${palette.brandColor2};
+  }
+`;

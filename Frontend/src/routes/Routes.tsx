@@ -1,8 +1,40 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Header from "@/pages/base/Header";
+import HomePage from "@/pages/HomePage";
+import CryptoPage from "@/pages/CryptoPage";
+import UserPage from "@/pages/UserPage";
+import History from "@/pages/TradeHistoryPage";
+import Asset from "@/pages/TradeHistoryPage/AssetPage";
+import Result from "@/pages/TradeHistoryPage/ReturnResultPage";
+import ChangeHistory from "@/pages/TradeHistoryPage/AssetChangePage";
+import Follow from "@/pages/TradeHistoryPage/FollowPage";
+import Following from "@/pages/TradeHistoryPage/FollowPage/FollowingPage";
+import Follower from "@/pages/TradeHistoryPage/FollowPage/FollowerPage";
+import OpenOrders from "@/pages/TradeHistoryPage/OpenOrdersPage";
+import Rank from "@/pages/RankPage";
 
-const RoutesComponent = () => {
-	return <Routes></Routes>;
-};
-
-export default RoutesComponent;
+export default function RoutesComponent() {
+  return (
+    <Routes>
+      <Route path="/" element={<Header />}>
+        <Route index element={<HomePage />} />
+        <Route path="trade/:coin" element={<CryptoPage />} />
+        <Route path="user/:memberId" element={<UserPage />} />
+        <Route path="history" element={<History />}>
+          <Route index element={<Navigate to="asset" />} />
+          <Route path="asset" element={<Asset />} />
+          <Route path="result" element={<Result />} />
+          <Route path="change" element={<ChangeHistory />} />
+          <Route path="follow" element={<Follow />}>
+            <Route index element={<Navigate to="following" />} />
+            <Route path="following" element={<Following />} />
+            <Route path="follower" element={<Follower />} />
+          </Route>
+          <Route path="orders" element={<OpenOrders />} />
+        </Route>
+        <Route path="rank" element={<Rank />} />
+        <Route path="*" element={<div>Not Found</div>} />
+      </Route>
+    </Routes>
+  );
+}

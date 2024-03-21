@@ -30,5 +30,16 @@ module.exports = {
     project: "./tsconfig.json",
   },
   plugins: ["@typescript-eslint", "react", "prettier"],
-  rules: { "react/react-in-jsx-scope": 0, "prettier/prettier": ["error"] },
+  rules: {
+    "react/react-in-jsx-scope": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+        useTabs: false,
+      },
+    ],
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "import/extensions": ["off"],
+  },
 };

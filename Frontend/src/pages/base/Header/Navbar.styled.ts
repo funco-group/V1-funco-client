@@ -1,0 +1,151 @@
+import styled from "styled-components";
+import palette from "@/lib/palette";
+
+export const NavBarContainer = styled.div`
+  background-color: ${palette.brandWhite};
+  padding: 0.75rem 1.5rem;
+
+  display: flex;
+`;
+
+export const NavBarLeftDiv = styled.div`
+  img:hover {
+    cursor: pointer;
+  }
+
+  img {
+    width: 6.25rem;
+    height: 1.875rem;
+    margin: 0.625rem 0;
+  }
+
+  display: flex;
+`;
+
+export const NavBarLeftLinkDiv = styled.div`
+  margin: auto;
+  margin-left: 1.5rem;
+
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    margin-right: 1.5rem;
+  }
+
+  .active {
+    color: ${palette.brandColor};
+    font-weight: bold;
+  }
+`;
+
+export const NavBarRightDiv = styled.div`
+  margin: auto;
+  margin-right: 0;
+
+  display: flex;
+`;
+
+export const NavBarNotiProfileDiv = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+
+  margin: 0 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const NavBarNotiImg = styled.img`
+  margin: auto;
+  width: 1.25rem;
+  height: 1.5625rem;
+`;
+
+export const NavBarNotiPointDiv = styled.div`
+  width: 1rem;
+  height: 1rem;
+
+  position: absolute;
+  top: 0.25rem;
+  right: 0.125rem;
+
+  color: ${palette.brandWhite};
+  background-color: red;
+  border-radius: 100%;
+
+  p {
+    margin: auto;
+    margin-top: 2px;
+    font-size: 0.7rem;
+
+    height: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+`;
+
+export const NavBarNotiPointImg = styled.img`
+  width: 0.5rem;
+  height: 0.5rem;
+
+  position: absolute;
+  top: 0.4375rem;
+  right: 0.625rem;
+`;
+
+export const NavBarProfileImg = styled.img`
+  margin: auto;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  border-radius: 100%;
+`;
+
+export const NavBarLoginButton = styled.button`
+  color: ${palette.brandBlack};
+  border: 1px solid ${palette.brandColor};
+  border-radius: 5px;
+
+  background-color: ${palette.brandWhite};
+
+  margin: auto 0.625rem auto auto;
+  height: 2.1875rem;
+
+  display: flex;
+
+  img {
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+    margin-right: 0;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: auto;
+    margin-left: 0.625rem;
+    margin-right: 0.3125rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+`;
