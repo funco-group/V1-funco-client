@@ -12,13 +12,21 @@ import Following from "@/pages/TradeHistoryPage/FollowPage/FollowingPage";
 import Follower from "@/pages/TradeHistoryPage/FollowPage/FollowerPage";
 import OpenOrders from "@/pages/TradeHistoryPage/OpenOrdersPage";
 import Rank from "@/pages/RankPage";
+import WideLayout from "@/components/layout/WideLayout";
 
 export default function RoutesComponent() {
   return (
     <Routes>
       <Route path="/" element={<Header />}>
         <Route index element={<HomePage />} />
-        <Route path="trade/:coin" element={<CryptoPage />} />
+        <Route
+          path="trade/:coin"
+          element={
+            <WideLayout>
+              <CryptoPage />
+            </WideLayout>
+          }
+        />
         <Route path="user/:memberId" element={<UserPage />} />
         <Route path="history" element={<History />}>
           <Route index element={<Navigate to="asset" />} />

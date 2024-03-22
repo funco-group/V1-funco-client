@@ -1,5 +1,7 @@
-import OrderBookContainer from "./OrderBook.styled";
+import { OrderBookContainer } from "./OrderBook.styled";
 
-export default function OrderBook() {
-  return <OrderBookContainer>order book</OrderBookContainer>;
+function OrderBook() {
+  return <OrderBookContainer>호가창</OrderBookContainer>;
 }
+
+export default OrderBook;

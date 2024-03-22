@@ -1,13 +1,22 @@
+import PriceWindow from "@/components/common/PriceWindow/PriceWindow";
 import Chart from "./Chart";
 import OrderBook from "./OrderBook";
 import Trade from "./Trade";
+import { CryptoPageContainer, BottomContainer } from "./styled";
 
-export default function index() {
+function index() {
   return (
-    <>
-      <Chart />
-      <OrderBook />
-      <Trade />
-    </>
+    <CryptoPageContainer>
+      <div>
+        <Chart />
+        <BottomContainer>
+          <OrderBook />
+          <Trade />
+        </BottomContainer>
+      </div>
+      <PriceWindow />
+    </CryptoPageContainer>
   );
 }
+
+export default index;

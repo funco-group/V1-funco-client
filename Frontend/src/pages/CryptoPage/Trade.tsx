@@ -1,5 +1,7 @@
-import TradeContainer from "./Trade.style";
+import { TradeContainer } from "./Trade.style";
 
-export default function Trade() {
-  return <TradeContainer>trade</TradeContainer>;
+function Trade() {
+  return <TradeContainer>매매창</TradeContainer>;
 }
+
+export default Trade;

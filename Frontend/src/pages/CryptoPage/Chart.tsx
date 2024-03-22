@@ -1,6 +1,7 @@
-import ChartContainer from "./Chart.styled";
+import { ChartContainer } from "./Chart.styled";
 
-export default function Chart() {
-  return <ChartContainer>chart</ChartContainer>;
-  // return <div>chart</div>;
+function Chart() {
+  return <ChartContainer>차트</ChartContainer>;
 }
+
+export default Chart;
