@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import BodyContainer from "./styled";
 
 function index() {
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <BodyContainer>
+        <Outlet />
+      </BodyContainer>
     </div>
   );
 }

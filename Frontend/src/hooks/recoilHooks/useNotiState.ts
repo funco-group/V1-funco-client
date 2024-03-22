@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import notiState from "@/recoil/notification";
+import notiState from "@/recoils/notification";
 
 function useNotiState() {
   const [isNoti, setIsNoti] = useRecoilState(notiState);

@@ -2,6 +2,11 @@ import styled from "styled-components";
 import palette from "@/lib/palette";
 
 export const NavBarContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.375rem;
   background-color: ${palette.brandWhite};
   padding: 0.75rem 1.5rem;
 
@@ -83,7 +88,7 @@ export const NavBarNotiPointDiv = styled.div`
 
   p {
     margin: auto;
-    margin-top: 2px;
+    margin-top: 0.125rem;
     font-size: 0.7rem;
 
     height: 1rem;
@@ -122,20 +127,18 @@ export const NavBarLoginButton = styled.button`
   height: 2.1875rem;
 
   display: flex;
+  align-items: center;
 
   img {
+    display: block;
     width: 1rem;
     height: 1rem;
-    margin: auto;
     margin-right: 0;
   }
 
   p {
     font-size: 1rem;
-    margin: auto;
-    margin-left: 0.625rem;
-    margin-right: 0.3125rem;
-    height: 1rem;
+    margin: auto 0.3125rem auto 0.625rem;
   }
 
   &:hover {

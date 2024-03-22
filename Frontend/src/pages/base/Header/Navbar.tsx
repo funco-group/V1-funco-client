@@ -95,7 +95,10 @@ function Navbar() {
                 </NavBarNotiPointDiv>
               ) : null}
             </NavBarNotiProfileDiv>
-            {isNotiOpen && <NotiDropdown notiHistoryData={notiHistoryData} />}
+            <NotiDropdown
+              notiHistoryData={notiHistoryData}
+              visible={isNotiOpen}
+            />
           </div>
           <div ref={profileDropdownRef}>
             <NavBarNotiProfileDiv onClick={handleProfileDropdown}>
@@ -113,13 +116,12 @@ function Navbar() {
                 />
               )}
             </NavBarNotiProfileDiv>
-            {isProfileOpen && (
-              <ProfileDropdown
-                nickname={user.nickname}
-                userId={user.userId}
-                logout={logout}
-              />
-            )}
+            <ProfileDropdown
+              nickname={user.nickname}
+              userId={user.userId}
+              logout={logout}
+              visible={isProfileOpen}
+            />
           </div>
         </NavBarRightDiv>
       ) : (

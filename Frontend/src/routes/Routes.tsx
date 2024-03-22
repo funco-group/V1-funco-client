@@ -12,6 +12,7 @@ import Following from "@/pages/TradeHistoryPage/FollowPage/FollowingPage";
 import Follower from "@/pages/TradeHistoryPage/FollowPage/FollowerPage";
 import OpenOrders from "@/pages/TradeHistoryPage/OpenOrdersPage";
 import Rank from "@/pages/RankPage";
+import NarrowLayout from "@/components/layout/NarrowLayout";
 import WideLayout from "@/components/layout/WideLayout";
 
 export default function RoutesComponent() {
@@ -27,8 +28,22 @@ export default function RoutesComponent() {
             </WideLayout>
           }
         />
-        <Route path="user/:memberId" element={<UserPage />} />
-        <Route path="history" element={<History />}>
+        <Route
+          path="user/:memberId"
+          element={
+            <NarrowLayout>
+              <UserPage />
+            </NarrowLayout>
+          }
+        />
+        <Route
+          path="history"
+          element={
+            <WideLayout>
+              <History />
+            </WideLayout>
+          }
+        >
           <Route index element={<Navigate to="asset" />} />
           <Route path="asset" element={<Asset />} />
           <Route path="result" element={<Result />} />

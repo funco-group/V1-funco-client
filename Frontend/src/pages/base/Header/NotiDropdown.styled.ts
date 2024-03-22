@@ -1,5 +1,9 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import palette from "@/lib/palette";
+
+export interface DropdownContainerProps {
+  $visible: boolean;
+}
 
 export const fadeIn = keyframes`
   from {
@@ -12,7 +16,24 @@ export const fadeIn = keyframes`
   }
 `;
 
-export const NotiDropdownContainer = styled.div`
+export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+`;
+
+export const modalSettings = ($visible: boolean) => css`
+  visibility: ${$visible ? "visible" : "hidden"};
+  animation: ${$visible ? fadeIn : fadeOut} 0.5s ease-out;
+  transition: visibility 0.5s ease-out;
+`;
+
+export const NotiDropdownContainer = styled.div<DropdownContainerProps>`
   width: 25rem;
   padding: 0.75rem;
   background-color: ${palette.brandWhite};
@@ -27,7 +48,7 @@ export const NotiDropdownContainer = styled.div`
   top: 4.375rem;
   right: 5.9375rem;
 
-  animation: ${fadeIn} 0.5s ease forwards;
+  ${(props) => modalSettings(props.$visible)}
 `;
 
 export const NotiHistoryContentContainer = styled.div`

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   ProfileDiv,
   ProfileDropdownButton,
@@ -9,10 +10,12 @@ function ProfileDropdown({
   nickname,
   userId,
   logout,
+  visible,
 }: {
   nickname: string;
   userId: number;
   logout: () => void;
+  visible: boolean;
 }) {
   const navigate = useNavigate();
 
@@ -23,8 +26,23 @@ function ProfileDropdown({
   const handleLogout = () => {
     logout();
   };
+
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (visible) {
+      setOpen(true);
+    } else {
+      setTimeout(() => setOpen(false), 150);
+    }
+  }, [visible]);
+
+  if (!open) {
+    return null;
+  }
+
   return (
-    <ProfileDropdownContainer>
+    <ProfileDropdownContainer $visible={visible}>
       <ProfileDiv>
         <p>{nickname}</p>
       </ProfileDiv>

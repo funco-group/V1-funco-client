@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
-import { fadeIn } from "./NotiDropdown.styled";
+import { DropdownContainerProps, modalSettings } from "./NotiDropdown.styled";
 
-export const ProfileDropdownContainer = styled.div`
+export const ProfileDropdownContainer = styled.div<DropdownContainerProps>`
   width: 12.5rem;
   padding: 0.75rem;
   background-color: ${palette.brandWhite};
@@ -17,7 +17,7 @@ export const ProfileDropdownContainer = styled.div`
   top: 4.375rem;
   right: 1.875rem;
 
-  animation: ${fadeIn} 0.5s ease forwards;
+  ${(props) => modalSettings(props.$visible)}
 `;
 
 export const ProfileDiv = styled.div`
