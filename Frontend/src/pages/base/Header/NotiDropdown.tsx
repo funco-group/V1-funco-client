@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   NotiDropdownContainer,
   NotiHistoryContentContainer,
@@ -10,12 +10,29 @@ import downArrow from "@/assets/icon/chevron-down.svg";
 
 function NotiDropdown({
   notiHistoryData,
+  visible,
 }: {
   notiHistoryData: NotiHistoryType[];
+  visible: boolean;
 }) {
   const [notiHistoryList] = useState<NotiHistoryType[]>(notiHistoryData);
+
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (visible) {
+      setOpen(true);
+    } else {
+      setTimeout(() => setOpen(false), 150);
+    }
+  }, [visible]);
+
+  if (!open) {
+    return null;
+  }
+
   return (
-    <NotiDropdownContainer>
+    <NotiDropdownContainer $visible={visible}>
       <NotiHistoryContentContainer>
         {notiHistoryList.map((notiHistory) => (
           <NotiHistoryContent key={notiHistory.id} notiHistory={notiHistory} />

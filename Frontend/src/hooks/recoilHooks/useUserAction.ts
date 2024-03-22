@@ -1,6 +1,6 @@
 import { useSetRecoilState } from "recoil";
-import userState from "@/recoil/user";
-import { UserType } from "@/recoil/user/atom";
+import userState from "@/recoils/user";
+import { UserType } from "@/recoils/user/atom";
 
 function useUserAction() {
   const setUserState = useSetRecoilState(userState);
