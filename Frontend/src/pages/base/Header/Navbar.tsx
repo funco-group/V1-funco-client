@@ -38,12 +38,12 @@ function Navbar() {
   const [notiHistoryData, setNotiHistoryData] = useState(DummyNotiHistoryData);
 
   const handleLoginClick = () => {
-    login({
-      userId: 1,
-      nickname: "Hot-ttu",
-      profileUrl:
-        "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/320/e549ece10c7c8feb2d3feefdfe69bb11_res.jpeg",
-    });
+    window.location.href =
+      "https://accounts.google.com/o/oauth2/auth?" +
+      `client_id=${import.meta.env.VITE_CLIENT_ID}&` +
+      "redirect_uri=http://localhost:5173/redirect&" +
+      "response_type=token&" +
+      "scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
   };
 
   const handleNotiDropdown = () => {
