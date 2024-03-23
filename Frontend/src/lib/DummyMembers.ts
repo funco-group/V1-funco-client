@@ -1,4 +1,6 @@
-const DummyMembers = [
+import MemberType from "@/interfaces/common/memberType";
+
+const DummyMembers: MemberType[] = [
   {
     userId: 1,
     nickname: "Hot-ttu",
