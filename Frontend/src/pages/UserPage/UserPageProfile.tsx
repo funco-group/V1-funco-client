@@ -4,7 +4,7 @@ import {
   UserPageProfileContainer,
 } from "./UserPageProfile.styled";
 import { ComponentTitleH3 } from "./styled";
-import MemberType from "@/interfaces/common/memberType";
+import MemberType from "@/interfaces/common/MemberType";
 
 interface UserPageProfileProps {
   isCurrentUser: boolean;
