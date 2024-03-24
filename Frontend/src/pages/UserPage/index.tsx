@@ -1,5 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import palette from "@/lib/palette";
 import UserPageProfile from "./UserPageProfile";
 import {
@@ -14,7 +13,6 @@ import DummyMembers from "@/lib/DummyMembers";
 function index() {
   const { memberId } = useParams();
   const { user } = useUserState();
-  const navigate = useNavigate();
 
   if (!memberId || !user) {
     return <div>Member ID가 없습니다.</div>;

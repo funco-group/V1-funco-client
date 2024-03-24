@@ -1,14 +1,14 @@
-import { UserType } from "@/recoils/user/atom";
 import {
   ProfileButton,
   ProfileDetailContainer,
   UserPageProfileContainer,
 } from "./UserPageProfile.styled";
 import { ComponentTitleH3 } from "./styled";
+import MemberType from "@/interfaces/common/MemberType";
 
 interface UserPageProfileProps {
   isCurrentUser: boolean;
-  member: UserType;
+  member: MemberType;
 }
 
 function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
