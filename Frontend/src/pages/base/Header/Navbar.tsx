@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   NavBarContainer,
   NavBarLeftDiv,
@@ -7,7 +7,6 @@ import {
   NavBarLoginButton,
   NavBarNotiImg,
   NavBarNotiPointDiv,
-  // NavBarNotiPointImg,
   NavBarNotiProfileDiv,
   NavBarProfileImg,
   NavBarRightDiv,
@@ -15,7 +14,6 @@ import {
 import logo from "@/assets/icon/logo.svg";
 import googleLogo from "@/assets/icon/google.svg";
 import notificationOff from "@/assets/icon/notification-off.svg";
-// import notiPoint from "@/assets/icon/noti-point.svg";
 import defaultImage from "@/assets/icon/user-default.svg";
 import NavLinkComponent from "./NavLinkComponent";
 import useUserState from "@/hooks/recoilHooks/useUserState";
@@ -37,13 +35,20 @@ function Navbar() {
   );
   const [notiHistoryData, setNotiHistoryData] = useState(DummyNotiHistoryData);
 
+  useEffect(() => {
+    const newUser = localStorage.getItem("userInfo");
+    if (newUser) {
+      login(JSON.parse(newUser));
+    }
+  }, []);
+
   const handleLoginClick = () => {
-    login({
-      userId: 1,
-      nickname: "Hot-ttu",
-      profileUrl:
-        "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/320/e549ece10c7c8feb2d3feefdfe69bb11_res.jpeg",
-    });
+    window.location.href =
+      "https://accounts.google.com/o/oauth2/auth?" +
+      `client_id=${import.meta.env.VITE_CLIENT_ID}&` +
+      "redirect_uri=http://localhost:5173/redirect&" +
+      "response_type=token&" +
+      "scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
   };
 
   const handleNotiDropdown = () => {
@@ -85,11 +90,6 @@ function Navbar() {
                 draggable={false}
               />
               {isNoti ? (
-                // <NavBarNotiPointImg
-                //   src={notiPoint}
-                //   alt="noti-point"
-                //   draggable={false}
-                // />
                 <NavBarNotiPointDiv>
                   <p>{notiHistoryData.length}</p>
                 </NavBarNotiPointDiv>

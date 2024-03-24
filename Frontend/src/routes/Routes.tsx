@@ -14,10 +14,12 @@ import OpenOrders from "@/pages/TradeHistoryPage/OpenOrdersPage";
 import Rank from "@/pages/RankPage";
 import NarrowLayout from "@/components/layout/NarrowLayout";
 import WideLayout from "@/components/layout/WideLayout";
+import Redirect from "@/pages/base/Redirect";
 
 export default function RoutesComponent() {
   return (
     <Routes>
+      <Route path="/redirect" element={<Redirect />} />
       <Route path="/" element={<Header />}>
         <Route index element={<HomePage />} />
         <Route
@@ -56,8 +58,8 @@ export default function RoutesComponent() {
           <Route path="orders" element={<OpenOrders />} />
         </Route>
         <Route path="rank" element={<Rank />} />
-        <Route path="*" element={<div>Not Found</div>} />
       </Route>
+      <Route path="*" element={<div>Not Found</div>} />
     </Routes>
   );
 }
