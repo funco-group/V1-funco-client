@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { HistoryTabContainer, HistoryTabDiv } from "./HistoryTab.styled";
-import useUserState from "@/hooks/recoilHooks/useUserState";
+// import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function HistoryTab() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useUserState();
+  // const { user } = useUserState();
 
   const [nowTabName, setNowTabName] = useState<string | null>(
     location.pathname.split("/")[2],
@@ -16,10 +16,10 @@ function HistoryTab() {
     setNowTabName(location.pathname.split("/")[2]);
   }
 
-  const handleClick = (selectedTabName: string) => {
-    navigate(`/history/${selectedTabName}`);
-    setNowTabName(selectedTabName);
-  };
+  // const handleClick = (selectedTabName: string) => {
+  //   navigate(`/history/${selectedTabName}`);
+  //   setNowTabName(selectedTabName);
+  // };
 
   return (
     <HistoryTabContainer>

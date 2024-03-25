@@ -42,7 +42,7 @@ export default function tickerWebSocket(
       ]`);
     },
 
-    onmessage(event: object) {
+    onmessage(event: MessageEvent) {
       if (event.data instanceof Blob) {
         event.data.arrayBuffer().then((data) => {
           const decoder = new TextDecoder("utf-8");
@@ -50,11 +50,7 @@ export default function tickerWebSocket(
           const priceJson = JSON.parse(priceData);
 
           setPriceList((prevPrice) => {
-            // const index = prevPrice.findIndex(
-            //   (price) => price.code === priceJson.code,
-            // );
-            const now = Date.now(); // 현재 시간을 가져옵니다.
-            return prevPrice.map((price, idx) =>
+            return prevPrice.map((price) =>
               price.code === priceJson.code
                 ? {
                     ...price,
@@ -64,38 +60,18 @@ export default function tickerWebSocket(
                     accTradePrice24h: priceJson.acc_trade_price_24h,
                     updated: price.tradePrice !== priceJson.trade_price,
                     updatedDown: price.tradePrice > priceJson.trade_price,
-                    lastUpdated:
-                      price.tradePrice !== priceJson.trade_price
-                        ? now
-                        : price.lastUpdated,
                   }
                 : price,
             );
           });
 
-          // setTimeout(() => {
-          //   setPriceList((prevPrice) =>
-          //     prevPrice.map((price) =>
-          //       price.code === priceJson.code
-          //         ? { ...price, updated: false, updatedDown: false }
-          //         : price,
-          //     ),
-          //   );
-          // }, 1000);
           setTimeout(() => {
             setPriceList((prevPrice) =>
-              prevPrice.map((price) => {
-                if (Date.now() - price.lastUpdated >= 1000) {
-                  // 마지막 업데이트로부터 1초가 지났는지 확인합니다.
-                  return {
-                    ...price,
-                    updated: false,
-                    updatedDown: false,
-                    updatedUp: false,
-                  };
-                }
-                return price;
-              }),
+              prevPrice.map((price) =>
+                price.code === priceJson.code
+                  ? { ...price, updated: false, updatedDown: false }
+                  : price,
+              ),
             );
           }, 1000);
         });

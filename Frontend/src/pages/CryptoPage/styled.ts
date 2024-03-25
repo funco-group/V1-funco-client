@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CryptoPageContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 0.4fr;
+  grid-template-columns: 1.5fr 0.6fr;
   column-gap: 1rem;
 `;
 

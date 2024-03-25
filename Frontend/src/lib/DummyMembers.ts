@@ -1,4 +1,4 @@
-import MemberType from "@/interfaces/common/memberType";
+import MemberType from "@/interfaces/common/MemberType";
 
 const DummyMembers: MemberType[] = [
   {

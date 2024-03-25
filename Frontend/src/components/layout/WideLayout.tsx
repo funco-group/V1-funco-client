@@ -3,7 +3,7 @@ import { ReactNodeProps } from "@/interfaces/common/ReactNodeProps";
 
 const WideLayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 88rem 1fr;
+  grid-template-columns: 1fr 85rem 1fr;
   /* background-color: red; */
 `;
 
