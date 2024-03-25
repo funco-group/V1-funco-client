@@ -14,14 +14,11 @@ export const NavBarContainer = styled.div`
 `;
 
 export const NavBarLeftDiv = styled.div`
-  img:hover {
-    cursor: pointer;
-  }
-
   img {
     width: 6.25rem;
     height: 1.875rem;
     margin: 0.625rem 0;
+    cursor: pointer;
   }
 
   display: flex;
@@ -40,7 +37,7 @@ export const NavBarLeftLinkDiv = styled.div`
 
   .active {
     color: ${palette.brandColor};
-    font-weight: bold;
+    font-family: "NanumSquareBold";
   }
 `;
 
@@ -63,9 +60,7 @@ export const NavBarNotiProfileDiv = styled.div`
 
   position: relative;
 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const NavBarNotiImg = styled.img`
@@ -138,18 +133,10 @@ export const NavBarLoginButton = styled.button`
 
   p {
     font-size: 1rem;
-<<<<<<< HEAD
     margin: auto 0.3125rem auto 0.625rem;
-=======
-    margin-left: 0.625rem;
-    margin-right: 0.3125rem;
-    /* height: 1rem; */
->>>>>>> 96bac213ff1c6b0ebf4179f5a57d84b177dd7a77
   }
 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 
