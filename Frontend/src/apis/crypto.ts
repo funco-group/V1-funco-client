@@ -1,7 +1,23 @@
-import axios from "axios";
+import { AxiosResponse } from "axios";
+import localAxios from "@/utils/http-commons";
+import { FavoriteCoinResponseType } from "@/interfaces/PriceWindowType";
 
-export default async function getFavoriteCoinList(
-  success: (response: AxiosResponse<any>) => void,
+const domain = "crypto";
+
+export async function getFavoriteCoinList(
+  success: (response: AxiosResponse<FavoriteCoinResponseType>) => void,
 ) {
-  axios.get(`http://192.168.229.193:8080/crypto/favorite`).then(success);
+  await localAxios.get(`/${domain}/favorite`).then(success);
 }
+
+export async function addFavoriteCoin(code: string) {
+  await localAxios.post(`/${domain}/favorite`, {
+    ticker: code,
+  });
+}
+
+// export async function removeFavoriteCoin(code: string) {
+//   await localAxios.delete(`/${domain}/favorite`, {
+//     ticker: code,
+//   });
+// }

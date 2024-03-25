@@ -1,3 +1,4 @@
+import { PriceType } from "@/interfaces/PriceWindowType";
 import {
   PriceItemContainer,
   NameDiv,
@@ -11,42 +12,41 @@ import {
   TradePriceDiv,
   UnitDiv,
   StarIconDiv,
+  StartIconImg,
 } from "./PriceItem.styled";
-import { PriceType } from "@/interfaces/PriceWindowType";
 
-// interface PriceItemProps = {
-//   price: PriceType;
-//   isFav: boolean;
-// }
+interface PriceItemProps {
+  price: PriceType;
+  isFav: boolean;
+  onClickFavorite: (code: string) => void;
+}
 
-function PriceItem({ price, isFav }) {
+function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
   const isDown = price.signedChangeRate < 0;
+  const coloredStar =
+    "https://cdn.upbit.com/upbit-web/images/icon_list_favorite.c3deb14.svg";
+  const star =
+    "https://cdn.upbit.com/upbit-web/images/icon_list_favorite_disabled.4bd898a.svg";
 
   return (
     <PriceItemContainer>
       <StarIconDiv>
-        {isFav ? (
-          <img
-            src="https://cdn.upbit.com/upbit-web/images/icon_list_favorite.c3deb14.svg"
-            alt="star"
-          />
-        ) : (
-          <img
-            src="https://cdn.upbit.com/upbit-web/images/icon_list_favorite_disabled.4bd898a.svg"
-            alt="star"
-          />
-        )}
+        <StartIconImg
+          onClick={() => onClickFavorite(price.code)}
+          src={isFav ? coloredStar : star}
+          alt="start-icon"
+        />
       </StarIconDiv>
       <NameDiv>
         <KorNameDiv>{price.koreanName}</KorNameDiv>
         <CodeDiv>{price.code}</CodeDiv>
       </NameDiv>
-      <PriceDiv isDown={isDown}>
-        <UpdateDiv updated={price.updated} updatedDown={price.updatedDown}>
+      <PriceDiv $isDown={isDown}>
+        <UpdateDiv $updated={price.updated} $updatedDown={price.updatedDown}>
           {price.tradePrice.toLocaleString("en-US")}
         </UpdateDiv>
       </PriceDiv>
-      <ChangeDiv isDown={isDown}>
+      <ChangeDiv $isDown={isDown}>
         <ChangeRateDiv>
           {!isDown && "+"}
           {parseFloat((price.signedChangeRate * 100).toFixed(2))}%

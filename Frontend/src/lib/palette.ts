@@ -12,6 +12,7 @@ const palette = {
   mainColor2: "#439A97",
   mainColor3: "#62B6B7",
   background: "#FAFAFA",
+  deactivatedGray: "#eeeeee",
 };
 
 export default palette;

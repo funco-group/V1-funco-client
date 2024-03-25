@@ -14,5 +14,9 @@ export interface PriceType {
   updated: boolean;
   // updatedUp: boolean;
   updatedDown: boolean;
-  lastUpdated?: number;
+  // lastUpdated?: number;
+}
+
+export interface FavoriteCoinResponseType {
+  tickers: string[];
 }

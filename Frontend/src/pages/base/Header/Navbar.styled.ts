@@ -138,7 +138,13 @@ export const NavBarLoginButton = styled.button`
 
   p {
     font-size: 1rem;
+<<<<<<< HEAD
     margin: auto 0.3125rem auto 0.625rem;
+=======
+    margin-left: 0.625rem;
+    margin-right: 0.3125rem;
+    /* height: 1rem; */
+>>>>>>> 96bac213ff1c6b0ebf4179f5a57d84b177dd7a77
   }
 
   &:hover {

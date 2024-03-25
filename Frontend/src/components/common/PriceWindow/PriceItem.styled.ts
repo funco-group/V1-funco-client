@@ -17,6 +17,10 @@ export const StarIconDiv = styled.div`
   display: flex;
 `;
 
+export const StartIconImg = styled.img`
+  cursor: pointer;
+`;
+
 export const NameDiv = styled.div`
   /* background-color: blue; */
   margin: auto 0;
@@ -25,58 +29,58 @@ export const NameDiv = styled.div`
   font-family: "NanumSquareBold";
 `;
 export const KorNameDiv = styled.div`
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 `;
 
 export const CodeDiv = styled.div`
   color: ${palette.brandDarkGray};
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   margin-top: 0.1rem;
 `;
 
-export const PriceDiv = styled.div<{ isDown: boolean }>`
+export const PriceDiv = styled.div<{ $isDown: boolean }>`
   /* background-color: green; */
   /* height: 3.5rem; */
   /* line-height: 3.5rem; */
   font-family: "NanumSquareBold";
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-align: right;
-  color: ${(props) => (props.isDown ? "#1876d2" : "#c94930")};
+  color: ${(props) => (props.$isDown ? palette.brandBlue : palette.brandRed)};
   margin: auto 0;
 `;
 
 const flashAnimation = (updatedDown: boolean) => keyframes`
-  from { border: 1.5px solid ${updatedDown ? "#1876d2" : "#c94930"}; }
+  from { border: 1.5px solid ${updatedDown ? palette.brandBlue : palette.brandRed}; }
   /* to { border: none; } */
 `;
 
 export const UpdateDiv = styled.div<{
-  updated: boolean;
-  updatedDown: boolean;
+  $updated: boolean;
+  $updatedDown: boolean;
 }>`
   /* background-color: red; */
   padding: 0 0.2rem;
   height: 2.5rem;
   line-height: 2.5rem;
   ${(props) =>
-    props.updated &&
+    props.$updated &&
     css`
-      animation: ${flashAnimation(props.updatedDown)} 1s;
+      animation: ${flashAnimation(props.$updatedDown)} 1s;
     `}
 `;
 
-export const ChangeDiv = styled.div<{ isDown: boolean }>`
+export const ChangeDiv = styled.div<{ $isDown: boolean }>`
   /* background-color: orange; */
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   margin: auto 0;
   text-align: right;
-  color: ${(props) => (props.isDown ? "#1876d2" : "#c94930")};
+  color: ${(props) => (props.$isDown ? palette.brandBlue : palette.brandRed)};
 `;
 export const ChangeRateDiv = styled.div``;
 export const ChangePriceDiv = styled.div``;
 export const TradePriceDiv = styled.div`
   /* background-color: pink; */
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   display: flex;
   justify-content: flex-end;
   margin: auto 0;
