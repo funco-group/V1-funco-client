@@ -1,33 +1,46 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HistoryTabContainer, HistoryTabDiv } from "./HistoryTab.styled";
 // import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function HistoryTab() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   // const { user } = useUserState();
+  const tabList = [
+    ["보유자산", "asset"],
+    ["투자손익", "result"],
+    ["자산변동내역", "change"],
+    ["팔로우", "follow"],
+    ["미체결", "orders"],
+  ];
 
   const [nowTabName, setNowTabName] = useState<string | null>(
     location.pathname.split("/")[2],
   );
 
-  if (nowTabName !== location.pathname.split("/")[2]) {
-    setNowTabName(location.pathname.split("/")[2]);
-  }
+  useEffect(() => {
+    if (nowTabName !== location.pathname.split("/")[2]) {
+      setNowTabName(location.pathname.split("/")[2]);
+    }
+  }, [location.pathname, nowTabName]);
 
-  // const handleClick = (selectedTabName: string) => {
-  //   navigate(`/history/${selectedTabName}`);
-  //   setNowTabName(selectedTabName);
-  // };
+  const handleTabClick = (selectedTabName: string) => {
+    navigate(`/history/${selectedTabName}`);
+    setNowTabName(selectedTabName);
+  };
 
   return (
     <HistoryTabContainer>
-      <HistoryTabDiv>보유자산</HistoryTabDiv>
-      <HistoryTabDiv>투자손익</HistoryTabDiv>
-      <HistoryTabDiv>자산변동내역</HistoryTabDiv>
-      <HistoryTabDiv>팔로우</HistoryTabDiv>
-      <HistoryTabDiv>미체결</HistoryTabDiv>
+      {tabList.map((tab) => (
+        <HistoryTabDiv
+          key={tab[1]}
+          $active={tab[1] === nowTabName}
+          onClick={() => handleTabClick(tab[1])}
+        >
+          {tab[0]}
+        </HistoryTabDiv>
+      ))}
     </HistoryTabContainer>
   );
 }

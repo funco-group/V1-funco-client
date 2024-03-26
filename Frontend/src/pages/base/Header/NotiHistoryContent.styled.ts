@@ -9,7 +9,7 @@ export const NotiHistoryContentContainer = styled.div`
 `;
 
 export const NotiHistoryContentTitleP = styled.p`
-  font-weight: bold;
+  font-family: "NanumSquareBold";
   font-size: 0.75rem;
   color: ${palette.brandColor};
   margin: 0;

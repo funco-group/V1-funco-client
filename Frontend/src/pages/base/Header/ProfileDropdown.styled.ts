@@ -23,7 +23,7 @@ export const ProfileDropdownContainer = styled.div<DropdownContainerProps>`
 export const ProfileDiv = styled.div`
   padding: 0 10px;
   p {
-    font-weight: bold;
+    font-family: "NanumSquareBold";
     color: ${palette.brandBlack};
   }
 
@@ -42,8 +42,8 @@ export const ProfileDropdownButton = styled.button`
 
   text-align: left;
 
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
     background-color: ${palette.brandColor2};
   }
 `;

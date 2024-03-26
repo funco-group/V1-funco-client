@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import FollowTab from "./FollowTab";
 
 function index() {
   return (
     <div>
-      Follow default
+      <FollowTab />
       <Outlet />
     </div>
   );

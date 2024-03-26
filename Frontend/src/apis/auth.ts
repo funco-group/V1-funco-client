@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { UserType } from "@/recoils/user/atom";
+import { UserType } from "@/interfaces/user/UserType";
 
 async function postGoogleOAuth(
   success: (res: AxiosResponse<UserType>) => void,
