@@ -2,14 +2,15 @@ import { Outlet } from "react-router-dom";
 import PriceWindow from "@/components/common/PriceWindow/PriceWindow";
 import { CryptoPageContainer } from "../CryptoPage/styled";
 import HistoryTab from "./HistoryTab";
+import { TradeHistoryPageContainer } from "./styled";
 
 function index() {
   return (
     <CryptoPageContainer>
-      <div>
+      <TradeHistoryPageContainer>
         <HistoryTab />
         <Outlet />
-      </div>
+      </TradeHistoryPageContainer>
       <PriceWindow />
     </CryptoPageContainer>
   );

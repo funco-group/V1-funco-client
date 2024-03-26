@@ -75,7 +75,5 @@ export const NotiMoreButton = styled.button`
     margin-bottom: 0.1875rem;
   }
 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
