@@ -3,6 +3,7 @@ package com.found_404.funco.follow.service;
 import static com.found_404.funco.follow.exception.FollowErrorCode.*;
 import static com.found_404.funco.member.exception.MemberErrorCode.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -129,6 +130,80 @@ public class FollowService {
 		followRepository.save(follow);
 		followingCoinRepository.saveAll(followingCoinTradeMap.keySet());
 		tradeRepository.saveAll(followingCoinTradeMap.values());
+	}
+
+	@Transactional
+	public void deleteFollow(Long followId) {
+		// 팔로우
+		Follow follow = followRepository.findById(followId).orElseThrow(() -> new FollowException(FOLLOW_NOT_FOUND));
+
+		// 팔로잉 멤버
+		Member followingMember = findMemberById(follow.getFollowing().getId());
+
+		// 팔로워 멤버
+		Member followerMember = findMemberById(follow.getFollower().getId());
+
+		// 팔로잉 코인
+		List<FollowingCoin> followingCoins = followingCoinRepository.findFollowingCoinsByFollow(follow);
+
+		// 팔로잉 코인들의 현재 시세
+		Map<String, Long> followingCryptoPriceMap = cryptoPrice.getTickerPriceMap(followingCoins.stream()
+			.map(FollowingCoin::getTicker)
+			.collect(Collectors.toList()));
+
+		// 거래 내역
+		List<Trade> trades = followingCoins.stream()
+			.map(followingCoin -> Trade.builder()
+				.member(followerMember)
+				.ticker(followingCoin.getTicker())
+				.tradeType(TradeType.SELL)
+				.volume(followingCoin.getVolume())
+				.orderCash((long)(followingCoin.getVolume() * followingCryptoPriceMap.get(followingCoin.getTicker())))
+				.price(followingCryptoPriceMap.get(followingCoin.getTicker()))
+				.concluded(true)
+				.status(true)
+				.build())
+			.toList();
+
+		// 팔로잉 코인들 가격
+		long followAsset = followingCoins.stream()
+			.mapToLong(followingCoin -> {
+				long asset = (long)(followingCoin.getVolume() * followingCryptoPriceMap.get(followingCoin.getTicker()));
+				followingCoin.sellFollowingCoin();
+				return asset;
+			}).sum();
+
+		// 수익금
+		long proceed = followAsset + follow.getCash();
+
+		// 수익률
+		double returnRate = (double)(proceed - follow.getInvestment()) / follow.getInvestment();
+		// Math.round(((double)(proceed - follow.getInvestment()) / follow.getInvestment()) * 100.0) / 100.0;
+
+		// 수수료
+		long commission = proceed - follow.getInvestment() > 0 ? (long)(followAsset * FOLLOW_FEE) : 0;
+
+		// 정산 금액
+		long settlement = proceed - commission;
+
+		log.info("수익금 : {}", proceed);
+		log.info("수익룰 : {}", returnRate);
+		log.info("수수료 : {}", commission);
+		log.info("정산 금액 : {}", settlement);
+
+		// follow update
+		follow.settleFollow(commission, returnRate, LocalDateTime.now(), settlement);
+
+		// follower member update
+		followerMember.increaseCash(settlement);
+
+		// following member update
+		if (commission > 0) {
+			followingMember.increaseCash(commission);
+		}
+
+		// 데이터 insert
+		tradeRepository.saveAll(trades);
 	}
 
 	private Member findMemberById(Long memberId) {
