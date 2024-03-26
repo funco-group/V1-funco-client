@@ -9,6 +9,7 @@ export const NavBarContainer = styled.div`
   height: 3.375rem;
   background-color: ${palette.brandWhite};
   padding: 0.75rem 1.5rem;
+  z-index: 1000;
 
   display: flex;
 `;

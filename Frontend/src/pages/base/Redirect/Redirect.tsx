@@ -2,11 +2,13 @@
 // import postGoogleOAuth from "@/apis/auth";
 // import { UserType } from "@/recoils/user/atom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function Redirect() {
   const parsedHash = new URLSearchParams(window.location.hash.substring(1));
   const accessToken = parsedHash.get("access_token");
+  const navigate = useNavigate();
   console.log(window.location);
   console.log(parsedHash);
   console.log(accessToken);
@@ -21,8 +23,9 @@ function Redirect() {
       accessToken: "access",
       refreshToken: "refresh",
     };
-    localStorage.setItem("userInfo", JSON.stringify(newUser));
     login(newUser);
+    navigate(-1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // postGoogleOAuth((res: AxiosResponse<UserType>) => {

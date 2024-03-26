@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   NavBarContainer,
   NavBarLeftDiv,
@@ -24,7 +24,7 @@ import DummyNotiHistoryData from "@/lib/DummyNotiHistoryData";
 import useCloseDropdown from "@/hooks/useCloseDropdown";
 
 function Navbar() {
-  const { user, login, logout } = useUserState();
+  const { user, logout } = useUserState();
   const { isNoti, toggleNoti } = useNotiState();
   const notiDropDownRef = useRef(null);
   const profileDropdownRef = useRef(null);
@@ -34,13 +34,6 @@ function Navbar() {
     false,
   );
   const [notiHistoryData, setNotiHistoryData] = useState(DummyNotiHistoryData);
-
-  useEffect(() => {
-    const newUser = localStorage.getItem("userInfo");
-    if (newUser) {
-      login(JSON.parse(newUser));
-    }
-  }, []);
 
   const handleLoginClick = () => {
     window.location.href =
