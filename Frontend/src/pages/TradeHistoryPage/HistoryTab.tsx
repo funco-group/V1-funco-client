@@ -4,7 +4,7 @@ import { HistoryTabContainer, HistoryTabDiv } from "./HistoryTab.styled";
 // import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function HistoryTab() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   // const { user } = useUserState();
   const tabList = [
