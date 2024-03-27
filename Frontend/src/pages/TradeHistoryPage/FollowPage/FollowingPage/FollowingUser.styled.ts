@@ -18,22 +18,22 @@ export const FollowingDetailFlexDiv = styled.div`
 
 export const FollowingDetailDiv = styled.div`
   padding: 0 1rem;
-  width: 48rem;
+  width: 70%;
 `;
 
 export const FollowingDetailInnerDiv = styled.div`
-  margin-top: 40px;
+  margin-top: 1.5rem;
   ${CommonComponent}
 `;
 
 export const FollowingColumnGridDiv = styled.div`
   display: grid;
-  grid-template-columns: 5rem 1fr 1fr 1fr;
+  grid-template-columns: 7.5rem 1fr 1fr 1fr;
 `;
 
 export const FollowingContentDiv = styled.div`
   color: ${palette.brandDarkGray};
-  font-size: 0.75rem;
+  font-size: 1rem;
   text-align: end;
 
   span {
@@ -44,21 +44,22 @@ export const FollowingContentDiv = styled.div`
 
 export const FollowingDateDiv = styled.div`
   text-align: center;
-  margin: 0.625rem 0;
+  margin: 1.25rem auto;
+  padding: 0.625rem;
 `;
 
-export const FollowingCotentMarginDiv = styled.div`
+export const FollowingContentMarginDiv = styled.div`
   margin: auto 0.625rem;
 `;
 
 export const FollowingUserGraphDiv = styled.div`
-  width: 180px;
-  height: 130px;
+  width: 11.25rem;
+  height: 8.125rem;
   margin: 1.25rem auto auto auto;
 `;
 
 export const FollowingButtonDiv = styled.div`
-  padding: 1.25rem 3.3rem 0 1rem;
+  padding: 1.25rem 4.45rem 0 1rem;
   display: flex;
   justify-content: space-between;
 `;

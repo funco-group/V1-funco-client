@@ -32,7 +32,7 @@ function FollowTab() {
         <TabButton
           key={tabName[1]}
           width="6.25rem"
-          height="2.1875rem"
+          height="2.5rem"
           $active={tabName[1] === nowTabName}
           onClick={() => handleTabClick(tabName[1])}
           radius={tabName[1] === "following" ? "left" : "right"}

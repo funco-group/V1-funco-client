@@ -8,7 +8,7 @@ export const FollowingStatisticsContainer = styled.div`
 `;
 
 export const FollowingStatisticsDetailDiv = styled.div`
-  width: 42.5rem;
+  width: 80%;
   border: none;
   background-color: ${palette.brandColor2};
   padding: 1.25rem;
@@ -29,4 +29,8 @@ export const StatisticsRowDiv = styled.div`
   span {
     color: ${palette.brandDarkGray};
   }
+`;
+
+export const StatisticsGraphDiv = styled.div`
+  padding: 1.5625rem 0.625rem;
 `;
