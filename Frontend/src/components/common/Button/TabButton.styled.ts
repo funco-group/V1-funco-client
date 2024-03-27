@@ -5,7 +5,7 @@ interface TabButtonProps {
   width: string;
   height: string;
   $active: boolean;
-  radius: "left" | "right" | null;
+  radius: "left" | "right" | "";
 }
 
 const TabButton = styled.button<TabButtonProps>`
@@ -13,10 +13,32 @@ const TabButton = styled.button<TabButtonProps>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   color: ${({ $active }) => ($active ? palette.brandColor : "#999999")};
-  border: ${({ $active }) =>
+  border-top: ${({ $active }) =>
     $active
       ? `1px solid ${palette.brandColor}`
       : `1px solid ${palette.deactivatedGray}`};
+  border-bottom: ${({ $active }) =>
+    $active
+      ? `1px solid ${palette.brandColor}`
+      : `1px solid ${palette.deactivatedGray}`};
+  border-left: ${({ $active, radius }) => {
+    if ($active) {
+      return `1px solid ${palette.brandColor}`;
+    }
+    if (radius === "right") {
+      return "none";
+    }
+    return `1px solid ${palette.deactivatedGray}`;
+  }};
+  border-right: ${({ $active, radius }) => {
+    if ($active) {
+      return `1px solid ${palette.brandColor}`;
+    }
+    if (radius === "left") {
+      return "none";
+    }
+    return `1px solid ${palette.deactivatedGray}`;
+  }};
   border-radius: ${({ radius }) => {
     if (radius === "left") {
       return "5px 0 0 5px";
@@ -26,6 +48,7 @@ const TabButton = styled.button<TabButtonProps>`
     }
     return null;
   }};
+  cursor: pointer;
 `;
 
 export default TabButton;
