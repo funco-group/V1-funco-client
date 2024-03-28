@@ -68,7 +68,7 @@ function Navbar() {
           <img src={logo} alt="main-logo" draggable={false} />
         </NavLink>
         <NavBarLeftLinkDiv>
-          <NavLinkComponent path="/trade/BTC" name="거래소" />
+          <NavLinkComponent path="/trade/KRW-BTC" name="거래소" />
           <NavLinkComponent path="/history/asset" name="투자내역" />
           <NavLinkComponent path="/rank" name="랭킹" />
         </NavBarLeftLinkDiv>

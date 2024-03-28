@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { getCoinList, getTickerPrice } from "@/apis/upbit";
 import FollowStatistics from "./FollowStatistics";
-import { ResCoinType } from "@/interfaces/PriceWindowType";
+import { ResMarketCodeType } from "@/interfaces/PriceWindowType";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import DummyData from "@/lib/DummyFollowings";
 import FollowingUserListContainer from "./styled";
@@ -40,7 +40,7 @@ function Index() {
 
   // 코인 리스트 요청 및 설정
   const fetchCoinList = () => {
-    getCoinList((res: AxiosResponse<ResCoinType[]>) => {
+    getCoinList((res: AxiosResponse<ResMarketCodeType[]>) => {
       const newTickerList = res.data
         .filter((coin) => coin.market.startsWith("KRW"))
         .map((coin) => coin.market)

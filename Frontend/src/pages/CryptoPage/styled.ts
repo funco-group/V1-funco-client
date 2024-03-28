@@ -11,4 +11,5 @@ export const BottomContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
   margin-top: 1rem;
+  grid-auto-rows: min-content;
 `;

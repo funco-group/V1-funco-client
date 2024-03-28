@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Tab from "@/components/crypto/Tab";
-import { TradeContainer } from "./Trade.styled";
+import TradeContainer from "./Trade.styled";
 import NormalTrade from "./NormalTrade";
 import ShortTrade from "./ShortTrade";
 import TradeList from "./TradeList";
@@ -13,7 +13,7 @@ function Trade() {
   };
 
   return (
-    <TradeContainer>
+    <TradeContainer activeTab={activeTab}>
       <Tab tabs={tabs} activeTab={activeTab} changeTab={changeTab} />
       {activeTab === "일반거래" && <NormalTrade />}
       {activeTab === "간편거래" && <ShortTrade />}

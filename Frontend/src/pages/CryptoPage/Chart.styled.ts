@@ -36,8 +36,15 @@ export const PriceContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const CurPriceDiv = styled.div`
-  /* background-color: blue; */
+export const CurPriceDiv = styled.div<{ change: string }>`
+  color: ${(props) => {
+    if (props.change === "RISE") {
+      return palette.brandRed;
+    }
+    if (props.change === "FALL") {
+      return palette.brandBlue;
+    }
+  }};
 `;
 
 export const PriceDiv = styled.div`
@@ -79,13 +86,20 @@ export const TradePriceItemDiv = styled.div`
 export const TradeTitleDiv = styled.div<{ $top: boolean }>`
   display: flex;
   justify-content: space-between;
-  border-bottom: ${(props) =>
-    props.$top && ` 1px solid ${palette.borderGray};`};
+  border-bottom: ${(props) => props.$top && `1px solid ${palette.borderGray}`};
   /* background-color: blue; */
   padding: 0.5rem 0;
 `;
-export const TradePriceDiv = styled.div`
+export const TradePriceDiv = styled.div<{ color: string }>`
   font-family: "NanumSquareBold";
+  color: ${(props) => {
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+  }};
 
   span {
     font-size: 0.65rem;
@@ -99,12 +113,14 @@ export const ButtonsContainer = styled.div`
   display: flex;
 `;
 
-export const TypeButton = styled.div`
-  background-color: whitesmoke;
+export const TypeButton = styled.div<{ $selected: boolean }>`
+  background-color: ${(props) =>
+    props.$selected ? palette.brandColor : "whitesmoke"};
   padding: 0.3rem;
   font-size: 0.8rem;
   margin-right: 0.5rem;
   border-radius: 0.3rem;
-  color: ${palette.brandDarkGray};
+  color: ${(props) =>
+    props.$selected ? palette.brandWhite : palette.brandDarkGray};
   cursor: pointer;
 `;

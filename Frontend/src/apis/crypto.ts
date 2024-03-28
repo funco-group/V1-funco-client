@@ -16,8 +16,6 @@ export async function addFavoriteCoin(code: string) {
   });
 }
 
-// export async function removeFavoriteCoin(code: string) {
-//   await localAxios.delete(`/${domain}/favorite`, {
-//     ticker: code,
-//   });
-// }
+export async function removeFavoriteCoin(code: string) {
+  await localAxios.delete(`/${domain}/favorite/${code}`);
+}

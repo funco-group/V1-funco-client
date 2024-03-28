@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { PriceType } from "@/interfaces/PriceWindowType";
 import {
   PriceItemContainer,
@@ -18,21 +19,29 @@ import {
 interface PriceItemProps {
   price: PriceType;
   isFav: boolean;
-  onClickFavorite: (code: string) => void;
+  onClickFavorite: (code: string, e: React.MouseEvent<HTMLElement>) => void;
 }
 
 function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
-  const isDown = price.signedChangeRate < 0;
   const coloredStar =
     "https://cdn.upbit.com/upbit-web/images/icon_list_favorite.c3deb14.svg";
   const star =
     "https://cdn.upbit.com/upbit-web/images/icon_list_favorite_disabled.4bd898a.svg";
+  const { coinCode } = useParams();
+  const navigate = useNavigate();
+
+  const clickCoin = (code: string) => {
+    navigate(`/trade/${code}`);
+  };
 
   return (
-    <PriceItemContainer>
+    <PriceItemContainer
+      $selected={coinCode === price.code}
+      onClick={() => clickCoin(price.code)}
+    >
       <StarIconDiv>
         <StartIconImg
-          onClick={() => onClickFavorite(price.code)}
+          onClick={(e) => onClickFavorite(price.code, e)}
           src={isFav ? coloredStar : star}
           alt="start-icon"
         />
@@ -41,15 +50,18 @@ function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
         <KorNameDiv>{price.koreanName}</KorNameDiv>
         <CodeDiv>{price.code}</CodeDiv>
       </NameDiv>
-      <PriceDiv $isDown={isDown}>
-        <UpdateDiv $updated={price.updated} $updatedDown={price.updatedDown}>
+      <PriceDiv $isDown={price.change === "FALL"}>
+        <UpdateDiv
+          $updated={price.updated}
+          $updatedDown={price.change === "FALL"}
+        >
           {price.tradePrice.toLocaleString("en-US")}
         </UpdateDiv>
       </PriceDiv>
-      <ChangeDiv $isDown={isDown}>
+      <ChangeDiv $isDown={price.change === "FALL"}>
         <ChangeRateDiv>
-          {!isDown && "+"}
-          {parseFloat((price.signedChangeRate * 100).toFixed(2))}%
+          {price.change === "RISE" && "+"}
+          {(price.signedChangeRate * 100).toFixed(2)}%
         </ChangeRateDiv>
         <ChangePriceDiv>
           {price.signedChangePrice.toLocaleString("en-US")}

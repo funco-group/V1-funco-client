@@ -2,10 +2,8 @@ import styled from "styled-components";
 import palette from "@/lib/palette";
 
 export const TabContainer = styled.div`
-  /* background-color: orange; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* border-top: 1px solid ${palette.borderGray}; */
   border-bottom: 1px solid ${palette.borderGray};
 `;
 
