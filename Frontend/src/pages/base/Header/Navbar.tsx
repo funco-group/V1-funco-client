@@ -120,7 +120,7 @@ function Navbar() {
       ) : (
         <NavBarLoginButton type="button" onClick={handleLoginClick}>
           <img src={googleLogo} alt="google-logo" draggable={false} />
-          <p>로그인</p>
+          <p>Google로 시작하기</p>
         </NavBarLoginButton>
       )}
     </NavBarContainer>

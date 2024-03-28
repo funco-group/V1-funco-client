@@ -3,6 +3,7 @@ import { PriceType } from "@/interfaces/PriceWindowType";
 
 export default function tickerWebSocket(
   setPriceList: React.Dispatch<React.SetStateAction<PriceType[]>>,
+  setStatus: React.Dispatch<React.SetStateAction<number | undefined>>,
 ) {
   const uuid = uuidv4();
   const handlers = {
@@ -15,11 +16,13 @@ export default function tickerWebSocket(
       this.ws.onmessage = this.onmessage.bind(this);
       this.ws.onerror = this.onerror.bind(this);
       this.status = this.ws.readyState;
+      setStatus(this.ws.readyState);
     },
 
     onopen() {
       console.log("ticker connected!");
       this.status = this.ws?.readyState;
+      setStatus(this.ws?.readyState);
     },
 
     send(codes: string) {
@@ -80,12 +83,14 @@ export default function tickerWebSocket(
     onerror() {
       console.error("WebSocket error");
       this.status = this.ws?.readyState;
+      setStatus(this.ws?.readyState);
     },
 
     close() {
       this.ws?.close();
       console.log("ticker socket close");
       this.status = this.ws?.readyState;
+      setStatus(this.ws?.readyState);
     },
   };
 
