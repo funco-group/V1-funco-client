@@ -113,7 +113,7 @@ export const NavBarProfileImg = styled.img`
 `;
 
 export const NavBarLoginButton = styled.button`
-  color: ${palette.brandBlack};
+  color: ${palette.brandDarkGray};
   border: 1px solid ${palette.brandColor};
   border-radius: 5px;
 
@@ -133,13 +133,13 @@ export const NavBarLoginButton = styled.button`
   }
 
   p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: auto 0.3125rem auto 0.625rem;
   }
 
   cursor: pointer;
 
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3); */
 
   &:active {
     transform: translate(2px, 2px);

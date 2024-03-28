@@ -36,10 +36,11 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
     undefined,
   );
   const [favCoins, setFavCoins] = useState<string[]>([]);
+  const [status, setStatus] = useState<number | undefined>(-1);
 
   useMemo(() => {
     // 1. 소켓 연결
-    const tickerSocket = tickerWebSocket(setPriceList);
+    const tickerSocket = tickerWebSocket(setPriceList, setStatus);
     setSocket(tickerSocket);
 
     // 2. 관심 코인 갖고 오기
@@ -67,7 +68,7 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
         socket.send(JSON.stringify(favCoins));
       }
     }
-  }, [activeTab, favCoins, socket?.status, socket, codes]);
+  }, [activeTab, favCoins, socket?.status, socket, codes, status]);
 
   const changeTab = (tab: string) => {
     setActiveTab(tab);
