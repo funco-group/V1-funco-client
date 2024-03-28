@@ -1,11 +1,10 @@
-package com.found_404.funco.trade.domain;
+package com.found_404.funco.follow.domain;
 
 import com.found_404.funco.global.util.CommissionUtil;
 import com.found_404.funco.trade.exception.TradeException;
 import org.hibernate.annotations.Comment;
 
 import com.found_404.funco.global.entity.BaseEntity;
-import com.found_404.funco.member.domain.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,11 +21,11 @@ import static com.found_404.funco.trade.exception.TradeErrorCode.INSUFFICIENT_CO
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HoldingCoin extends BaseEntity {
+public class FollowingCoin extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
+	@JoinColumn(name = "follow_id", nullable = false)
+	private Follow follow;
 
 	@Comment("코인명")
 	@Column(length = 20, nullable = false)
@@ -41,11 +40,15 @@ public class HoldingCoin extends BaseEntity {
 	private Long averagePrice;
 
 	@Builder
-	public HoldingCoin(Member member, String ticker, Double volume, Long averagePrice) {
-		this.member = member;
+	public FollowingCoin(Follow follow, String ticker, Double volume, Long averagePrice) {
+		this.follow = follow;
 		this.ticker = ticker;
 		this.volume = volume;
 		this.averagePrice = averagePrice;
+	}
+
+	public void sellFollowingCoin() {
+		this.volume = 0.0;
 	}
 
 	public void increaseVolume(double volume, Long price) {
@@ -59,9 +62,4 @@ public class HoldingCoin extends BaseEntity {
 		}
 		this.volume -= volume;
 	}
-
-	public void recoverVolume(double volume) {
-		this.volume += volume;
-	}
-
 }
