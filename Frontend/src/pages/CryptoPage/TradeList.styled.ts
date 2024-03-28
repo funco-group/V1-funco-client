@@ -21,20 +21,17 @@ export const ToggleDiv = styled.div`
   margin-right: 1rem;
 `;
 
-export const ToggleText = styled.div``;
-
-export const ColumnContainer = styled.div`
-  background-color: #f9fafc;
-  padding: 0.5rem 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+export const ToggleText = styled.div`
+  font-size: 0.9rem;
+  cursor: pointer;
 `;
 
-export const ColumnTitleDiv = styled.div`
-  text-align: center;
-  font-size: 0.75rem;
-  font-family: "NanumSquareAcb";
-  color: ${palette.brandDarkGray};
+export const ColumnGridDiv = styled.div<{ $conclude: boolean }>`
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.$conclude
+      ? "6rem 6rem 9rem 8rem"
+      : "5.5rem 6rem 7.2rem 7.1rem 3.5rem;"};
 `;
 
 export const TradeListContainer = styled.div``;

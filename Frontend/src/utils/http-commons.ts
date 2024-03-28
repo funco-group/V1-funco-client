@@ -4,7 +4,7 @@ import axios from "axios";
 
 const localAxios = axios.create({
   // baseURL: VITE_VUE_API_URL,
-  baseURL: "http://192.168.229.193:8080",
+  baseURL: "http://192.168.137.247:8080",
   headers: {
     "Content-Type": "application/json;charset=utf-8",
   },

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const BodyContainer = styled.div`
-  padding-top: 6.5rem;
+  padding: 6.5rem 0;
 `;
 
 export default BodyContainer;

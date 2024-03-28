@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 import ChartGraph from "./ChartGraph";
 import {
   ChartContainer,
@@ -16,50 +18,90 @@ import {
   TradeTitleDiv,
   TradePriceDiv,
 } from "./Chart.styled";
-import Bitcoin from "@/assets/icon/bitcoin-icon.png";
+import { PriceType } from "@/interfaces/PriceWindowType";
 
-function Chart() {
+interface ChartProps {
+  priceList: PriceType[];
+}
+
+function Chart({ priceList }: ChartProps) {
+  const { coinCode } = useParams();
+  const coin = priceList.find((price) => price.code === coinCode);
+  const buttons = ["일봉", "주봉", "월봉", "1분봉", "5분봉", "10분봉"];
+  const [button, setButton] = useState<string>("일봉");
+
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(number);
+  };
+
+  const clickButton = (name: string) => {
+    setButton(name);
+  };
+
+  if (!coin) return null;
+
   return (
     <ChartContainer>
       <ChartInfoContainer>
         <CoinNameDiv>
-          <img src={Bitcoin} alt="" width={30} />
-          <span>비트코인</span>
-          KRW-BTC
+          <img
+            src={`https://static.upbit.com/logos/${coin.code.split("-")[1]}.png`}
+            alt=""
+            width={25}
+          />
+          <span>{coin.koreanName}</span>
+          {coin.code}
         </CoinNameDiv>
         <PriceContainer>
-          <CurPriceDiv>
+          <CurPriceDiv change={coin.change}>
             <PriceDiv>
-              21,735,000
-              <span>KRW</span>
+              {coin.tradePrice.toLocaleString("en-US")}
+              <span>{coin.code.split("-")[0]}</span>
             </PriceDiv>
             <ChangeDiv>
               <ChangeTextDiv>전일대비</ChangeTextDiv>
-              <ChangeInfoDiv>+0.37%</ChangeInfoDiv>
-              <ChangeInfoDiv>▲ 80,000</ChangeInfoDiv>
+              <ChangeInfoDiv>
+                {coin.change === "RISE" && "+"}
+                {(coin.signedChangeRate * 100).toFixed(2)}%
+              </ChangeInfoDiv>
+              <ChangeInfoDiv>
+                {coin.signedChangePrice.toLocaleString("en-US")}
+                {coin.change === "RISE" && " ▲"}
+                {coin.change === "FALL" && " ▼"}
+              </ChangeInfoDiv>
             </ChangeDiv>
           </CurPriceDiv>
           <TradePriceContainer>
             <TradePriceItemDiv>
               <TradeTitleDiv $top>
                 고가
-                <TradePriceDiv>21,752,000</TradePriceDiv>
+                <TradePriceDiv color="red">
+                  {coin.highPrice.toLocaleString("en-US")}
+                </TradePriceDiv>
               </TradeTitleDiv>
               <TradeTitleDiv $top={false}>
-                저가 <TradePriceDiv>21,752,000</TradePriceDiv>
+                저가
+                <TradePriceDiv color="blue">
+                  {coin.lowPrice.toLocaleString("en-US")}
+                </TradePriceDiv>
               </TradeTitleDiv>
             </TradePriceItemDiv>
             <TradePriceItemDiv>
               <TradeTitleDiv $top>
                 거래량(24H)
-                <TradePriceDiv>
-                  21,752,000 <span>BTC</span>
+                <TradePriceDiv color="black">
+                  {coin.accTradeVolme24h.toLocaleString("en-US")}
+                  <span> {coin.code.split("-")[1]}</span>
                 </TradePriceDiv>
               </TradeTitleDiv>
               <TradeTitleDiv $top={false}>
                 거래대금(24H)
-                <TradePriceDiv>
-                  67,811,769,048 <span>KRW</span>
+                <TradePriceDiv color="black">
+                  {formatNumber(coin.accTradePrice24h)}
+                  <span> {coin.code.split("-")[0]}</span>
                 </TradePriceDiv>
               </TradeTitleDiv>
             </TradePriceItemDiv>
@@ -67,14 +109,17 @@ function Chart() {
         </PriceContainer>
       </ChartInfoContainer>
       <ButtonsContainer>
-        <TypeButton>일봉</TypeButton>
-        <TypeButton>주봉</TypeButton>
-        <TypeButton>월봉</TypeButton>
-        <TypeButton>1분봉</TypeButton>
-        <TypeButton>5분봉</TypeButton>
-        <TypeButton>10분봉</TypeButton>
+        {buttons.map((name) => (
+          <TypeButton
+            $selected={name === button}
+            key={name}
+            onClick={() => clickButton(name)}
+          >
+            {name}
+          </TypeButton>
+        ))}
       </ButtonsContainer>
-      <ChartGraph />
+      <ChartGraph button={button} />
     </ChartContainer>
   );
 }

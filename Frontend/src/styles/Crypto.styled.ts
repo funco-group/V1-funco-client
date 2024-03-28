@@ -3,7 +3,7 @@ import palette from "@/lib/palette";
 
 export const ButtonContainer = styled.div`
   display: flex;
-  padding: 0.7rem;
+  padding: 1.2rem 0.7rem;
 `;
 
 export const TradeContainer = styled.div`
@@ -88,7 +88,7 @@ export const PriceButton = styled.div`
 export const GreenDiv = styled.div<{ $last: boolean }>`
   background-color: ${palette.brandColor2};
   border-bottom: ${(props) =>
-    !props.$last && ` 1px solid ${palette.mainColor};`};
+    !props.$last && `1px solid ${palette.mainColor};`};
 `;
 
 export const TradeInfo = styled.div`

@@ -23,7 +23,7 @@ export default function RoutesComponent() {
       <Route path="/" element={<Header />}>
         <Route index element={<HomePage />} />
         <Route
-          path="trade/:coin"
+          path="trade/:coinCode"
           element={
             <WideLayout>
               <CryptoPage />

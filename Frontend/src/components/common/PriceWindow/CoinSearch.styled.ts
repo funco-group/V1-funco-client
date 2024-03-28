@@ -4,6 +4,7 @@ import palette from "@/lib/palette";
 export const CoinSearchContainer = styled.div`
   padding: 0.7rem 0.5rem;
   display: flex;
+  border-bottom: 1px solid ${palette.borderGray};
 
   img {
     vertical-align: middle;

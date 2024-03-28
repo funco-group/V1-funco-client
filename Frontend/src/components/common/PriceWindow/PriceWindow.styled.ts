@@ -4,6 +4,8 @@ import palette from "@/lib/palette";
 
 export const PriceWindowContainer = styled.div`
   ${CommonComponent}
+  height: 73.65rem;
+  overflow-y: auto;
 `;
 
 export const ColumnContainer = styled.div`

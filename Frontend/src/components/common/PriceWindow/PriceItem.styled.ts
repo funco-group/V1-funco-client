@@ -1,15 +1,18 @@
 import styled, { keyframes, css } from "styled-components";
 import palette from "@/lib/palette";
 
-export const PriceItemContainer = styled.div`
-  /* background-color: yellow; */
+export const PriceItemContainer = styled.div<{ $selected: boolean }>`
+  background-color: ${(props) => props.$selected && "#f4f5f8"};
   display: grid;
   grid-template-columns: 0.2fr 0.8fr 0.7fr 0.55fr 0.8fr;
-  /* text-align: center; */
-  /* padding: 0.7rem 0.3rem; */
   padding: 0 0.3rem;
   height: 3.5rem;
   border-bottom: 1px solid ${palette.borderGray};
+  cursor: default;
+
+  &:hover {
+    background-color: #f4f5f8;
+  }
 `;
 export const StarIconDiv = styled.div`
   /* background-color: red; */
