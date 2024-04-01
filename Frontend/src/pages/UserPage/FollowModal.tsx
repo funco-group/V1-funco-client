@@ -15,6 +15,7 @@ import BrandButtonComponent from "@/components/common/Button/BrandButtonComponen
 import palette from "@/lib/palette";
 import BrandButton from "@/components/common/Button/BrandButtonComponent.styled";
 import { addFollow } from "@/apis/follow";
+import { getCash } from "@/apis/asset";
 
 function FollowModal() {
   const { followModal, offFollowModal } = useFollowModalState();
@@ -23,7 +24,10 @@ function FollowModal() {
   const [isCheckTerms, setIsCheckTerms] = useState(false);
 
   useEffect(() => {
-    setCash(50000000);
+    getCash((res) => {
+      const { data } = res;
+      setCash(data.cash);
+    });
   }, []);
 
   if (!followModal) {

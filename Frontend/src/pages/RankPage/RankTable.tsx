@@ -52,7 +52,7 @@ function RankTable({
   }, [rankList]);
 
   if (isLoading) {
-    return <>isLoading~~~~~~~~~</>;
+    return <></>;
   }
   return (
     <RankTableContainer>

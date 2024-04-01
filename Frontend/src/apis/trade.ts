@@ -103,6 +103,16 @@ export async function getOpenTradeList(
     .then(success);
 }
 
+export async function getAllOpenTradeList(
+  page: number,
+  size: number,
+  success: (response: AxiosResponse<TradeListType[]>) => void,
+) {
+  await localAxios
+    .get(`/${version}/${domain}/open-orders?page=${page}&size=${size}`)
+    .then(success);
+}
+
 export async function cancleOrder(id: number, success: () => void) {
   await localAxios
     .delete(`/${version}/${domain}/open-orders/${id}`)
