@@ -11,7 +11,7 @@ localAxios.interceptors.request.use(
   (config) => {
     const savedValue = localStorage.getItem("userInfo");
     const userInfo = savedValue ? JSON.parse(savedValue) : null;
-    if (userInfo.user !== null) {
+    if (userInfo && userInfo.user !== null) {
       const newConfig = { ...config };
       newConfig.headers.Authorization = `Bearer ${userInfo.user.accessToken}`;
       return newConfig;
