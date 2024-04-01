@@ -5,6 +5,7 @@ interface BrandButtonComponentProps {
   content: string;
   onClick: () => void;
   cancel: boolean;
+  disabled: boolean;
 }
 
 function BrandButtonComponent({
@@ -12,9 +13,16 @@ function BrandButtonComponent({
   color,
   cancel,
   onClick,
+  disabled,
 }: BrandButtonComponentProps) {
   return (
-    <BrandButton type="button" color={color} onClick={onClick} $cancel={cancel}>
+    <BrandButton
+      type="button"
+      color={color}
+      onClick={onClick}
+      $cancel={cancel}
+      disabled={disabled}
+    >
       {content}
     </BrandButton>
   );

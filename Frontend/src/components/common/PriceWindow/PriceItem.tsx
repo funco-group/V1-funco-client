@@ -55,7 +55,7 @@ function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
           $updated={price.updated}
           $updatedDown={price.change === "FALL"}
         >
-          {price.tradePrice.toLocaleString("en-US")}
+          {price.tradePrice.toLocaleString("ko-KR")}
         </UpdateDiv>
       </PriceDiv>
       <ChangeDiv $isDown={price.change === "FALL"}>
@@ -64,12 +64,12 @@ function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
           {(price.signedChangeRate * 100).toFixed(2)}%
         </ChangeRateDiv>
         <ChangePriceDiv>
-          {price.signedChangePrice.toLocaleString("en-US")}
+          {price.signedChangePrice.toLocaleString("ko-KR")}
         </ChangePriceDiv>
       </ChangeDiv>
       <TradePriceDiv>
         <div>
-          {Math.round(price.accTradePrice24h / 1000000).toLocaleString("en-US")}
+          {Math.round(price.accTradePrice24h / 1000000).toLocaleString("ko-KR")}
         </div>
         <UnitDiv>백만</UnitDiv>
       </TradePriceDiv>

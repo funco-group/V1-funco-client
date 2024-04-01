@@ -5,26 +5,28 @@ import {
   ProfileDropdownButton,
   ProfileDropdownContainer,
 } from "./ProfileDropdown.styled";
+import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function ProfileDropdown({
   nickname,
-  userId,
-  logout,
   visible,
+  setIsProfileOpen,
 }: {
   nickname: string;
-  userId: number;
-  logout: () => void;
   visible: boolean;
+  setIsProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
+  const { logout } = useUserState();
 
   const handleNavigateMypage = () => {
-    navigate(`user/${userId}`);
+    navigate(`member/${nickname}`);
+    setIsProfileOpen((prev) => !prev);
   };
 
   const handleLogout = () => {
     logout();
+    setIsProfileOpen((prev) => !prev);
   };
 
   const [open, setOpen] = useState(false);

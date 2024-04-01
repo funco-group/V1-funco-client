@@ -5,12 +5,14 @@ import {
   PriceWindowContainer,
   ColumnContainer,
   ColumnTitleDiv,
+  PriceItemContainer,
 } from "./PriceWindow.styled";
 import tickerWebSocket from "@/sockets/tickerWebSocket";
 import {
   PriceType,
   FavoriteCoinResponseType,
   WebSocketHandlers,
+  HoldingCoinResponseType,
 } from "@/interfaces/PriceWindowType";
 import {
   addFavoriteCoin,
@@ -21,6 +23,7 @@ import CoinSearch from "./CoinSearch";
 import PriceItem from "./PriceItem";
 import Tab from "@/components/crypto/Tab";
 import codeListState from "@/recoils/crypto/withCodeList";
+import { getHoldingCoin } from "@/apis/trade";
 
 interface PriceWindowProps {
   priceList: PriceType[];
@@ -36,6 +39,7 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
     undefined,
   );
   const [favCoins, setFavCoins] = useState<string[]>([]);
+  const [holdingCoins, setHoldingCoins] = useState<string[]>([]);
   const [status, setStatus] = useState<number | undefined>(-1);
 
   useMemo(() => {
@@ -43,7 +47,13 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
     const tickerSocket = tickerWebSocket(setPriceList, setStatus);
     setSocket(tickerSocket);
 
-    // 2. 관심 코인 갖고 오기
+    // 2. 보유 코인 갖고 오기
+    getHoldingCoin((response: AxiosResponse<HoldingCoinResponseType>) => {
+      const { data } = response;
+      setHoldingCoins(data.holdingCoins);
+    });
+
+    // 3. 관심 코인 갖고 오기
     getFavoriteCoinList((response: AxiosResponse<FavoriteCoinResponseType>) => {
       const { data } = response;
       setFavCoins(data.tickers);
@@ -63,12 +73,20 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
       if (activeTab === "원화") {
         socket.send(JSON.stringify(codes));
       } else if (activeTab === "보유") {
-        // 보유 코인 get
+        socket.send(JSON.stringify(holdingCoins));
       } else if (activeTab === "관심") {
         socket.send(JSON.stringify(favCoins));
       }
     }
-  }, [activeTab, favCoins, socket?.status, socket, codes, status]);
+  }, [
+    activeTab,
+    favCoins,
+    socket?.status,
+    socket,
+    codes,
+    status,
+    holdingCoins,
+  ]);
 
   const changeTab = (tab: string) => {
     setActiveTab(tab);
@@ -90,15 +108,41 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
   return (
     <PriceWindowContainer>
       <CoinSearch />
-      <Tab tabs={tabs} activeTab={activeTab} changeTab={changeTab} />
+      <Tab
+        columns={3}
+        tabs={tabs}
+        activeTab={activeTab}
+        changeTab={changeTab}
+      />
       <ColumnContainer>
         <div />
         {columnList.map((column) => (
           <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
         ))}
       </ColumnContainer>
-      {activeTab === "관심"
-        ? priceList
+      <PriceItemContainer>
+        {activeTab === "원화" &&
+          priceList.map((price: PriceType) => (
+            <PriceItem
+              key={price.code}
+              price={price}
+              isFav={favCoins.includes(price.code)}
+              onClickFavorite={clickFavorite}
+            />
+          ))}
+        {activeTab === "보유" &&
+          priceList
+            .filter((price) => holdingCoins.includes(price.code))
+            .map((price: PriceType) => (
+              <PriceItem
+                key={price.code}
+                price={price}
+                isFav={favCoins.includes(price.code)}
+                onClickFavorite={clickFavorite}
+              />
+            ))}
+        {activeTab === "관심" &&
+          priceList
             .filter((price) => favCoins.includes(price.code))
             .map((price: PriceType) => (
               <PriceItem
@@ -107,15 +151,8 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
                 isFav={favCoins.includes(price.code)}
                 onClickFavorite={clickFavorite}
               />
-            ))
-        : priceList.map((price: PriceType) => (
-            <PriceItem
-              key={price.code}
-              price={price}
-              isFav={favCoins.includes(price.code)}
-              onClickFavorite={clickFavorite}
-            />
-          ))}
+            ))}
+      </PriceItemContainer>
     </PriceWindowContainer>
   );
 }

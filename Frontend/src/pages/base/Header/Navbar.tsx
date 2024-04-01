@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   NavBarContainer,
   NavBarLeftDiv,
@@ -20,12 +20,11 @@ import useUserState from "@/hooks/recoilHooks/useUserState";
 import useNotiState from "@/hooks/recoilHooks/useNotiState";
 import NotiDropdown from "./NotiDropdown";
 import ProfileDropdown from "./ProfileDropdown";
-import DummyNotiHistoryData from "@/lib/DummyNotiHistoryData";
 import useCloseDropdown from "@/hooks/useCloseDropdown";
 
 function Navbar() {
-  const { user, logout } = useUserState();
-  const { isNoti, toggleNoti } = useNotiState();
+  const { user } = useUserState();
+  const { isNoti } = useNotiState();
   const notiDropDownRef = useRef(null);
   const profileDropdownRef = useRef(null);
   const [isNotiOpen, setIsNotiOpen] = useCloseDropdown(notiDropDownRef, false);
@@ -33,29 +32,18 @@ function Navbar() {
     profileDropdownRef,
     false,
   );
-  const [notiHistoryData, setNotiHistoryData] = useState(DummyNotiHistoryData);
 
   const handleLoginClick = () => {
     window.location.href =
       "https://accounts.google.com/o/oauth2/auth?" +
       `client_id=${import.meta.env.VITE_CLIENT_ID}&` +
-      "redirect_uri=http://localhost:5173/redirect&" +
-      "response_type=token&" +
+      `redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&` +
+      "response_type=code&" +
       "scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
   };
 
   const handleNotiDropdown = () => {
     setIsNotiOpen((prev) => !prev);
-    if (isNoti) {
-      toggleNoti();
-    }
-    const newNotiHistoryData = [...notiHistoryData];
-    for (let i = 0; i < newNotiHistoryData.length; i += 1) {
-      if (!newNotiHistoryData[i].isRead) {
-        newNotiHistoryData[i].isRead = true;
-      }
-    }
-    setNotiHistoryData([...newNotiHistoryData]);
   };
   const handleProfileDropdown = () => {
     setIsProfileOpen((prev) => !prev);
@@ -84,14 +72,11 @@ function Navbar() {
               />
               {isNoti ? (
                 <NavBarNotiPointDiv>
-                  <p>{notiHistoryData.length}</p>
+                  <p>1</p>
                 </NavBarNotiPointDiv>
               ) : null}
             </NavBarNotiProfileDiv>
-            <NotiDropdown
-              notiHistoryData={notiHistoryData}
-              visible={isNotiOpen}
-            />
+            <NotiDropdown visible={isNotiOpen} />
           </div>
           <div ref={profileDropdownRef}>
             <NavBarNotiProfileDiv onClick={handleProfileDropdown}>
@@ -111,9 +96,8 @@ function Navbar() {
             </NavBarNotiProfileDiv>
             <ProfileDropdown
               nickname={user.nickname}
-              userId={user.userId}
-              logout={logout}
               visible={isProfileOpen}
+              setIsProfileOpen={setIsProfileOpen}
             />
           </div>
         </NavBarRightDiv>

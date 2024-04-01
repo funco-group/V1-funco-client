@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { HistoryTabContainer, HistoryTabDiv } from "./HistoryTab.styled";
+import { TabContainer, TabItemDiv } from "@/components/crypto/Tab.style";
 // import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function HistoryTab() {
@@ -31,17 +31,28 @@ function HistoryTab() {
   };
 
   return (
-    <HistoryTabContainer>
+    <TabContainer columns={5}>
       {tabList.map((tab) => (
-        <HistoryTabDiv
+        <TabItemDiv
           key={tab[1]}
           $active={tab[1] === nowTabName}
           onClick={() => handleTabClick(tab[1])}
         >
           {tab[0]}
-        </HistoryTabDiv>
+        </TabItemDiv>
       ))}
-    </HistoryTabContainer>
+    </TabContainer>
+    // <HistoryTabContainer>
+    //   {tabList.map((tab) => (
+    //     <HistoryTabDiv
+    //       key={tab[1]}
+    //       $active={tab[1] === nowTabName}
+    //       onClick={() => handleTabClick(tab[1])}
+    //     >
+    //       {tab[0]}
+    //     </HistoryTabDiv>
+    //   ))}
+    // </HistoryTabContainer>
   );
 }
 

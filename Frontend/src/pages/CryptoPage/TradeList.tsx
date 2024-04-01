@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { AxiosResponse } from "axios";
+import { useParams } from "react-router-dom";
 import {
   ToggleContainer,
   CircleDiv,
@@ -10,39 +13,77 @@ import {
 } from "./TradeList.styled";
 import TradeListItem from "./TradeListItem";
 import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
+import AlertModal from "@/components/common/Modal/AlertModal";
+import userState from "@/recoils/user";
+import { TradeListType } from "@/interfaces/TradeType";
+import { cancleOrder, getOpenTradeList, getTradeList } from "@/apis/trade";
 
 function TradeList() {
+  const { coinCode } = useParams();
+  const user = useRecoilValue(userState);
   const toggles = ["체결", "미체결"];
   const columns = ["주문시간", "구분", "주문가격", "주문량", "취소"];
   const concludeColumns = ["주문시간", "구분", "주문가격", "주문량"];
   const [selected, isSelected] = useState<string>("체결");
+  const [tradeList, setTradeList] = useState<TradeListType[]>([]);
+  const [alert, setAlert] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
+
+  useEffect(() => {
+    setTradeList([]);
+    if (!user.user) {
+      setAlert(true);
+      setAlertContent("로그인이 필요합니다.");
+    } else if (selected === "체결") {
+      getTradeList(
+        coinCode!,
+        false,
+        0,
+        10,
+        (response: AxiosResponse<TradeListType[]>) => {
+          const { data } = response;
+          setTradeList(data);
+        },
+      );
+    } else {
+      getOpenTradeList(
+        coinCode!,
+        0,
+        10,
+        (response: AxiosResponse<TradeListType[]>) => {
+          const { data } = response;
+          setTradeList(data);
+        },
+      );
+    }
+  }, [coinCode, selected]);
+
   const changeSelect = (toggle: string) => {
     isSelected(toggle);
   };
 
-  const tradeList = [
-    {
-      id: 0,
-      tradeDate: "2022.09.12 11:56",
-      ticker: "KRW-BTCCC",
-      type: "buy",
-      volume: 0.000061543,
-      orderCash: 43488999,
-      price: 26640,
-    },
-    {
-      id: 1,
-      tradeDate: "2022.09.12 11:56",
-      ticker: "KRW-BTC",
-      type: "sell",
-      volume: 2.1,
-      orderCash: 33424211,
-      price: 1323233,
-    },
-  ];
+  const closeAlert = () => {
+    setAlert(false);
+  };
+
+  const clickCancle = (id: number) => {
+    // 거래를 취소하시겠습니까? 모달
+    cancleOrder(id, () => {
+      setAlertContent("주문이 취소되었습니다.");
+      setAlert(true);
+      setTradeList(tradeList.filter((prevTrade) => prevTrade.id !== id));
+    });
+  };
 
   return (
     <div>
+      {alert && (
+        <AlertModal
+          title="알림"
+          content={alertContent}
+          closeAlert={closeAlert}
+        />
+      )}
       <ToggleContainer>
         {toggles.map((toggle: string) => {
           return (
@@ -74,15 +115,20 @@ function TradeList() {
         )}
       </ColumnContainer>
       <TradeListContainer>
-        {tradeList ? (
-          tradeList.map((trade) => {
-            return (
-              <TradeListItem key={trade.id} trade={trade} selected={selected} />
-            );
-          })
-        ) : (
+        {!user.user && <NoTradeData>로그인 후 확인할 수 있습니다.</NoTradeData>}
+        {user.user && !tradeList && (
           <NoTradeData>{selected} 내역이 없습니다.</NoTradeData>
         )}
+        {user.user &&
+          tradeList &&
+          tradeList.map((trade) => (
+            <TradeListItem
+              key={trade.id}
+              trade={trade}
+              selected={selected}
+              clickCancle={clickCancle}
+            />
+          ))}
       </TradeListContainer>
     </div>
   );

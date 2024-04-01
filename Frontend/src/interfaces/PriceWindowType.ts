@@ -22,6 +22,10 @@ export interface FavoriteCoinResponseType {
   tickers: string[];
 }
 
+export interface HoldingCoinResponseType {
+  holdingCoins: string[];
+}
+
 export interface WebSocketHandlers {
   ws: WebSocket | null;
   status: number | undefined;

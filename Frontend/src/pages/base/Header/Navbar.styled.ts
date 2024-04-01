@@ -68,6 +68,7 @@ export const NavBarNotiImg = styled.img`
   margin: auto;
   width: 1.25rem;
   height: 1.5625rem;
+  user-select: none;
 `;
 
 export const NavBarNotiPointDiv = styled.div`
@@ -81,6 +82,7 @@ export const NavBarNotiPointDiv = styled.div`
   color: ${palette.brandWhite};
   background-color: red;
   border-radius: 100%;
+  user-select: none;
 
   p {
     margin: auto;
@@ -110,6 +112,7 @@ export const NavBarProfileImg = styled.img`
   height: 2.5rem;
 
   border-radius: 100%;
+  object-fit: cover;
 `;
 
 export const NavBarLoginButton = styled.button`

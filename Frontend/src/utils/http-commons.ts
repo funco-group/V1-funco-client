@@ -1,25 +1,24 @@
 import axios from "axios";
 
-// const { VITE_VUE_API_URL } = import.meta.env;
-
 const localAxios = axios.create({
-  // baseURL: VITE_VUE_API_URL,
-  baseURL: "http://192.168.137.247:8080",
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json;charset=utf-8",
   },
 });
 
 localAxios.interceptors.request.use(
-  function (config) {
-    if (sessionStorage.getItem("accessToken")) {
-      config.headers.Authorization = `Bearer ${sessionStorage.getItem(
-        "accessToken",
-      )}`;
+  (config) => {
+    const savedValue = localStorage.getItem("userInfo");
+    const userInfo = savedValue ? JSON.parse(savedValue) : null;
+    if (userInfo.user !== null) {
+      const newConfig = { ...config };
+      newConfig.headers.Authorization = `Bearer ${userInfo.user.accessToken}`;
+      return newConfig;
     }
     return config;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   },
 );

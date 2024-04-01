@@ -7,5 +7,4 @@ export interface FollowerContentType {
   returnRate: number | null;
   commission: number | null;
   settleDate: string | null;
-  settled: boolean;
 }

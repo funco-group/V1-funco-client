@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
 
-export const NotiHistoryContentContainer = styled.div`
+export const NotiHistoryContentContainer = styled.div<{ $isRead: boolean }>`
   border-bottom: 1px solid ${palette.borderGray};
-  background-color: transparent;
+  background-color: ${({ $isRead }) =>
+    $isRead ? "transparent" : palette.brandColor2};
   margin: 0;
   padding: 0.625rem;
 `;

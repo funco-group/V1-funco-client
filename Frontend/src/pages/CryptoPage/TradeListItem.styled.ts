@@ -27,7 +27,7 @@ export const TypeColumnDiv = styled.div<{ type: string }>`
   div {
     margin-top: 0.4rem;
     color: ${(props) =>
-      props.type === "buy" ? palette.brandRed : palette.brandBlue};
+      props.type === "BUY" ? palette.brandRed : palette.brandBlue};
   }
 `;
 

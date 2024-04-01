@@ -6,8 +6,10 @@ import RoutesComponent from "@/routes/Routes";
 import priceListState from "@/recoils/crypto/atoms";
 import { getCoinList } from "@/apis/upbit";
 import { PriceType, ResMarketCodeType } from "@/interfaces/PriceWindowType";
-import SettleModal from "./pages/TradeHistoryPage/FollowPage/FollowingPage/SettleModal";
+import SettleModal from "@/pages/TradeHistoryPage/FollowPage/FollowingPage/SettleModal";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
+import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
+import FollowModal from "@/pages/UserPage/FollowModal";
 
 const toPriceType = (coinData: ResMarketCodeType[]): PriceType[] => {
   return coinData
@@ -30,6 +32,7 @@ const toPriceType = (coinData: ResMarketCodeType[]): PriceType[] => {
 export default function App() {
   const setPriceList = useSetRecoilState(priceListState);
   const { settleModal } = useSettleModalState();
+  const { followModal } = useFollowModalState();
 
   useEffect(() => {
     getCoinList((response: AxiosResponse<ResMarketCodeType[]>) => {
@@ -42,6 +45,7 @@ export default function App() {
     <>
       <RoutesComponent />
       {settleModal && <SettleModal />}
+      {followModal && <FollowModal />}
     </>
   );
 }

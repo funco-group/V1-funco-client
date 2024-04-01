@@ -33,11 +33,9 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
       followingUser.investment) *
     100
   ).toFixed(2);
-  const investmentList: (string | number)[][] = [
-    ["현금", followingUser.asset.cash],
-  ];
-  followingUser.asset.coins.forEach((coin) => {
-    const coinPrice = [coin.ticker, coin.price];
+  const investmentList: (string | number)[][] = [["현금", followingUser.cash]];
+  followingUser.coins.forEach((coin) => {
+    const coinPrice = [coin.ticker, coin.price.toFixed(3)];
     investmentList.push(coinPrice);
   });
 
@@ -50,11 +48,16 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
   };
 
   const handleSettleClick = () => {
+    const commission =
+      followingUser.estimatedValue - followingUser.investment > 0
+        ? Math.round(
+            (followingUser.estimatedValue - followingUser.investment) * 0.03,
+          )
+        : 0;
     onModal({
+      followId: followingUser.followId,
       estimatedValue: followingUser.estimatedValue,
-      commission: Math.round(
-        (followingUser.estimatedValue - followingUser.investment) * 0.05,
-      ),
+      commission,
     });
   };
   return (
@@ -75,13 +78,13 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
                 <FollowingDateDiv>{followDate}</FollowingDateDiv>
                 <FollowingContentMarginDiv>
                   <span>
-                    {followingUser.investment.toLocaleString("en-US")}
+                    {followingUser.investment.toLocaleString("ko-KR")}
                   </span>{" "}
                   won
                 </FollowingContentMarginDiv>
                 <FollowingContentMarginDiv>
                   <span>
-                    {followingUser.estimatedValue.toLocaleString("en-US")}
+                    {followingUser.estimatedValue.toLocaleString("ko-KR")}
                   </span>{" "}
                   won
                 </FollowingContentMarginDiv>
@@ -106,12 +109,14 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
             content="거래 내역 보기"
             cancel={false}
             onClick={handleTradeHistoryClick}
+            disabled={false}
           />
           <BrandButtonComponent
             color={null}
             content="포폴 보기"
             cancel={false}
             onClick={handlePortFolioClick}
+            disabled={false}
           />
         </FollowingLeftButtonDiv>
         <BrandButtonComponent
@@ -119,6 +124,7 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
           content="정산하기"
           cancel={false}
           onClick={handleSettleClick}
+          disabled={false}
         />
       </FollowingButtonDiv>
     </FollowingUserContainer>

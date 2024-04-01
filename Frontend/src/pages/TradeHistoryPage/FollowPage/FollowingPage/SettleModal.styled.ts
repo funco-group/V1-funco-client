@@ -24,19 +24,18 @@ export const SettleModalContainer = styled.div`
 `;
 
 export const SettleModalTitleDiv = styled.div`
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   border-bottom: 1px solid ${palette.borderGray};
   text-align: left;
   font-family: "NanumSquareBold";
-  font-size: 1rem;
+  font-size: 1.1rem;
   width: 20rem;
 `;
 
 export const SettleModalContentDiv = styled.div`
-  padding: 1.25rem 1.5rem;
+  padding: 0.5rem 1rem;
   color: ${palette.brandDarkGray};
-  font-size: 0.875rem;
-
+  font-size: 0.9rem;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid ${palette.borderGray};
@@ -50,10 +49,11 @@ export const SettleModalContentDiv = styled.div`
 export const SettleModalContentRowDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 0.5rem 0;
 `;
 
 export const SettleModalContentButtonRowDiv = styled.div`
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   display: flex;
   justify-content: end;
   gap: 0.625rem;

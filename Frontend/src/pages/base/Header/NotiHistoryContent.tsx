@@ -23,7 +23,7 @@ function NotiHistoryContent({ notiHistory }: NotiHistoryContentProps) {
   const time = useParseDate(notiHistory.notificationDate);
 
   return (
-    <NotiHistoryContentContainer>
+    <NotiHistoryContentContainer $isRead={notiHistory.isRead}>
       <NotiHistoryContentTitleP>
         {notificationTypeMap.get(notiHistory.notificationType)}
       </NotiHistoryContentTitleP>

@@ -4,9 +4,9 @@ import {
   FollowerContentTableContainer,
   FolloweColumnGridDiv,
 } from "./FollowerContentTable.styled";
-import DummyFollowers from "@/lib/DummyFollowers";
 import { FollowerContentType } from "@/interfaces/tradeHistory/follow/FollowerContentType";
 import FollowerContent from "./FollowerContent";
+import { getFollowerList } from "@/apis/follow";
 
 function FollowerContentTable({
   nowTabName,
@@ -27,11 +27,10 @@ function FollowerContentTable({
   ];
 
   useEffect(() => {
-    const newFollowContentList = DummyFollowers.get(nowTabName);
-
-    if (newFollowContentList) {
+    getFollowerList((res) => {
+      const newFollowContentList = res.data.followers;
       setFollowerContentList(newFollowContentList);
-    }
+    }, nowTabName);
   }, [nowTabName]);
 
   return (

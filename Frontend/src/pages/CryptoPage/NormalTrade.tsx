@@ -3,7 +3,11 @@ import NormalTradeItem from "./NormalTradeItem";
 import TradeButton from "@/components/crypto/TradeButtonTab";
 import { ButtonContainer } from "@/styles/Crypto.styled";
 
-function NormalTrade() {
+interface NormalTradeProps {
+  curPrice: number;
+}
+
+function NormalTrade({ curPrice }: NormalTradeProps) {
   const buttons = ["매수", "매도"];
   const [activeButton, setActiveButton] = useState<string>("매수");
 
@@ -26,9 +30,9 @@ function NormalTrade() {
         })}
       </ButtonContainer>
       {activeButton === "매수" ? (
-        <NormalTradeItem name="매수" />
+        <NormalTradeItem name="매수" curPrice={curPrice} />
       ) : (
-        <NormalTradeItem name="매도" />
+        <NormalTradeItem name="매도" curPrice={curPrice} />
       )}
     </div>
   );

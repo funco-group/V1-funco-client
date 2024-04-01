@@ -8,7 +8,10 @@ export const ButtonContainer = styled.div`
 
 export const TradeContainer = styled.div`
   /* background-color: red; */
-  /* padding: 0.5rem 0.7rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 30.5rem;
 `;
 
 export const TradeItem = styled.div`
@@ -17,7 +20,7 @@ export const TradeItem = styled.div`
   /* margin-bottom: 1rem; */
   /* background-color: blue; */
   align-items: center;
-  padding: 0.7rem;
+  padding: 0.8rem;
 `;
 
 export const AmountDiv = styled.div`
@@ -28,7 +31,7 @@ export const AmountDiv = styled.div`
 `;
 
 export const TitleDiv = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: ${palette.brandBlack};
 `;
 
@@ -52,6 +55,11 @@ export const PriceInput = styled.input`
   padding: 0.5rem;
   text-align: right;
   width: 100%;
+
+  &:focus {
+    border-color: ${palette.mainColor};
+    outline: none;
+  }
 `;
 
 export const UpdownButton = styled.div`
@@ -83,6 +91,10 @@ export const PriceButton = styled.div`
   margin-left: 0.4rem;
   margin-bottom: 0.4rem;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 export const GreenDiv = styled.div<{ $last: boolean }>`

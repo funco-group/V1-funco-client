@@ -13,8 +13,6 @@ function Index() {
     useRecoilValue(priceListState),
   );
 
-  // console.log(priceList);
-
   return (
     <CryptoPageContainer>
       <div>

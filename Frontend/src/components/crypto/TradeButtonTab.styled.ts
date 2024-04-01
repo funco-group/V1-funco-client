@@ -17,7 +17,6 @@ const TradeButtonTabContainer = styled.div<{
 
   color: ${(props) =>
     props.active === props.name ? palette.brandWhite : palette.brandBlack};
-
   text-align: center;
   padding: 0.6rem;
   cursor: pointer;
