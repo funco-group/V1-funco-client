@@ -75,7 +75,7 @@ public class QueryDslFollowRepositoryImpl implements QueryDslFollowRepository {
 	@Override
 	public List<HoldingCoinsDto> findHoldingCoin(Long memberId) {
 		return jpaQueryFactory
-			.select(Projections.constructor(HoldingCoinsDto.class, holdingCoin.ticker, holdingCoin.volume))
+			.select(Projections.constructor(HoldingCoinsDto.class, holdingCoin.ticker, holdingCoin.ticker))
 			.from(holdingCoin)
 			.where(holdingCoin.member.id.eq(memberId))
 			.fetch();
