@@ -4,13 +4,17 @@ import {
   OpenOrderContentTableContainer,
 } from "./OpenOrderContentTable.style";
 import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
-import { OpenOrderContentType } from "@/interfaces/tradeHistory/openOrder/OpenOrderContentType";
 import OpenOrderContent from "./OpenOrderContent";
+import { TradeListType } from "@/interfaces/TradeType";
+import { cancleOrder, getAllOpenTradeList } from "@/apis/trade";
+import AlertModal from "@/components/common/Modal/AlertModal";
 
 function OpenOrderContentTable() {
   const [openOrderContentList, setOpenOrderContentList] =
-    useState<OpenOrderContentType[]>();
+    useState<TradeListType[]>();
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
 
   const openOrderColumnList = [
     "주문시간",
@@ -24,17 +28,11 @@ function OpenOrderContentTable() {
 
   useEffect(() => {
     setIsLoading(true);
-    setOpenOrderContentList([
-      {
-        id: 15,
-        ticker: "KRW-ETH",
-        tradeType: "SELL",
-        volume: 0.01,
-        orderCash: 40000,
-        price: 4000000,
-        tradeDate: "2024-03-30T18:09:53",
-      },
-    ]);
+    getAllOpenTradeList(0, 100, (res) => {
+      const { data } = res;
+      console.log(data);
+      setOpenOrderContentList(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -43,11 +41,35 @@ function OpenOrderContentTable() {
     }
   }, [openOrderContentList]);
 
+  const handleCancelOpenOrder = (id: number) => {
+    if (openOrderContentList !== undefined) {
+      cancleOrder(id, () => {
+        setAlertContent("주문이 취소되었습니다.");
+        setAlert(true);
+        const newOpenOrderContentList = [...openOrderContentList].filter(
+          (order) => order.id !== id,
+        );
+        setOpenOrderContentList(newOpenOrderContentList);
+      });
+    }
+  };
+
+  const closeAlert = () => {
+    setAlert(false);
+  };
+
   if (isLoading) {
-    return <>isLoading~~~~~~~~~~~</>;
+    return <></>;
   }
   return (
     <OpenOrderContentTableContainer>
+      {alert && (
+        <AlertModal
+          title="알림"
+          content={alertContent}
+          closeAlert={closeAlert}
+        />
+      )}
       <ColumnContainer>
         <OpenOrderColumnGridDiv>
           {openOrderColumnList.map((column) => (
@@ -57,7 +79,11 @@ function OpenOrderContentTable() {
       </ColumnContainer>
       {openOrderContentList && openOrderContentList.length > 0 ? (
         openOrderContentList.map((content) => (
-          <OpenOrderContent key={content.id} content={content} />
+          <OpenOrderContent
+            key={content.id}
+            content={content}
+            handleCancelOpenOrder={handleCancelOpenOrder}
+          />
         ))
       ) : (
         <div>텅~~~~~~~~~~~~</div>

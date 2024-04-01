@@ -4,6 +4,7 @@ import { RankTableColumnGridDiv } from "./RankTable.styled";
 import {
   RankSpan,
   RankTableContentContainer,
+  RankTableContentMarginDiv,
   RankTableContentUserDiv,
 } from "./RankTableContent.styled";
 import { MoneySpan, RateSpan } from "./TopRankContent.styled";
@@ -29,29 +30,31 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
             {medalMap.get(rank.rank) || rank.rank}
           </RankSpan>
         </FollowingContentMarginDiv>
-        <RankTableContentUserDiv onClick={handleProfileClick}>
-          <img
-            src={rank.member.profileUrl}
-            alt="rank-user-profile"
-            draggable={false}
-          />
-          {rank.member.nickname}
-        </RankTableContentUserDiv>
-        <FollowingContentMarginDiv>
+        <div>
+          <RankTableContentUserDiv onClick={handleProfileClick}>
+            <img
+              src={rank.member.profileUrl}
+              alt="rank-user-profile"
+              draggable={false}
+            />
+            {rank.member.nickname}
+          </RankTableContentUserDiv>
+        </div>
+        <RankTableContentMarginDiv>
           <RateSpan $isProfit={rank.returnRate > 0}>
             {rank.returnRate} %
           </RateSpan>
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
+        </RankTableContentMarginDiv>
+        <RankTableContentMarginDiv>
           <MoneySpan $active={nowTabName === "follow"}>
             {rank.followingAsset.toLocaleString("en-US")} won
           </MoneySpan>
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
+        </RankTableContentMarginDiv>
+        <RankTableContentMarginDiv>
           <MoneySpan $active={nowTabName === "asset"}>
             {rank.totalAsset.toLocaleString("en-US")} won
           </MoneySpan>
-        </FollowingContentMarginDiv>
+        </RankTableContentMarginDiv>
       </RankTableColumnGridDiv>
     </RankTableContentContainer>
   );

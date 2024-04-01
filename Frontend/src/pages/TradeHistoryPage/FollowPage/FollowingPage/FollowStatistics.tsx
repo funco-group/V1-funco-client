@@ -25,7 +25,7 @@ function FollowStatistics({
     100
   ).toFixed(2);
   const totalInvestmentAssetRatio = Math.round(
-    (totalInvestment / totalAsset) * 100,
+    (totalInvestment / (totalAsset + totalInvestment)) * 100,
   );
 
   const statisticsList = [
@@ -47,7 +47,8 @@ function FollowStatistics({
           ))}
         </FollowingStatisticsDetailInnerDiv>
         <p>
-          당신의 총 자산 {totalAsset.toLocaleString("ko-KR")}중{" "}
+          당신의 총 자산{" "}
+          {(totalAsset + totalInvestment).toLocaleString("ko-KR")}중{" "}
           {totalInvestmentAssetRatio}%가 투자 중입니다.
         </p>
       </FollowingStatisticsDetailDiv>

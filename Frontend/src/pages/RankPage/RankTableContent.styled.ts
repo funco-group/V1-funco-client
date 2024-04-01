@@ -11,9 +11,10 @@ export const RankTableContentContainer = styled.div`
 
 export const RankTableContentUserDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   gap: 0.625rem;
+  margin-left: 4.0625rem;
 
   img {
     width: 1.5rem;
@@ -21,6 +22,11 @@ export const RankTableContentUserDiv = styled.div`
     border-radius: 100%;
   }
   cursor: pointer;
+`;
+
+export const RankTableContentMarginDiv = styled.div`
+  text-align: end;
+  margin-right: 3.75rem;
 `;
 
 export const RankSpan = styled.span<{ $isTopRank: string | undefined }>`

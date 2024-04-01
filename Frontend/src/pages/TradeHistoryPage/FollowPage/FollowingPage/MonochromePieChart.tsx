@@ -9,7 +9,7 @@ function MonochromePieChart({
   isLegend: boolean;
 }) {
   const [chartData] = useState({
-    series: investmentList.map((investment) => +investment[1]),
+    series: investmentList.map((investment) => Math.floor(+investment[1])),
 
     options: {
       chart: {
@@ -33,6 +33,18 @@ function MonochromePieChart({
         show: isLegend,
         position: "bottom" as const,
         fontSize: "10px",
+      },
+      tooltip: {
+        enabled: true,
+        y: {
+          show: true,
+          formatter(val: number) {
+            if (val >= 1000) {
+              return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 천단위 콤마
+            }
+            return val.toFixed(0).toString();
+          },
+        },
       },
     },
   });

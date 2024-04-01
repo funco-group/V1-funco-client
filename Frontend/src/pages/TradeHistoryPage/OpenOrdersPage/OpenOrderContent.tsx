@@ -1,5 +1,4 @@
 import useParseDate from "@/hooks/useParseDate";
-import { OpenOrderContentType } from "@/interfaces/tradeHistory/openOrder/OpenOrderContentType";
 import { OpenOrderColumnGridDiv } from "./OpenOrderContentTable.style";
 import {
   MoneySpan,
@@ -11,8 +10,17 @@ import {
   FollowingContentMarginDiv,
   FollowingDateDiv,
 } from "../FollowPage/FollowingPage/FollowingUser.styled";
+import { TradeListType } from "@/interfaces/TradeType";
 
-function OpenOrderContent({ content }: { content: OpenOrderContentType }) {
+interface OpenOrderContentProps {
+  content: TradeListType;
+  handleCancelOpenOrder: (id: number) => void;
+}
+
+function OpenOrderContent({
+  content,
+  handleCancelOpenOrder,
+}: OpenOrderContentProps) {
   const parseDate = useParseDate;
   const tradeDate = parseDate(content.tradeDate).split(" ").join("\n");
 
@@ -21,9 +29,6 @@ function OpenOrderContent({ content }: { content: OpenOrderContentType }) {
     ["SELL", "매도"],
   ]);
 
-  const handleCancelClick = () => {
-    console.log("취소");
-  };
   return (
     <OpenOrderContentDiv>
       <OpenOrderColumnGridDiv>
@@ -49,7 +54,7 @@ function OpenOrderContent({ content }: { content: OpenOrderContentType }) {
           <BrandButtonComponent
             content="취소"
             color={null}
-            onClick={handleCancelClick}
+            onClick={() => handleCancelOpenOrder(content.id)}
             cancel={false}
             disabled={false}
           />

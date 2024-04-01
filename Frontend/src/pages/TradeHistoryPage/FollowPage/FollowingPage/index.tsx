@@ -74,6 +74,7 @@ function Index() {
     fetchCoinList();
     getFollowingList((res: AxiosResponse<ResFollowingType>) => {
       const { data } = res;
+      console.log(data);
       setTotalAsset(data.totalAsset);
       setFollowings(data.followings);
     });
@@ -143,7 +144,7 @@ function Index() {
   ]);
 
   if (isLoading) {
-    return <>loading</>;
+    return <></>;
   }
   return (
     <div>
