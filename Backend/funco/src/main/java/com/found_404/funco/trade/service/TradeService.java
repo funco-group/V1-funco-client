@@ -3,6 +3,7 @@ package com.found_404.funco.trade.service;
 import com.found_404.funco.follow.service.FollowTradeService;
 import com.found_404.funco.member.domain.Member;
 import com.found_404.funco.member.domain.repository.MemberRepository;
+import com.found_404.funco.member.exception.MemberException;
 import com.found_404.funco.trade.cryptoPrice.CryptoPrice;
 import com.found_404.funco.trade.domain.HoldingCoin;
 import com.found_404.funco.trade.domain.OpenTrade;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 
 import static com.found_404.funco.global.util.DecimalCalculator.*;
 import static com.found_404.funco.global.util.ScaleType.*;
+import static com.found_404.funco.member.exception.MemberErrorCode.NOT_FOUND_MEMBER;
 import static com.found_404.funco.trade.exception.TradeErrorCode.*;
 
 @Service
@@ -35,12 +37,12 @@ import static com.found_404.funco.trade.exception.TradeErrorCode.*;
 public class TradeService {
 
     private final TradeRepository tradeRepository;
+    private final MemberRepository memberRepository;
     private final HoldingCoinRepository holdingCoinRepository;
     private final OpenTradeRepository openTradeRepository;
 
     private final CryptoPrice cryptoPrice;
     private final FollowTradeService followTradeService;
-    private final MemberRepository memberRepository;
 
 
     private long getPriceByTicker(String ticker) {
@@ -48,13 +50,15 @@ public class TradeService {
     }
 
     @Transactional
-    public MarketTradeResponse marketBuying(Member member, String ticker, long orderCash) {
+    public MarketTradeResponse marketBuying(long memberId, String ticker, long orderCash) {
+        // 회원 조회
+        Member member = getMember(memberId);
+
         // 시세 가져오기
         long currentPrice = getPriceByTicker(ticker);
 
         // orderCash <= 자산 check, member 원화 감소
         member.decreaseCash(orderCash);
-        memberRepository.save(member);
 
         // 구매 개수
         double volume = divide(orderCash, currentPrice, VOLUME_SCALE);
@@ -88,6 +92,8 @@ public class TradeService {
         // 팔로우 연동
         followTradeService.followTrade(trade);
 
+        System.out.println("팔로우 비동기 이후 로직!");
+
         return MarketTradeResponse.builder()
                 .ticker(trade.getTicker())
                 .price(trade.getPrice())
@@ -96,20 +102,21 @@ public class TradeService {
     }
 
     @Transactional
-    public MarketTradeResponse marketSelling(Member member, String ticker, double volume) {
+    public MarketTradeResponse marketSelling(long memberId, String ticker, double volume) {
+        // 회원 조회
+        Member member = getMember(memberId);
+
         // 시세 가져오기
         long currentPrice = getPriceByTicker(ticker);
 
         // 수수료 제외한 잔액 증가
         long orderCash = (long) (multiple(currentPrice, volume, NORMAL_SCALE));
         member.increaseCash(orderCash);
-        memberRepository.save(member);
 
         // 코인 감소
         HoldingCoin holdingCoin = holdingCoinRepository.findByMemberAndTicker(member, ticker)
                 .orElseThrow(() -> new TradeException(INSUFFICIENT_COINS));
-
-        decreaseHoldingCoin(holdingCoin, volume);
+        holdingCoin.decreaseVolume(volume);
 
         // 데이터 저장
         Trade trade = Trade.builder()
@@ -134,7 +141,13 @@ public class TradeService {
                 .build();
     }
 
-    public HoldingCoinsResponse getHoldingCoins(Member member) {
+    private Member getMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
+    }
+
+    public HoldingCoinsResponse getHoldingCoins(Long memberId) {
+        Member member = getMember(memberId);
+
         return HoldingCoinsResponse.builder()
                 .holdingCoins(holdingCoinRepository
                         .findByMember(member)
@@ -145,7 +158,9 @@ public class TradeService {
     }
 
     @Transactional(readOnly = true)
-    public List<TradeDto> getOrders(Member member, String ticker, Boolean follow, Pageable pageable) {
+    public List<TradeDto> getOrders(Long memberId, String ticker, Boolean follow, Pageable pageable) {
+        Member member = getMember(memberId);
+
         return tradeRepository.findMyTradeHistoryByTicker(member.getId(), follow, ticker, pageable)
                 .stream()
                 .map(TradeDto::fromEntity)
@@ -153,7 +168,9 @@ public class TradeService {
     }
 
     @Transactional(readOnly = true)
-    public List<OpenTradeDto> getOpenOrders(Member member, Boolean follow, String ticker, Pageable pageable) {
+    public List<OpenTradeDto> getOpenOrders(Long memberId, Boolean follow, String ticker, Pageable pageable) {
+        Member member = getMember(memberId);
+
         // 멤버 아이디, 코인 유무, id 역순,
         return openTradeRepository.findMyOpenTrade(member.getId(), follow, ticker, pageable)
                 .stream()
@@ -163,7 +180,8 @@ public class TradeService {
     }
 
     @Transactional
-    public void deleteOpenTrade(Member member, Long openTradeId) {
+    public void deleteOpenTrade(Long memberId, Long openTradeId) {
+        Member member = getMember(memberId);
 
         OpenTrade openTrade = openTradeRepository.findById(openTradeId)
                 .orElseThrow(() -> new TradeException(NOT_FOUND_TRADE));
@@ -176,7 +194,6 @@ public class TradeService {
         // 돈 또는 코인 회수
         if (openTrade.getTradeType().equals(TradeType.BUY)) {
             member.recoverCash(openTrade.getOrderCash());
-            memberRepository.save(member);
         } else {
             HoldingCoin holdingCoin = holdingCoinRepository.findByMemberAndTicker(openTrade.getMember(), openTrade.getTicker())
                     .orElseThrow(() -> new TradeException(INSUFFICIENT_COINS));
@@ -185,11 +202,12 @@ public class TradeService {
     }
 
     @Transactional
-    public void limitBuying(Member member, String ticker, Long price, Double volume) {
+    public void limitBuying(long memberId, String ticker, Long price, Double volume) {
+        Member member = getMember(memberId);
+
         // 돈 확인 및 감소
         long orderCash = (long) (price * volume);
         member.decreaseCash(orderCash);
-        memberRepository.save(member);
 
         // 미체결 거래 등록
         OpenTrade openTrade = openTradeRepository.save(OpenTrade.builder()
@@ -206,13 +224,15 @@ public class TradeService {
     }
 
     @Transactional
-    public void limitSelling(Member member, String ticker, Long price, Double volume) {
+    public void limitSelling(long memberId, String ticker, Long price, Double volume) {
+        Member member = getMember(memberId);
+
         // 코인 확인 및 팔려고 등록한 만큼 빼기
-        Optional<HoldingCoin> optionalHoldingCoin = holdingCoinRepository.findByMemberAndTicker(member, ticker);
-        if (optionalHoldingCoin.isEmpty() || optionalHoldingCoin.get().getVolume() < volume) {
+        Optional<HoldingCoin> holdingCoin = holdingCoinRepository.findByMemberAndTicker(member, ticker);
+        if (holdingCoin.isEmpty() || holdingCoin.get().getVolume() < volume) {
             throw new TradeException(INSUFFICIENT_COINS);
         } else {
-            decreaseHoldingCoin(optionalHoldingCoin.get(), volume);
+            holdingCoin.get().decreaseVolume(volume);
         }
 
         // 미체결 거래 생성
@@ -228,13 +248,5 @@ public class TradeService {
 
         // 미체결 거래 등록
         cryptoPrice.addTrade(openTrade.getTicker(), openTrade.getId(), openTrade.getTradeType(), openTrade.getPrice());
-    }
-
-    @Transactional
-    public void decreaseHoldingCoin(HoldingCoin holdingCoin, Double volume) {
-        holdingCoin.decreaseVolume(volume);
-        if (holdingCoin.getVolume() <= 0) {
-            holdingCoinRepository.delete(holdingCoin);
-        }
     }
 }

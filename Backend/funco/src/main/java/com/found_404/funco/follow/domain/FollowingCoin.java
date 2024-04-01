@@ -1,6 +1,8 @@
 package com.found_404.funco.follow.domain;
 
 import com.found_404.funco.global.util.CommissionUtil;
+import com.found_404.funco.global.util.DecimalCalculator;
+import com.found_404.funco.global.util.ScaleType;
 import com.found_404.funco.trade.exception.TradeException;
 import org.hibernate.annotations.Comment;
 

@@ -1,50 +1,44 @@
 package com.found_404.funco.asset.controller;
 
-import com.found_404.funco.asset.dto.response.HistoryResponse;
+import com.found_404.funco.asset.dto.response.CashResponse;
+import com.found_404.funco.asset.dto.response.TotalAssetResponse;
+import com.found_404.funco.asset.dto.response.CryptoResponse;
+import com.found_404.funco.asset.service.AssetService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.found_404.funco.asset.dto.response.CashResponse;
-import com.found_404.funco.asset.dto.response.CryptoResponse;
-import com.found_404.funco.asset.dto.response.TotalAssetResponse;
-import com.found_404.funco.asset.service.AssetService;
-import com.found_404.funco.member.domain.Member;
-
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/asset")
 @RequiredArgsConstructor
 public class AssetController {
 
-	private final AssetService assetService;
+    private final AssetService assetService;
 
-	@GetMapping()
-	public ResponseEntity<TotalAssetResponse> getMemberTotalAsset(@AuthenticationPrincipal Member member) {
-		return ResponseEntity.ok(assetService.getMemberTotalAsset(member));
-	}
+    @GetMapping()
+    public ResponseEntity<TotalAssetResponse> getMemberTotalAsset() {
+        // 임시로 설정한 memberId
+        long memberId = 1L;
 
-	@GetMapping("/cash")
-	public ResponseEntity<CashResponse> getMemberCash(@AuthenticationPrincipal Member member) {
-		return ResponseEntity.ok(assetService.getMemberCash(member));
-	}
+        return ResponseEntity.ok(assetService.getMemberTotalAsset(memberId));
+    }
 
-	@GetMapping("/crypto/{ticker}")
-	public ResponseEntity<CryptoResponse> getCrypto(@AuthenticationPrincipal Member member,
-		@PathVariable String ticker) {
-		return ResponseEntity.ok(assetService.getCrypto(member, ticker));
-	}
+    @GetMapping("/cash")
+    public ResponseEntity<CashResponse> getMemberCash(){
+        // 임시로 설정한 memberId
+        long memberId = 1L;
 
-	@GetMapping("/history")
-	public ResponseEntity<List<HistoryResponse>> getMemberHistory(@AuthenticationPrincipal Member member) {
+        return ResponseEntity.ok(assetService.getMemberCash(memberId));
+    }
 
-		return ResponseEntity.ok(assetService.getMemberHistory(member));
-	}
+    @GetMapping("/crypto/{ticker}")
+    public ResponseEntity<CryptoResponse> getCrypto(@PathVariable String ticker) {
+        long memberId = 1L;
+
+        return ResponseEntity.ok(assetService.getCrypto(memberId, ticker));
+    }
 
 }
