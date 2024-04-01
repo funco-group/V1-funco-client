@@ -4,7 +4,6 @@ import com.found_404.funco.follow.domain.Follow;
 import com.found_404.funco.follow.domain.FollowingCoin;
 import com.found_404.funco.follow.domain.repository.FollowRepository;
 import com.found_404.funco.follow.domain.repository.FollowingCoinRepository;
-import com.found_404.funco.global.util.DecimalCalculator;
 import com.found_404.funco.member.domain.Member;
 import com.found_404.funco.trade.domain.HoldingCoin;
 import com.found_404.funco.trade.domain.Trade;
@@ -21,10 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static com.found_404.funco.global.util.DecimalCalculator.divide;
-import static com.found_404.funco.global.util.DecimalCalculator.multiple;
-import static com.found_404.funco.global.util.ScaleType.*;
-
 @Service
 @RequiredArgsConstructor
 public class FollowTradeService {
@@ -40,8 +35,6 @@ public class FollowTradeService {
         tradeRepository.saveAll(followerList.stream()
                 .map(follow -> getTrade(trade, follow))
                 .toList());
-
-        System.out.println("비동기 함수 끝!!!!");
     }
 
     @Transactional // 내부 호출 트랜잭셔널 수정 생각
@@ -55,14 +48,11 @@ public class FollowTradeService {
         if (trade.getTradeType().equals(TradeType.BUY)) {
             // 현금에서 얼마를 썼냐 비율
             long prevCash = following.getCash() + trade.getOrderCash();
-            double ratio = divide(trade.getOrderCash(), prevCash, NORMAL_SCALE);
+            double ratio = (double) trade.getOrderCash() / prevCash;
 
-            System.out.println("현금에서 산 비중 :" + ratio);
+            orderCash = (long) (follower.getCash() * ratio);
+            volume = (double) orderCash / trade.getPrice();
 
-            orderCash = (long) multiple(follow.getCash(), ratio, NORMAL_SCALE);
-            volume = divide(orderCash, trade.getPrice(), VOLUME_SCALE);
-
-            System.out.printf("팔로워%d는 투자금액 중 현금 %d원에서 %d원을 사용할거고 %f개를 삽니다.\n",follower.getId(), follow.getCash(), orderCash, volume);
             // 돈 쓰기
             follow.decreaseCash(orderCash);
 
@@ -83,19 +73,16 @@ public class FollowTradeService {
             Optional<HoldingCoin> followingCoin = holdingCoinRepository.findByMemberAndTicker(following, trade.getTicker());
 
             double prevVolume = trade.getVolume() + (followingCoin.isEmpty() ? 0 : followingCoin.get().getVolume());
-            double ratio = DecimalCalculator.divide(trade.getVolume(), prevVolume, NORMAL_SCALE);
-
-            //System.out.printf("%s가 %s를 %f 만큼 팔았다. \n", following.getNickname(), followingCoin.get().getTicker(), ratio);
+            double ratio = trade.getVolume() / prevVolume;
 
             FollowingCoin followerCoin = followingCoinRepository.findByFollowAndTicker(follow, trade.getTicker())
                     .orElseThrow(() -> new TradeException(TradeErrorCode.INSUFFICIENT_COINS));
 
-            volume = multiple(followerCoin.getVolume(), ratio, VOLUME_SCALE);
-            orderCash = (long) multiple(trade.getPrice(), volume, NORMAL_SCALE);
+            volume = followerCoin.getVolume() * ratio;
+            orderCash = Math.round(trade.getPrice() * volume);
 
-            System.out.printf("%s는 갖고있는 %f개에서 %f개를 판다. ", follower.getNickname(), followerCoin.getVolume(), volume);
             // 돈 추가
-            follow.increaseCash(orderCash);
+            follower.increaseCash(orderCash);
 
             // 코인 감소
             followerCoin.decreaseVolume(volume);
@@ -109,7 +96,6 @@ public class FollowTradeService {
                 .price(trade.getPrice())
                 .ticker(trade.getTicker())
                 .status(Boolean.TRUE)
-                .tradedAt(trade.getTradedAt())
                 .member(follow.getFollower())
                 .volume(volume) // 비율
                 .orderCash(orderCash)
