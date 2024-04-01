@@ -17,7 +17,15 @@ function OrderBook() {
   const topTitle = ["매도", "호가", ""];
   const BottomTitle = ["", "호가", "매수"];
   const { coinCode } = useParams();
-  const [orderList, setOrderList] = useState<OrderType[]>([]);
+  const [orderList, setOrderList] = useState<OrderType[]>(
+    Array.from({ length: 9 }, () => ({
+      ask_price: 0,
+      bid_price: 0,
+      ask_size: 0,
+      bid_size: 0,
+    })),
+  );
+
   const [socket, setSocket] = useState<WebSocketHandlers | undefined>(
     undefined,
   );
@@ -49,20 +57,20 @@ function OrderBook() {
         ))}
       </TitleContainer>
       <ContentContainer>
-        {[...orderList].reverse().map((d, index) => (
+        {[...orderList].reverse().map((order, index) => (
           <ContentDiv key={index}>
-            <SizeDiv $buy={false}>{d.ask_size.toFixed(3)}</SizeDiv>
+            <SizeDiv $buy={false}>{order.ask_size.toFixed(3)}</SizeDiv>
             <PriceDiv $buy={false}>
-              {d.ask_price.toLocaleString("en-US")}
+              {order.ask_price.toLocaleString("ko-KR")}
             </PriceDiv>
             <div />
           </ContentDiv>
         ))}
-        {orderList.map((d, index) => (
+        {orderList.map((order, index) => (
           <ContentDiv key={index}>
             <div />
-            <PriceDiv $buy>{d.bid_price.toLocaleString("en-US")}</PriceDiv>
-            <SizeDiv $buy>{d.bid_size.toFixed(3)}</SizeDiv>
+            <PriceDiv $buy>{order.bid_price.toLocaleString("ko-KR")}</PriceDiv>
+            <SizeDiv $buy>{order.bid_size.toFixed(3)}</SizeDiv>
           </ContentDiv>
         ))}
       </ContentContainer>

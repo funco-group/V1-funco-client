@@ -13,7 +13,7 @@ export const ComponentTitleH3 = styled.h3`
 
 export const UserLayoutContainer = styled.div`
   display: grid;
-  grid-template-rows: 20rem 12rem 13rem;
+  grid-template-rows: 25rem 12rem 13rem;
   grid-row-gap: 1rem;
 `;
 

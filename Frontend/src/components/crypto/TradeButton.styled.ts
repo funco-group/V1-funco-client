@@ -7,7 +7,12 @@ const TradeButtonContainer = styled.div<{ name: string }>`
   color: ${palette.brandWhite};
   text-align: center;
   padding: 0.6rem;
-  margin: 0.7rem;
+  margin: 1rem 0.7rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 95%;
+  }
 `;
 
 export default TradeButtonContainer;

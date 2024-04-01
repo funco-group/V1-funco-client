@@ -21,7 +21,7 @@ function FollowStatistics({
   investmentList,
 }: FollowStatisticsProps) {
   const totalEstimatedProfitRate = (
-    (totalEstimatedValue / totalInvestment) *
+    ((totalEstimatedValue - totalInvestment) / totalInvestment) *
     100
   ).toFixed(2);
   const totalInvestmentAssetRatio = Math.round(
@@ -29,8 +29,8 @@ function FollowStatistics({
   );
 
   const statisticsList = [
-    ["총 투자 금액", totalInvestment.toLocaleString("en-US")],
-    ["총 예상 수익금", totalEstimatedValue.toLocaleString("en-US")],
+    ["총 투자 금액", totalInvestment.toLocaleString("ko-KR")],
+    ["총 예상 수익금", totalEstimatedValue.toLocaleString("ko-KR")],
     ["총 예상 수익률", totalEstimatedProfitRate],
   ];
   return (
@@ -47,7 +47,7 @@ function FollowStatistics({
           ))}
         </FollowingStatisticsDetailInnerDiv>
         <p>
-          당신의 총 자산 {totalAsset.toLocaleString("en-US")}중{" "}
+          당신의 총 자산 {totalAsset.toLocaleString("ko-KR")}중{" "}
           {totalInvestmentAssetRatio}%가 투자 중입니다.
         </p>
       </FollowingStatisticsDetailDiv>

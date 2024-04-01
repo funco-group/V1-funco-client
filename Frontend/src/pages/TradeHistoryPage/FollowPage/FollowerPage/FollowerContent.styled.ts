@@ -14,10 +14,12 @@ export const FollowerContentInsideGridDiv = styled.div`
 export const FollowerContentDiv = styled.div`
   color: ${palette.brandDarkGray};
   font-size: 0.8rem;
-  text-align: end;
+  text-align: center;
 
   span {
     font-family: "NanumSquareBold";
     color: ${palette.brandBlack};
   }
+
+  border-bottom: 1px solid ${palette.borderGray};
 `;

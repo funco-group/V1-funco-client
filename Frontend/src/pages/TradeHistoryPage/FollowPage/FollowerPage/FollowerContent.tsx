@@ -25,28 +25,28 @@ function FollowerContent({ content }: { content: FollowerContentType }) {
           {content.nickname}
         </FollowingContentMarginDiv>
         <FollowingContentMarginDiv>
-          <span>{content.investment.toLocaleString("en-US")}</span> won
+          <span>{content.investment.toLocaleString("ko-KR")}</span> won
         </FollowingContentMarginDiv>
         {content.settleDate ? (
           <FollowerContentInsideGridDiv>
             <FollowingContentMarginDiv>
               <span>
                 {content.settlement &&
-                  content.settlement.toLocaleString("en-US")}
+                  content.settlement.toLocaleString("ko-KR")}
               </span>{" "}
               won
             </FollowingContentMarginDiv>
             <FollowingContentMarginDiv>
               <span>
                 {content.returnRate &&
-                  content.returnRate.toLocaleString("en-US")}
+                  content.returnRate.toLocaleString("ko-KR")}
               </span>{" "}
               %
             </FollowingContentMarginDiv>
             <FollowingContentMarginDiv>
               <span>
                 {content.commission &&
-                  content.commission.toLocaleString("en-US")}
+                  content.commission.toLocaleString("ko-KR")}
               </span>{" "}
               won
             </FollowingContentMarginDiv>

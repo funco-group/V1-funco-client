@@ -31,7 +31,7 @@ export default function RoutesComponent() {
           }
         />
         <Route
-          path="user/:memberId"
+          path="member/:nickname"
           element={
             <NarrowLayout>
               <UserPage />
@@ -57,7 +57,14 @@ export default function RoutesComponent() {
           </Route>
           <Route path="orders" element={<OpenOrders />} />
         </Route>
-        <Route path="rank" element={<Rank />} />
+        <Route
+          path="rank"
+          element={
+            <NarrowLayout>
+              <Rank />
+            </NarrowLayout>
+          }
+        />
       </Route>
       <Route path="*" element={<div>Not Found</div>} />
     </Routes>

@@ -15,7 +15,7 @@ function FollowerTab({ nowTabName, setNowTabName }: FollowerTabProps) {
     "right" | "left" | "",
   ][] = [
     ["전체", "all", "left"],
-    ["팔로잉 중", "following", ""],
+    ["팔로잉", "following", ""],
     ["정산 완료", "settled", "right"],
   ];
 

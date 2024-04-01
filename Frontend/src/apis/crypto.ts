@@ -3,6 +3,7 @@ import localAxios from "@/utils/http-commons";
 import { FavoriteCoinResponseType } from "@/interfaces/PriceWindowType";
 
 const domain = "crypto";
+// const version = "v1";
 
 export async function getFavoriteCoinList(
   success: (response: AxiosResponse<FavoriteCoinResponseType>) => void,

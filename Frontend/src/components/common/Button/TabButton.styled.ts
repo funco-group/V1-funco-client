@@ -2,7 +2,7 @@ import styled from "styled-components";
 import palette from "@/lib/palette";
 
 interface TabButtonProps {
-  width: string;
+  width: string | null;
   height: string;
   $active: boolean;
   radius: "left" | "right" | "";
@@ -10,9 +10,10 @@ interface TabButtonProps {
 
 const TabButton = styled.button<TabButtonProps>`
   background-color: transparent;
-  width: ${({ width }) => width};
+  width: ${({ width }) => width || null};
   height: ${({ height }) => height};
   color: ${({ $active }) => ($active ? palette.brandColor : "#999999")};
+  padding: 0.5rem;
   border-top: ${({ $active }) =>
     $active
       ? `1px solid ${palette.brandColor}`
@@ -48,6 +49,7 @@ const TabButton = styled.button<TabButtonProps>`
     }
     return null;
   }};
+  font-family: ${({ $active }) => ($active ? "NanumSquareBold" : null)};
   cursor: pointer;
 `;
 

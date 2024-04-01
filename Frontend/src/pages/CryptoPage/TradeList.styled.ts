@@ -2,7 +2,7 @@ import styled from "styled-components";
 import palette from "@/lib/palette";
 
 export const ToggleContainer = styled.div`
-  padding: 0.7rem;
+  padding: 1rem 0.7rem;
   display: flex;
 `;
 
@@ -34,9 +34,18 @@ export const ColumnGridDiv = styled.div<{ $conclude: boolean }>`
       : "5.5rem 6rem 7.2rem 7.1rem 3.5rem;"};
 `;
 
-export const TradeListContainer = styled.div``;
+export const TradeListContainer = styled.div`
+  height: 30.55rem;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+`;
+
 export const NoTradeData = styled.div`
   color: #dfe1e6;
   text-align: center;
   font-size: 0.9rem;
+  /* background-color: red; */
+  position: relative;
+  top: 14rem;
 `;

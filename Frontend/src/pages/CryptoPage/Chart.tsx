@@ -31,7 +31,7 @@ function Chart({ priceList }: ChartProps) {
   const [button, setButton] = useState<string>("일봉");
 
   const formatNumber = (number: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("ko-KR", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(number);
@@ -58,7 +58,7 @@ function Chart({ priceList }: ChartProps) {
         <PriceContainer>
           <CurPriceDiv change={coin.change}>
             <PriceDiv>
-              {coin.tradePrice.toLocaleString("en-US")}
+              {coin.tradePrice.toLocaleString("ko-KR")}
               <span>{coin.code.split("-")[0]}</span>
             </PriceDiv>
             <ChangeDiv>
@@ -68,7 +68,7 @@ function Chart({ priceList }: ChartProps) {
                 {(coin.signedChangeRate * 100).toFixed(2)}%
               </ChangeInfoDiv>
               <ChangeInfoDiv>
-                {coin.signedChangePrice.toLocaleString("en-US")}
+                {coin.signedChangePrice.toLocaleString("ko-KR")}
                 {coin.change === "RISE" && " ▲"}
                 {coin.change === "FALL" && " ▼"}
               </ChangeInfoDiv>
@@ -79,13 +79,13 @@ function Chart({ priceList }: ChartProps) {
               <TradeTitleDiv $top>
                 고가
                 <TradePriceDiv color="red">
-                  {coin.highPrice.toLocaleString("en-US")}
+                  {coin.highPrice.toLocaleString("ko-KR")}
                 </TradePriceDiv>
               </TradeTitleDiv>
               <TradeTitleDiv $top={false}>
                 저가
                 <TradePriceDiv color="blue">
-                  {coin.lowPrice.toLocaleString("en-US")}
+                  {coin.lowPrice.toLocaleString("ko-KR")}
                 </TradePriceDiv>
               </TradeTitleDiv>
             </TradePriceItemDiv>
@@ -93,7 +93,7 @@ function Chart({ priceList }: ChartProps) {
               <TradeTitleDiv $top>
                 거래량(24H)
                 <TradePriceDiv color="black">
-                  {coin.accTradeVolme24h.toLocaleString("en-US")}
+                  {coin.accTradeVolme24h.toLocaleString("ko-KR")}
                   <span> {coin.code.split("-")[1]}</span>
                 </TradePriceDiv>
               </TradeTitleDiv>

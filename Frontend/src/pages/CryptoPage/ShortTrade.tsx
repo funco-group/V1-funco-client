@@ -3,7 +3,11 @@ import TradeButton from "@/components/crypto/TradeButtonTab";
 import { ButtonContainer } from "@/styles/Crypto.styled";
 import ShortTradeItem from "./ShortTradeItem";
 
-function ShortTrade() {
+interface ShortTradeProps {
+  curPrice: number;
+}
+
+function ShortTrade({ curPrice }: ShortTradeProps) {
   const buttons = ["매수", "매도"];
   const [activeButton, setActiveButton] = useState<string>("매수");
 
@@ -26,9 +30,9 @@ function ShortTrade() {
         })}
       </ButtonContainer>
       {activeButton === "매수" ? (
-        <ShortTradeItem name="매수" />
+        <ShortTradeItem name="매수" curPrice={curPrice} />
       ) : (
-        <ShortTradeItem name="매도" />
+        <ShortTradeItem name="매도" curPrice={curPrice} />
       )}
     </div>
   );

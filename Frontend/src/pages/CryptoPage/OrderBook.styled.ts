@@ -27,7 +27,9 @@ export const TitleDiv = styled.div<{ type: string }>`
   }};
 `;
 
-export const ContentContainer = styled.div``;
+export const ContentContainer = styled.div`
+  /* height: 33rem; */
+`;
 
 export const ContentDiv = styled.div`
   /* padding: 0.6rem 0; */

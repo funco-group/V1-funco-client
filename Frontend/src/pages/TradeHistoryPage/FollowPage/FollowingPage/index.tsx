@@ -4,32 +4,13 @@ import { getCoinList, getTickerPrice } from "@/apis/upbit";
 import FollowStatistics from "./FollowStatistics";
 import { ResMarketCodeType } from "@/interfaces/PriceWindowType";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
-import DummyData from "@/lib/DummyFollowings";
 import FollowingUserListContainer from "./styled";
 import FollowingUser from "./FollowingUser";
 import { ComputedFollowingType } from "@/interfaces/tradeHistory/follow/ComputedFollowingType";
-
-export interface DummyDataType {
-  totalAsset: number;
-  followings: FollowingType[];
-}
-
-interface FollowingType {
-  followingId: number;
-  nickname: string;
-  investment: number;
-  returnRate: number;
-  followedAt: string;
-  asset: AssetType;
-}
-
-interface AssetType {
-  cash: number;
-  coins: {
-    ticker: string;
-    volume: number;
-  }[];
-}
+import { FollowingType } from "@/interfaces/tradeHistory/follow/FollowingTyps";
+import { getFollowingList } from "@/apis/follow";
+import { ResFollowingType } from "@/interfaces/tradeHistory/follow/ResFollowingType";
+import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 
 function Index() {
   const [tickerList, setTickerList] = useState("");
@@ -37,6 +18,31 @@ function Index() {
     new Map(null),
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [totalAsset, setTotalAsset] = useState<number>();
+  const [followings, setFollowings] = useState<FollowingType[]>();
+  const [totalInvestment, setTotalInvesment] = useState<number>();
+  const [totalEstimatedValue, setTotalEstimatedValue] = useState<number>();
+  const [computedFollowings, setComputedFollowings] = useState<
+    ComputedFollowingType[]
+  >([]);
+  const [investmentList, setInvestmentList] = useState<(string | number)[][]>(
+    [],
+  );
+  const { settleModal } = useSettleModalState();
+
+  useEffect(() => {
+    if (!settleModal && followings !== undefined) {
+      setIsLoading(true);
+      setTimeout(() => {
+        getFollowingList((res: AxiosResponse<ResFollowingType>) => {
+          const { data } = res;
+          setTotalAsset(data.totalAsset);
+          setFollowings(data.followings);
+        });
+      }, 1000); // 1초 뒤에 실행됨
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settleModal]);
 
   // 코인 리스트 요청 및 설정
   const fetchCoinList = () => {
@@ -66,6 +72,11 @@ function Index() {
   useEffect(() => {
     setIsLoading(true);
     fetchCoinList();
+    getFollowingList((res: AxiosResponse<ResFollowingType>) => {
+      const { data } = res;
+      setTotalAsset(data.totalAsset);
+      setFollowings(data.followings);
+    });
   }, []);
 
   useEffect(() => {
@@ -74,64 +85,80 @@ function Index() {
   }, [tickerList]);
 
   useEffect(() => {
-    if (tickerPriceMap.size) {
+    if (tickerPriceMap.size && totalAsset && followings) {
+      let newTotalInvestment = 0;
+      let newTotalEstimatedValue = 0;
+      const newComputedFollowings: ComputedFollowingType[] = [];
+      const newInvestmentList: (string | number)[][] = [];
+      followings.forEach((following) => {
+        const computedFollowing = {
+          followId: following.followId,
+          nickname: following.nickname,
+          date: following.followedAt,
+          investment: following.investment,
+          estimatedValue: Math.round(
+            following.cash +
+              following.coins.reduce((total, coin) => {
+                const price = tickerPriceMap.get(coin.ticker) || 0;
+                const value = coin.volume * price;
+                return total + value;
+              }, 0),
+          ),
+          cash: following.cash,
+          coins: following.coins.map((coin) => {
+            const tickerPrice = tickerPriceMap.get(coin.ticker) || 0;
+            return {
+              ticker: coin.ticker,
+              price: tickerPrice * coin.volume,
+            };
+          }),
+        };
+        newComputedFollowings.push(computedFollowing);
+        newInvestmentList.push([following.nickname, following.investment]);
+        newTotalInvestment += following.investment;
+        newTotalEstimatedValue += computedFollowing.estimatedValue;
+      });
+      setTotalInvesment(newTotalInvestment);
+      setTotalEstimatedValue(newTotalEstimatedValue);
+      setComputedFollowings(newComputedFollowings);
+      setInvestmentList(newInvestmentList);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalAsset, followings, tickerPriceMap]);
+
+  useEffect(() => {
+    if (
+      totalInvestment &&
+      totalEstimatedValue &&
+      investmentList &&
+      computedFollowings
+    ) {
       setIsLoading(false);
     }
-  }, [tickerPriceMap]);
-
-  const { totalAsset, followings } = DummyData;
-  let totalInvestment = 0;
-  let totalEstimatedValue = 0;
-  const computedFollowings: ComputedFollowingType[] = [];
-  const investmentList: (string | number)[][] = [];
-  followings.forEach((following) => {
-    const computedFollowing = {
-      followingId: following.followingId,
-      nickname: following.nickname,
-      date: following.followedAt,
-      investment: following.investment,
-      estimatedValue: Math.round(
-        following.asset.cash +
-          following.asset.coins.reduce((total, coin) => {
-            const price = tickerPriceMap.get(coin.ticker) || 0;
-            const value = coin.volume * price;
-            return total + value;
-          }, 0),
-      ),
-      asset: {
-        cash: following.asset.cash,
-        coins: following.asset.coins.map((coin) => {
-          const tickerPrice = tickerPriceMap.get(coin.ticker) || 0;
-          return {
-            ticker: coin.ticker,
-            price: tickerPrice * coin.volume,
-          };
-        }),
-      },
-    };
-    computedFollowings.push(computedFollowing);
-    investmentList.push([following.nickname, following.investment]);
-    totalInvestment += following.investment;
-    totalEstimatedValue += computedFollowing.estimatedValue;
-  });
+  }, [
+    totalInvestment,
+    totalEstimatedValue,
+    investmentList,
+    computedFollowings,
+  ]);
 
   if (isLoading) {
     return <>loading</>;
   }
   return (
     <div>
-      <FollowStatistics
-        totalAsset={totalAsset}
-        totalInvestment={totalInvestment}
-        totalEstimatedValue={totalEstimatedValue}
-        investmentList={investmentList}
-      />
+      {totalInvestment && totalEstimatedValue && totalAsset && (
+        <FollowStatistics
+          totalAsset={totalAsset}
+          totalInvestment={totalInvestment}
+          totalEstimatedValue={totalEstimatedValue}
+          investmentList={investmentList}
+        />
+      )}
+
       <FollowingUserListContainer>
         {computedFollowings.map((following) => (
-          <FollowingUser
-            key={following.followingId}
-            followingUser={following}
-          />
+          <FollowingUser key={following.followId} followingUser={following} />
         ))}
       </FollowingUserListContainer>
     </div>
