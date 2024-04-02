@@ -41,12 +41,10 @@ export default function tickerWebSocket(
 
     onmessage(event: MessageEvent) {
       if (event.data instanceof Blob) {
-        // console.log(event.data);
         event.data.arrayBuffer().then((data) => {
           const decoder = new TextDecoder("utf-8");
           const priceData = decoder.decode(data);
           const priceJson = JSON.parse(priceData);
-          // console.log(priceJson);
 
           setPriceList((prevPrice) => {
             return prevPrice.map((price) =>

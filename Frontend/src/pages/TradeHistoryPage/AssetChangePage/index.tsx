@@ -1,5 +1,13 @@
+import AssetChangeList from "./AssetChangeList";
+import DateTab from "./DateTab";
+
 function index() {
-  return <div>assetChange</div>;
+  return (
+    <div>
+      <DateTab />
+      <AssetChangeList />
+    </div>
+  );
 }
 
 export default index;

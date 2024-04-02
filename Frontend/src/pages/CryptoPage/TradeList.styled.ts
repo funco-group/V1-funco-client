@@ -31,7 +31,7 @@ export const ColumnGridDiv = styled.div<{ $conclude: boolean }>`
   grid-template-columns: ${(props) =>
     props.$conclude
       ? "6rem 6rem 9rem 8rem"
-      : "5.5rem 6rem 7.2rem 7.1rem 3.5rem;"};
+      : "5.5rem 6rem 7.2rem 7.1rem 3.5rem"};
 `;
 
 export const TradeListContainer = styled.div`

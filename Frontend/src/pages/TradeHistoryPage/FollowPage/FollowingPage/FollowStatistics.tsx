@@ -5,7 +5,7 @@ import {
   StatisticsGraphDiv,
   StatisticsRowDiv,
 } from "./FollowStatistics.styled";
-import MonochromePieChart from "./MonochromePieChart";
+import MonochromePieChart from "@/components/common/MonochromePieChart";
 
 interface FollowStatisticsProps {
   totalInvestment: number;

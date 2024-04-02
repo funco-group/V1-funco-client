@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { OpenOrderContentTableContainer } from "./OpenOrderContentTable.style";
 import {
-  OpenOrderColumnGridDiv,
-  OpenOrderContentTableContainer,
-} from "./OpenOrderContentTable.style";
-import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
+  ColumnContainer,
+  ColumnGrid,
+  ColumnTitleDiv,
+} from "@/styles/CommonStyled";
 import OpenOrderContent from "./OpenOrderContent";
 import { TradeListType } from "@/interfaces/TradeType";
 import { cancleOrder, getAllOpenTradeList } from "@/apis/trade";
@@ -71,11 +72,11 @@ function OpenOrderContentTable() {
         />
       )}
       <ColumnContainer>
-        <OpenOrderColumnGridDiv>
+        <ColumnGrid column="7.5rem 7.5rem 7.5rem 1fr 1fr 1fr 7.5rem">
           {openOrderColumnList.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}
-        </OpenOrderColumnGridDiv>
+        </ColumnGrid>
       </ColumnContainer>
       {openOrderContentList && openOrderContentList.length > 0 ? (
         openOrderContentList.map((content) => (

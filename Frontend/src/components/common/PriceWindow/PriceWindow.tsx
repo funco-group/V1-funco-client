@@ -3,7 +3,6 @@ import { AxiosResponse } from "axios";
 import { useRecoilValue } from "recoil";
 import {
   PriceWindowContainer,
-  ColumnContainer,
   ColumnTitleDiv,
   PriceItemContainer,
 } from "./PriceWindow.styled";
@@ -24,6 +23,7 @@ import PriceItem from "./PriceItem";
 import Tab from "@/components/crypto/Tab";
 import codeListState from "@/recoils/crypto/withCodeList";
 import { getHoldingCoin } from "@/apis/trade";
+import { ColumnContainer, ColumnGrid } from "@/styles/CommonStyled";
 
 interface PriceWindowProps {
   priceList: PriceType[];
@@ -115,10 +115,12 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
         changeTab={changeTab}
       />
       <ColumnContainer>
-        <div />
-        {columnList.map((column) => (
-          <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
-        ))}
+        <ColumnGrid column="0.2fr 0.8fr 0.7fr 0.55fr 0.8fr">
+          <div />
+          {columnList.map((column) => (
+            <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
+          ))}
+        </ColumnGrid>
       </ColumnContainer>
       <PriceItemContainer>
         {activeTab === "원화" &&

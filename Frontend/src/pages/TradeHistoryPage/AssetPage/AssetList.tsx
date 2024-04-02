@@ -1,30 +1,53 @@
-import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
-import { ColumnGridDiv } from "./AssetList.styled";
+import {
+  ColumnContainer,
+  ColumnGrid,
+  ColumnTitleDiv,
+} from "@/styles/CommonStyled";
 import AssetListItem from "./AssetListItem";
 import { TitleDiv } from "@/styles/TradeHistoryStyled";
+import { AssetType } from "@/interfaces/AssetType";
+import AssetListContainer from "./AssetList.styled";
 
-function AssetList() {
+interface AssetListProps {
+  assets: AssetType[];
+}
+
+function AssetList({ assets }: AssetListProps) {
   const columns = [
     "보유자산",
     "보유수량",
     "매수평균가",
     "매수금액",
     "평가금액",
-    "평가손익(%)",
+    "평가수익률(%)",
   ];
 
   return (
-    <div>
+    <>
       <TitleDiv>보유자산 목록</TitleDiv>
       <ColumnContainer>
-        <ColumnGridDiv>
+        <ColumnGrid column="repeat(6, 1fr)">
           {columns.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}
-        </ColumnGridDiv>
+        </ColumnGrid>
       </ColumnContainer>
-      <AssetListItem />
-    </div>
+      <AssetListContainer>
+        {assets.map((coin: AssetType) => {
+          return (
+            <AssetListItem
+              imgSrc={coin.imgSrc}
+              name={coin.name}
+              volume={coin.volume}
+              averagePrice={coin.averagePrice}
+              price={coin.price}
+              evaluationAmount={coin.evaluationAmount}
+              evaluationProfit={coin.evaluationProfit}
+            />
+          );
+        })}
+      </AssetListContainer>
+    </>
   );
 }
 
