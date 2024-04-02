@@ -13,7 +13,7 @@ import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import cashIcon from "@/assets/icon/cash-icon.png";
 import followIcon from "@/assets/icon/follow-icon.png";
 import { ChartContainer, TotalAssetInfoContainer } from "./styled";
-import MonochromePieChart from "@/components/common/MonochromePieChart";
+import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
 
 function index() {
   const [assets, setAssets] = useState<AssetType[]>([]);

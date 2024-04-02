@@ -5,12 +5,18 @@ import {
 } from "@/styles/CommonStyled";
 import { TitleDiv } from "@/styles/TradeHistoryStyled";
 import ReturnResultListItem from "./ReturnResultListItem";
+import { StatisticsType } from "@/interfaces/StatisticsType";
+import ReturnResultListContainer from "./ReturnResultList.styled";
 
-function ReturnResultList() {
+interface ReturnResultListProps {
+  resultList: StatisticsType[];
+}
+
+function ReturnResultList({ resultList }: ReturnResultListProps) {
   const columns = [
     "일자",
-    "월 손익",
-    "월 수익률",
+    "손익",
+    "수익률",
     "누적 손익",
     "누적 수익률",
     "기초 자산",
@@ -27,7 +33,11 @@ function ReturnResultList() {
           ))}
         </ColumnGrid>
       </ColumnContainer>
-      <ReturnResultListItem />
+      <ReturnResultListContainer>
+        {resultList.map((result: StatisticsType) => {
+          return <ReturnResultListItem key={result.date} result={result} />;
+        })}
+      </ReturnResultListContainer>
     </div>
   );
 }

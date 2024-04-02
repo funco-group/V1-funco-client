@@ -45,8 +45,8 @@ function AssetListItem({
                 : "black"
             }
           >
-            {evaluationProfit ? evaluationProfit : "-"}
-            {evaluationProfit && <span>%</span>}
+            {evaluationProfit === null ? "-" : evaluationProfit}
+            {evaluationProfit !== null && <span>%</span>}
           </AssetItemDiv>
         </ColumnGrid>
       </ListItemContainerDiv>

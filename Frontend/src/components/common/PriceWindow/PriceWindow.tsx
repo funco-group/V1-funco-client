@@ -41,6 +41,7 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
   const [favCoins, setFavCoins] = useState<string[]>([]);
   const [holdingCoins, setHoldingCoins] = useState<string[]>([]);
   const [status, setStatus] = useState<number | undefined>(-1);
+  const [search, setSearch] = useState<string>("");
 
   useMemo(() => {
     // 1. 소켓 연결
@@ -103,11 +104,28 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
     }
   };
 
+  const filterPricesByTab = (price: PriceType) => {
+    switch (activeTab) {
+      case "원화":
+        return price.koreanName.includes(search);
+      case "보유":
+        return (
+          holdingCoins.includes(price.code) && price.koreanName.includes(search)
+        );
+      case "관심":
+        return (
+          favCoins.includes(price.code) && price.koreanName.includes(search)
+        );
+      default:
+        return false;
+    }
+  };
+
   if (!priceList) return null;
 
   return (
     <PriceWindowContainer>
-      <CoinSearch />
+      <CoinSearch setSearch={setSearch} />
       <Tab
         columns={3}
         tabs={tabs}
@@ -123,37 +141,14 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
         </ColumnGrid>
       </ColumnContainer>
       <PriceItemContainer>
-        {activeTab === "원화" &&
-          priceList.map((price: PriceType) => (
-            <PriceItem
-              key={price.code}
-              price={price}
-              isFav={favCoins.includes(price.code)}
-              onClickFavorite={clickFavorite}
-            />
-          ))}
-        {activeTab === "보유" &&
-          priceList
-            .filter((price) => holdingCoins.includes(price.code))
-            .map((price: PriceType) => (
-              <PriceItem
-                key={price.code}
-                price={price}
-                isFav={favCoins.includes(price.code)}
-                onClickFavorite={clickFavorite}
-              />
-            ))}
-        {activeTab === "관심" &&
-          priceList
-            .filter((price) => favCoins.includes(price.code))
-            .map((price: PriceType) => (
-              <PriceItem
-                key={price.code}
-                price={price}
-                isFav={favCoins.includes(price.code)}
-                onClickFavorite={clickFavorite}
-              />
-            ))}
+        {priceList.filter(filterPricesByTab).map((price: PriceType) => (
+          <PriceItem
+            key={price.code}
+            price={price}
+            isFav={favCoins.includes(price.code)}
+            onClickFavorite={clickFavorite}
+          />
+        ))}
       </PriceItemContainer>
     </PriceWindowContainer>
   );

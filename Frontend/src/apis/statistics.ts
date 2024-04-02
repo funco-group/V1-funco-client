@@ -1,14 +1,14 @@
 import { AxiosResponse } from "axios";
 import localAxios from "@/utils/http-commons";
-import { DailyStatisticsType } from "@/interfaces/StatisticsType";
+import { StatisticsType, StartDateType } from "@/interfaces/StatisticsType";
 
 const domain = "statistics";
 const version = "v1";
 
 export async function getDailyStatistics(
-  year: number,
-  month: number,
-  success: (response: AxiosResponse<DailyStatisticsType[]>) => void,
+  year: string,
+  month: string,
+  success: (response: AxiosResponse<StatisticsType[]>) => void,
 ) {
   await localAxios
     .get(`/${version}/${domain}/daily?year=${year}&month=${month}`)
@@ -16,10 +16,16 @@ export async function getDailyStatistics(
 }
 
 export async function getMonthlyStatistics(
-  year: number,
-  success: (response: AxiosResponse<DailyStatisticsType[]>) => void,
+  year: string,
+  success: (response: AxiosResponse<StatisticsType[]>) => void,
 ) {
   await localAxios
     .get(`/${version}/${domain}/monthly?year=${year}`)
     .then(success);
+}
+
+export async function getStartDate(
+  success: (response: AxiosResponse<StartDateType>) => void,
+) {
+  await localAxios.get(`/${version}/${domain}/startdate`).then(success);
 }

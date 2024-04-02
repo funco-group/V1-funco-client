@@ -1,19 +1,14 @@
-export interface DailyStatisticsType {
+export interface StatisticsType {
   date: string;
   returnResult: number;
   returnRate: number;
   accReturnResult: number;
-  accdReturnRate: number;
+  accReturnRate: number;
   beginningAsset: number;
   endingAsset: number;
 }
 
-export interface MonthlyStatistics {
+export interface StartDateType {
+  year: number;
   month: number;
-  returnResult: number;
-  returnRate: number;
-  accReturnResult: number;
-  accdReturnRate: number;
-  beginningAsset: number;
-  endingAsset: number;
 }

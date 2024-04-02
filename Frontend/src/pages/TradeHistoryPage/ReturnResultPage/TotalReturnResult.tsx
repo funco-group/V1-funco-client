@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ResultItemContainer,
   ResultItemDiv,
@@ -8,19 +8,90 @@ import {
 } from "./TotalReturnResult.styled";
 import { GreenContainer } from "@/styles/TradeHistoryStyled";
 import ReturnResultTab from "@/components/common/ReturnResultTab";
+import { OptionType } from "@/interfaces/AssetType";
+import { getStartDate } from "@/apis/statistics";
+import { AxiosResponse } from "axios";
+import { StartDateType } from "@/interfaces/StatisticsType";
 
-function TotalReturnResult() {
-  const [activeTab, setActiveTab] = useState<string>("일별");
+interface TotalReturnResultProps {
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  setOptions: React.Dispatch<React.SetStateAction<OptionType[]>>;
+  options: OptionType[];
+  selected: string | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<string | undefined>>;
+  handleSelect: (e: any) => void;
+}
+
+function TotalReturnResult({
+  activeTab,
+  setActiveTab,
+  setOptions,
+  options,
+  selected,
+  setSelected,
+  handleSelect,
+}: TotalReturnResultProps) {
   const titles = ["기간 누적 수익", "기간 누적 수익률", "투자 금액"];
   const resultData = [194418, 180.7, 19848400];
   const unit = ["WON", "%", "WON"];
+  const [startYear, setStartYear] = useState<number>();
+  const [startMonth, setStartMonth] = useState<number>();
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (startYear && startMonth) {
+      let year = startYear;
+      let month = startMonth;
+      const todayYear = new Date().getFullYear();
+      const todayMonth = new Date().getMonth() + 1;
+      let dateList = [];
+
+      if (activeTab === "일별") {
+        while (year < todayYear || (year === todayYear && month < todayMonth)) {
+          dateList.push({
+            value: `${year}-${month}`,
+            name: `${year}년 ${month}월`,
+          });
+          month++;
+          if (month > 12) {
+            month = 1;
+            year++;
+          }
+        }
+      } else {
+        for (let i = startYear; i <= todayYear; i++) {
+          dateList.push({
+            value: `${year}`,
+            name: `${year}년`,
+          });
+        }
+      }
+      setSelected(dateList[0]?.value);
+      setOptions(dateList);
+    }
+  }, [startYear, startMonth, activeTab]);
+
+  useEffect(() => {
+    getStartDate((response: AxiosResponse<StartDateType>) => {
+      const { data } = response;
+      setStartYear(data.year);
+      setStartMonth(data.month);
+    });
+  }, []);
+
   return (
     <>
-      <ReturnResultTab activeTab={activeTab} handleTabClick={handleTabClick} />
+      <ReturnResultTab
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        options={options}
+        selected={selected}
+        handleSelect={handleSelect}
+      />
       <div>
         <ResultContainer>
           <GreenContainer>
