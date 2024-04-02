@@ -164,6 +164,7 @@ public class TradeService {
 
     @Transactional
     public void deleteOpenTrade(Member member, Long openTradeId) {
+
         OpenTrade openTrade = openTradeRepository.findById(openTradeId)
                 .orElseThrow(() -> new TradeException(NOT_FOUND_TRADE));
         if (!openTrade.getMember().getId().equals(member.getId())) {
@@ -177,17 +178,10 @@ public class TradeService {
             member.recoverCash(openTrade.getOrderCash());
             memberRepository.save(member);
         } else {
-            Optional<HoldingCoin> optionalHoldingCoin = holdingCoinRepository.findByMemberAndTicker(openTrade.getMember(), openTrade.getTicker());
-            if (optionalHoldingCoin.isEmpty()) {
-                holdingCoinRepository.save(HoldingCoin.builder()
-                        .ticker(openTrade.getTicker())
-                        .volume(openTrade.getVolume())
-                        .member(openTrade.getMember())
-                        .averagePrice(openTrade.getBuyPrice())
-                        .build());
-            } else {
-                optionalHoldingCoin.get().recoverVolume(openTrade.getVolume(), openTrade.getBuyPrice());
-            }
+            log.info("미체결 취소 : {}, {}", member.getId(), openTrade.getTicker());
+            HoldingCoin holdingCoin = holdingCoinRepository.findByMemberAndTicker(openTrade.getMember(), openTrade.getTicker())
+                    .orElseThrow(() -> new TradeException(INSUFFICIENT_COINS));
+            holdingCoin.recoverVolume(openTrade.getVolume());
         }
     }
 
@@ -226,10 +220,9 @@ public class TradeService {
                 .ticker(ticker)
                 .tradeType(TradeType.SELL)
                 .member(member)
-                .orderCash((long) multiple(volume, price, CASH_SCALE))
+                .orderCash((long) multiple(volume, price, NORMAL_SCALE))
                 .price(price)
                 .volume(volume)
-                .buyPrice(optionalHoldingCoin.get().getAveragePrice())
                 .build());
 
         // 미체결 거래 등록
