@@ -9,7 +9,7 @@ interface ResMessageType {
   notificationDate: string;
 }
 
-function useSSE(setUnReadCount: Dispatch<SetStateAction<number>>) {
+function useSSE(setUnReadCount: Dispatch<SetStateAction<number | undefined>>) {
   const { user } = useUserState();
   useEffect(() => {
     let eventSource: EventSourcePolyfill;

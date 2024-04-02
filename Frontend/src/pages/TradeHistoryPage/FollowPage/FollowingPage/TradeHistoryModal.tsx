@@ -10,17 +10,19 @@ import {
   FollowTradeHistoryTextAlignDiv,
 } from "./TradeHistoryModal.styled";
 import { TradeListType } from "@/interfaces/TradeType";
-import { getFollowTradeList } from "@/apis/trade";
 import { OrderTypeSpan } from "../../OpenOrdersPage/OpenOrderContent.styled";
 import tradeTypeMap from "@/lib/tradeTypeMap";
 import useParseDate from "@/hooks/useParseDate";
+import { getFollowingTradeList } from "@/apis/follow";
 
 interface TradeHistoryModalProps {
   handleTradeHistoryClick: () => void;
+  followId: number;
 }
 
 function TradeHistoryModal({
   handleTradeHistoryClick,
+  followId,
 }: TradeHistoryModalProps) {
   const tradeHistortColumnList = ["거래시간", "구분", "거래가격", "거래수량"];
   const [tradeHistoryList, setTradeHistoryList] = useState<TradeListType[]>();
@@ -29,8 +31,9 @@ function TradeHistoryModal({
 
   useEffect(() => {
     setIsLoading(true);
-    getFollowTradeList(0, 100, (res) => {
+    getFollowingTradeList(followId, 0, 100, (res) => {
       const { data } = res;
+      console.log(data);
       setTradeHistoryList(data);
     });
   }, []);

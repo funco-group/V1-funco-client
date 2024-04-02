@@ -9,29 +9,29 @@ import {
   UserLayoutThirdRowDiv,
 } from "./styled";
 import useUserState from "@/hooks/recoilHooks/useUserState";
-import DummyMembers from "@/lib/DummyMembers";
 import MemberType from "@/interfaces/userPage/MemberType";
+import getMemberInfo from "@/apis/member";
 
 function Index() {
-  const { nickname } = useParams();
+  const { memberId } = useParams();
   const { user } = useUserState();
   const [member, setMember] = useState<MemberType>();
 
   useEffect(() => {
-    setMember(
-      DummyMembers[
-        DummyMembers.findIndex(
-          (dummyMember) => dummyMember.nickname === nickname,
-        )
-      ],
-    );
-  }, [nickname]);
+    if (memberId) {
+      getMemberInfo(+memberId, (res) => {
+        const { data } = res;
+        console.log(data);
+        setMember(data);
+      });
+    }
+  }, [memberId]);
 
-  if (!nickname || !user || !member) {
+  if (!memberId || !user || !member) {
     return <div>존재하지 않는 회원입니다.</div>;
   }
 
-  const isCurrentUser = user?.nickname === nickname;
+  const isCurrentUser = user?.memberId === +memberId;
   return (
     <UserLayoutContainer>
       <UserLayoutFirstRowDiv>

@@ -3,4 +3,5 @@ export interface UserType {
   nickname: string;
   profileUrl: string;
   accessToken: string;
+  unReadCount: number;
 }

@@ -3,7 +3,15 @@ export interface MemberType {
   nickname: string;
   profileUrl: string;
   introduction: string;
-  rank: number;
+  assetRank: number;
+  followingCashRank: number;
+  memberAssetInfo: {
+    cash: number;
+    coins: {
+      ticker: string;
+      volume: number;
+    }[];
+  };
   followingCash: number;
   followerCash: number;
   isFollow: boolean;

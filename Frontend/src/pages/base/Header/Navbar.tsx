@@ -31,7 +31,8 @@ function Navbar() {
     profileDropdownRef,
     false,
   );
-  const [unReadCount, setUnReadCount] = useState(0);
+
+  const [unReadCount, setUnReadCount] = useState(user?.unReadCount);
 
   const handleLoginClick = () => {
     window.location.href =
@@ -72,7 +73,7 @@ function Navbar() {
                 alt="noti-off-icon"
                 draggable={false}
               />
-              {unReadCount > 0 ? (
+              {unReadCount && unReadCount > 0 ? (
                 <NavBarNotiPointDiv>
                   <p>{unReadCount}</p>
                 </NavBarNotiPointDiv>
@@ -101,6 +102,7 @@ function Navbar() {
             </NavBarNotiProfileDiv>
             <ProfileDropdown
               nickname={user.nickname}
+              memberId={user.memberId}
               visible={isProfileOpen}
               setIsProfileOpen={setIsProfileOpen}
             />

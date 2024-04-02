@@ -16,6 +16,7 @@ function SettleModal() {
   if (!settleModal) {
     return null;
   }
+  console.log(settleModal.followId);
 
   const handleCancelClick = () => {
     offModal();

@@ -31,7 +31,7 @@ export default function RoutesComponent() {
           }
         />
         <Route
-          path="member/:nickname"
+          path="member/:memberId"
           element={
             <NarrowLayout>
               <UserPage />

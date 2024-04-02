@@ -11,7 +11,7 @@ import { getNotiHistoryList, sendReadNotiList } from "@/apis/notification";
 
 interface NotiDropdownProps {
   visible: boolean;
-  setUnReadCount: Dispatch<SetStateAction<number>>;
+  setUnReadCount: Dispatch<SetStateAction<number | undefined>>;
 }
 
 function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {

@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { FollowerContentType } from "@/interfaces/tradeHistory/follow/FollowerContentType";
 import localAxios from "@/utils/http-commons";
 import { ResFollowingType } from "@/interfaces/tradeHistory/follow/ResFollowingType";
+import { TradeListType } from "@/interfaces/TradeType";
 
 interface FollowerListResType {
   last: boolean;
@@ -31,6 +32,17 @@ export async function getFollowingList(
   success: (res: AxiosResponse<ResFollowingType>) => void,
 ) {
   await localAxios.get(`/${version}/${domain}/following`).then(success);
+}
+
+export async function getFollowingTradeList(
+  followId: number,
+  page: number,
+  size: number,
+  success: (response: AxiosResponse<TradeListType[]>) => void,
+) {
+  await localAxios
+    .get(`/${version}/${domain}/${followId}/trades?page=${page}&size=${size}`)
+    .then(success);
 }
 
 export async function removeFollow(followId: number, success: () => void) {

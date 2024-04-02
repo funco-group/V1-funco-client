@@ -114,6 +114,7 @@ function Index() {
             };
           }),
         };
+        console.log(following.followId);
         newComputedFollowings.push(computedFollowing);
         newInvestmentList.push([following.nickname, following.investment]);
         newTotalInvestment += following.investment;
