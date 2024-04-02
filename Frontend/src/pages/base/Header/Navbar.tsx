@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   NavBarContainer,
   NavBarLeftDiv,
@@ -17,14 +17,13 @@ import notificationOff from "@/assets/icon/notification-off.svg";
 import defaultImage from "@/assets/icon/user-default.svg";
 import NavLinkComponent from "./NavLinkComponent";
 import useUserState from "@/hooks/recoilHooks/useUserState";
-import useNotiState from "@/hooks/recoilHooks/useNotiState";
 import NotiDropdown from "./NotiDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import useCloseDropdown from "@/hooks/useCloseDropdown";
+import useSSE from "@/hooks/useSSE";
 
 function Navbar() {
   const { user } = useUserState();
-  const { isNoti } = useNotiState();
   const notiDropDownRef = useRef(null);
   const profileDropdownRef = useRef(null);
   const [isNotiOpen, setIsNotiOpen] = useCloseDropdown(notiDropDownRef, false);
@@ -32,6 +31,7 @@ function Navbar() {
     profileDropdownRef,
     false,
   );
+  const [unReadCount, setUnReadCount] = useState(0);
 
   const handleLoginClick = () => {
     window.location.href =
@@ -48,6 +48,8 @@ function Navbar() {
   const handleProfileDropdown = () => {
     setIsProfileOpen((prev) => !prev);
   };
+
+  useSSE(setUnReadCount);
 
   return (
     <NavBarContainer>
@@ -70,13 +72,16 @@ function Navbar() {
                 alt="noti-off-icon"
                 draggable={false}
               />
-              {isNoti ? (
+              {unReadCount > 0 ? (
                 <NavBarNotiPointDiv>
-                  <p>1</p>
+                  <p>{unReadCount}</p>
                 </NavBarNotiPointDiv>
               ) : null}
             </NavBarNotiProfileDiv>
-            <NotiDropdown visible={isNotiOpen} />
+            <NotiDropdown
+              visible={isNotiOpen}
+              setUnReadCount={setUnReadCount}
+            />
           </div>
           <div ref={profileDropdownRef}>
             <NavBarNotiProfileDiv onClick={handleProfileDropdown}>

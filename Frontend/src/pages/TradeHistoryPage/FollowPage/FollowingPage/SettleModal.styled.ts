@@ -29,7 +29,6 @@ export const SettleModalTitleDiv = styled.div`
   text-align: left;
   font-family: "NanumSquareBold";
   font-size: 1.1rem;
-  width: 20rem;
 `;
 
 export const SettleModalContentDiv = styled.div`
@@ -50,6 +49,7 @@ export const SettleModalContentRowDiv = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0;
+  width: 20rem;
 `;
 
 export const SettleModalContentButtonRowDiv = styled.div`

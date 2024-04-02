@@ -90,6 +90,16 @@ export async function getTradeList(
     .then(success);
 }
 
+export async function getFollowTradeList(
+  page: number,
+  size: number,
+  success: (response: AxiosResponse<TradeListType[]>) => void,
+) {
+  await localAxios
+    .get(`/${version}/${domain}/orders?follow=true&page=${page}&size=${size}`)
+    .then(success);
+}
+
 export async function getOpenTradeList(
   ticker: string,
   page: number,

@@ -39,7 +39,7 @@ function Index() {
           setTotalAsset(data.totalAsset);
           setFollowings(data.followings);
         });
-      }, 1000); // 1초 뒤에 실행됨
+      }, 300); // 1초 뒤에 실행됨
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settleModal]);

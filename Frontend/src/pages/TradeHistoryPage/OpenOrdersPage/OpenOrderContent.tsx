@@ -11,6 +11,7 @@ import {
   FollowingDateDiv,
 } from "../FollowPage/FollowingPage/FollowingUser.styled";
 import { TradeListType } from "@/interfaces/TradeType";
+import tradeTypeMap from "@/lib/tradeTypeMap";
 
 interface OpenOrderContentProps {
   content: TradeListType;
@@ -23,11 +24,6 @@ function OpenOrderContent({
 }: OpenOrderContentProps) {
   const parseDate = useParseDate;
   const tradeDate = parseDate(content.tradeDate).split(" ").join("\n");
-
-  const tradeTypeMap = new Map([
-    ["BUY", "매수"],
-    ["SELL", "매도"],
-  ]);
 
   return (
     <OpenOrderContentDiv>

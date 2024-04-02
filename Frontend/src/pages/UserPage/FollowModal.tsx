@@ -78,12 +78,6 @@ function FollowModal() {
             />
             약관에 동의합니다.
           </label>
-          {/* <div class="check_wrap">
-            <input type="checkbox" id="check_btn" />
-            <label for="check_btn">
-              <span>선택!</span>
-            </label>
-          </div> */}
           <label htmlFor="cash">
             가용 자산
             <input

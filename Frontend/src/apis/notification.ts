@@ -11,9 +11,6 @@ export async function getNotiHistoryList(
   await localAxios.get(`/${version}/${domain}?size=10`).then(success);
 }
 
-export async function sendReadNotiList(
-  body: { readIds: number[] },
-  success: () => void,
-) {
-  await localAxios.patch(`/${version}/${domain}/read`, body).then(success);
+export async function sendReadNotiList(success: () => void) {
+  await localAxios.patch(`/${version}/${domain}/read`).then(success);
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ComputedFollowingType } from "@/interfaces/tradeHistory/follow/ComputedFollowingType";
 import {
   FollowingColumnGridDiv,
@@ -12,6 +13,7 @@ import {
   FollowingButtonDiv,
   FollowingLeftButtonDiv,
   FollowingUserGraphDiv,
+  FollowingUserGraphInnerDiv,
 } from "./FollowingUser.styled";
 import {
   ColumnContainer,
@@ -23,6 +25,7 @@ import BrandButtonComponent from "@/components/common/Button/BrandButtonComponen
 import palette from "@/lib/palette";
 import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
+import TradeHistoryModal from "./TradeHistoryModal";
 
 interface FollowingUserProps {
   followingUser: ComputedFollowingType;
@@ -42,13 +45,15 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
     const coinPrice = [coin.ticker, coin.price.toFixed(3)];
     investmentList.push(coinPrice);
   });
+  const [onTradeModal, setOnTradeModal] = useState(false);
+  // const [onFollowAssetModal, setOnFollowAssetModal] = useState(false);
 
   const handleTradeHistoryClick = () => {
-    console.log("tradeHistoryClick");
+    setOnTradeModal((prev) => !prev);
   };
 
   const handlePortFolioClick = () => {
-    console.log("portFolioClick");
+    // setOnFollowAssetModal((prev) => !prev);
   };
 
   const handleSettleClick = () => {
@@ -64,8 +69,12 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
       commission,
     });
   };
+
   return (
     <FollowingUserContainer>
+      {onTradeModal && (
+        <TradeHistoryModal handleTradeHistoryClick={handleTradeHistoryClick} />
+      )}
       <FollowingTitleDiv>{followingUser.nickname}</FollowingTitleDiv>
       <FollowingDetailFlexDiv>
         <FollowingDetailDiv>
@@ -100,10 +109,12 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
           </FollowingDetailInnerDiv>
         </FollowingDetailDiv>
         <FollowingUserGraphDiv>
-          <MonochromePieChart
-            investmentList={investmentList}
-            isLegend={false}
-          />
+          <FollowingUserGraphInnerDiv>
+            <MonochromePieChart
+              investmentList={investmentList}
+              isLegend={false}
+            />
+          </FollowingUserGraphInnerDiv>
         </FollowingUserGraphDiv>
       </FollowingDetailFlexDiv>
       <FollowingButtonDiv>
@@ -117,7 +128,7 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
           />
           <BrandButtonComponent
             color={null}
-            content="포폴 보기"
+            content="보유 내역 보기"
             cancel={false}
             onClick={handlePortFolioClick}
             disabled={false}

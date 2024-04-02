@@ -10,6 +10,10 @@ import SettleModal from "@/pages/TradeHistoryPage/FollowPage/FollowingPage/Settl
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
 import FollowModal from "@/pages/UserPage/FollowModal";
+import "react-toastify/dist/ReactToastify.css";
+import { StyledContainer } from "./styles/CommonStyled";
+import useLoginAlertModalState from "./hooks/recoilHooks/useLoginAlertModalState";
+import LoginAlertModal from "./components/common/Modal/LoginAlertModal";
 
 const toPriceType = (coinData: ResMarketCodeType[]): PriceType[] => {
   return coinData
@@ -33,6 +37,7 @@ export default function App() {
   const setPriceList = useSetRecoilState(priceListState);
   const { settleModal } = useSettleModalState();
   const { followModal } = useFollowModalState();
+  const { loginAlertModal } = useLoginAlertModalState();
 
   useEffect(() => {
     getCoinList((response: AxiosResponse<ResMarketCodeType[]>) => {
@@ -43,9 +48,19 @@ export default function App() {
 
   return (
     <>
+      <StyledContainer
+        position="top-right"
+        closeOnClick
+        closeButton={false}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        theme="light"
+        draggablePercent={60}
+      />
       <RoutesComponent />
       {settleModal && <SettleModal />}
       {followModal && <FollowModal />}
+      {loginAlertModal && <LoginAlertModal />}
     </>
   );
 }

@@ -20,9 +20,9 @@ function RankPagination({
   totalPage,
 }: RankPaginationProps) {
   const [pageList, setPageList] = useState([1]);
+  const [startPage, setStartPage] = useState(0);
 
   useEffect(() => {
-    const startPage = Math.floor(nowPage / 5) * 5;
     const newPageList = [];
 
     for (let i = startPage; i < startPage + 5 && i < totalPage; i += 1) {
@@ -30,7 +30,11 @@ function RankPagination({
     }
 
     setPageList(newPageList);
-  }, [nowPage, totalPage]);
+  }, [startPage, totalPage]);
+
+  useEffect(() => {
+    setStartPage(Math.floor(nowPage / 5) * 5);
+  }, [nowPage]);
 
   const handlePaginationClick = (selectedPageNum: number) => {
     setNowPage(selectedPageNum - 1);
@@ -38,32 +42,26 @@ function RankPagination({
 
   const handlePaginationPrevArrowClick = () => {
     const prevPage = Math.floor(nowPage / 5) * 5 - 1;
-    if (prevPage >= 0) {
-      setNowPage(prevPage);
-    } else {
-      alert("더 이상 없습니다");
-    }
+    setNowPage(prevPage);
   };
 
   const handlePaginationNextArrowClick = () => {
     const nextPage = Math.ceil((nowPage + 1) / 5) * 5;
-    if (nextPage <= totalPage) {
-      setNowPage(nextPage);
-    } else {
-      alert("더 이상 없습니다");
-    }
+    setNowPage(nextPage);
   };
 
   return (
     <RankPaginationContainer>
       <RankPaginationDiv>
-        <RankArrowDiv onClick={handlePaginationPrevArrowClick}>
-          <img
-            src={leftArrow}
-            alt="rank-pagination-left-arrow"
-            draggable={false}
-          />
-        </RankArrowDiv>
+        {startPage !== 0 ? (
+          <RankArrowDiv onClick={handlePaginationPrevArrowClick}>
+            <img
+              src={leftArrow}
+              alt="rank-pagination-left-arrow"
+              draggable={false}
+            />
+          </RankArrowDiv>
+        ) : null}
         {pageList.map((pageNum) => (
           <RankPaginationButton
             key={pageNum}
@@ -73,13 +71,15 @@ function RankPagination({
             {pageNum}
           </RankPaginationButton>
         ))}
-        <RankArrowDiv onClick={handlePaginationNextArrowClick}>
-          <img
-            src={rightArrow}
-            alt="rank-pagination-right-arrow"
-            draggable={false}
-          />
-        </RankArrowDiv>
+        {startPage !== Math.floor(totalPage / 5) * 5 ? (
+          <RankArrowDiv onClick={handlePaginationNextArrowClick}>
+            <img
+              src={rightArrow}
+              alt="rank-pagination-right-arrow"
+              draggable={false}
+            />
+          </RankArrowDiv>
+        ) : null}
       </RankPaginationDiv>
     </RankPaginationContainer>
   );

@@ -26,7 +26,7 @@ function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
       {tabNameList.map((tabName, idx) => (
         <TabButton
           key={tabName[1]}
-          width={idx === 1 ? "3.75rem" : null}
+          width={idx === 1 ? "4.5rem" : null}
           height={buttonHeight}
           $active={nowTabName === tabName[1]}
           onClick={() => handleTabClick(tabName[1])}
