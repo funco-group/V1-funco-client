@@ -21,7 +21,7 @@ import {
 import useParseDate from "@/hooks/useParseDate";
 import BrandButtonComponent from "@/components/common/Button/BrandButtonComponent";
 import palette from "@/lib/palette";
-import MonochromePieChart from "@/components/common/MonochromePieChart";
+import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 
 interface FollowingUserProps {

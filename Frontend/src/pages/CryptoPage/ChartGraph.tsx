@@ -67,6 +67,11 @@ function ChartGraph({ button }: ChartGraphProps) {
         tooltip: {
           enabled: true,
         },
+        labels: {
+          formatter: function (y: number) {
+            return y.toLocaleString("ko-KR");
+          },
+        },
       },
       plotOptions: {
         candlestick: {

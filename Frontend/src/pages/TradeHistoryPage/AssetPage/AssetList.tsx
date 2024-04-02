@@ -16,8 +16,8 @@ function AssetList({ assets }: AssetListProps) {
   const columns = [
     "보유자산",
     "보유수량",
-    "매수평균가",
-    "매수금액",
+    "매수 평균가",
+    "매수 금액",
     "평가금액",
     "평가수익률(%)",
   ];

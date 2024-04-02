@@ -24,11 +24,18 @@ export const TitleDiv = styled.div`
   /* background-color: red; */
   font-size: 0.95rem;
 `;
-export const DataDiv = styled.div`
+export const DataDiv = styled.div<{ color: string }>`
   /* background-color: blue; */
   text-align: right;
   font-family: "NanumSquareBold";
-
+  color: ${(props) => {
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+  }};
   span {
     font-size: 0.75rem;
     color: ${palette.brandDarkGray};

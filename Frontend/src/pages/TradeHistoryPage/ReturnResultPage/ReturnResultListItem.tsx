@@ -1,26 +1,68 @@
 import { ColumnGrid, ListItemContainer } from "@/styles/CommonStyled";
-import { ReturnResultListItemDiv } from "./ReturnResultListItem.styled";
+import {
+  ReturnResultListItemDiv,
+  ReturnResultListItemContainer,
+} from "./ReturnResultListItem.styled";
+import { StatisticsType } from "@/interfaces/StatisticsType";
 
-function ReturnResultListItem() {
+interface ReturnResultListItemProps {
+  result: StatisticsType;
+}
+
+function ReturnResultListItem({ result }: ReturnResultListItemProps) {
   return (
     <ListItemContainer>
-      <ColumnGrid column="repeat(7, 1fr)">
-        <ReturnResultListItemDiv color="black">23.6</ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="blue">
-          -19,293,323
-        </ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="red">0.18%</ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="red">
-          999,999,999
-        </ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="red">100%</ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="black">
-          999,999,999
-        </ReturnResultListItemDiv>
-        <ReturnResultListItemDiv color="black">
-          999,999,999
-        </ReturnResultListItemDiv>
-      </ColumnGrid>
+      <ReturnResultListItemContainer>
+        <ColumnGrid column="repeat(7, 1fr)">
+          <ReturnResultListItemDiv color="black" align="">
+            {result.date}
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv
+            color={
+              result.returnResult.toString().startsWith("-") ? "blue" : "red"
+            }
+            align="right"
+          >
+            {result.returnResult.toLocaleString("ko-KR")}
+            <span>WON</span>
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv
+            color={
+              result.returnRate.toString().startsWith("-") ? "blue" : "red"
+            }
+            align="right"
+          >
+            {result.returnRate}
+            <span>%</span>
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv
+            color={
+              result.accReturnResult.toString().startsWith("-") ? "blue" : "red"
+            }
+            align="right"
+          >
+            {result.accReturnResult.toLocaleString("ko-KR")}
+            <span>WON</span>
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv
+            color={
+              result.accReturnRate.toString().startsWith("-") ? "blue" : "red"
+            }
+            align="right"
+          >
+            {result.accReturnRate}
+            <span>%</span>
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv color="black" align="right">
+            {result.beginningAsset.toLocaleString("ko-KR")}
+            <span>WON</span>
+          </ReturnResultListItemDiv>
+          <ReturnResultListItemDiv color="black" align="right">
+            {result.endingAsset.toLocaleString("ko-KR")}
+            <span>WON</span>
+          </ReturnResultListItemDiv>
+        </ColumnGrid>
+      </ReturnResultListItemContainer>
     </ListItemContainer>
   );
 }

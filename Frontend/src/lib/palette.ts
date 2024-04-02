@@ -13,6 +13,7 @@ const palette = {
   mainColor3: "#62B6B7",
   background: "#FAFAFA",
   deactivatedGray: "#eeeeee",
+  tabColor: "#f9fafc",
 };
 
 export default palette;

@@ -38,3 +38,8 @@ export interface TotalAssetType {
   returnResult: number;
   evaluationProfit: number;
 }
+
+export interface OptionType {
+  value: string;
+  name: string;
+}

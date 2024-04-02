@@ -15,6 +15,7 @@ export const ReturnResultTabContainer = styled.div`
     border: 1px solid ${palette.deactivatedGray};
     border-radius: 5px;
     color: #999999;
+    width: 7rem;
 
     &:focus {
       border-color: ${palette.mainColor};
