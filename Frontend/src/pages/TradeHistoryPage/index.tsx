@@ -18,7 +18,7 @@ function Index() {
         <HistoryTab />
         <Outlet />
       </TradeHistoryPageContainer>
-      {/* <PriceWindow priceList={priceList} setPriceList={setPriceList} /> */}
+      <PriceWindow priceList={priceList} setPriceList={setPriceList} />
     </CryptoPageContainer>
   );
 }
