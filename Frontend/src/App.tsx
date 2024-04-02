@@ -55,7 +55,8 @@ export default function App() {
         pauseOnHover={false}
         pauseOnFocusLoss={false}
         theme="light"
-        draggablePercent={60}
+        draggable
+        draggablePercent={80}
       />
       <RoutesComponent />
       {settleModal && <SettleModal />}
