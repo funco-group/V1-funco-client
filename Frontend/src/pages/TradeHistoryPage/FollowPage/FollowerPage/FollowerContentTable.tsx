@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
 import {
-  FollowerContentTableContainer,
-  FolloweColumnGridDiv,
-} from "./FollowerContentTable.styled";
+  ColumnContainer,
+  ColumnGrid,
+  ColumnTitleDiv,
+} from "@/styles/CommonStyled";
+import { FollowerContentTableContainer } from "./FollowerContentTable.styled";
 import { FollowerContentType } from "@/interfaces/tradeHistory/follow/FollowerContentType";
 import FollowerContent from "./FollowerContent";
 import { getFollowerList } from "@/apis/follow";
@@ -36,11 +37,11 @@ function FollowerContentTable({
   return (
     <FollowerContentTableContainer>
       <ColumnContainer>
-        <FolloweColumnGridDiv>
+        <ColumnGrid column="7.5rem 1fr 1fr 1fr 1fr 1fr 7.5rem">
           {columnList.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}
-        </FolloweColumnGridDiv>
+        </ColumnGrid>
       </ColumnContainer>
       {FollowerContentList.length ? (
         FollowerContentList.map((content) => (

@@ -7,12 +7,15 @@ import {
   CircleDiv,
   ToggleDiv,
   ToggleText,
-  ColumnGridDiv,
   TradeListContainer,
   NoTradeData,
 } from "./TradeList.styled";
 import TradeListItem from "./TradeListItem";
-import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
+import {
+  ColumnContainer,
+  ColumnGrid,
+  ColumnTitleDiv,
+} from "@/styles/CommonStyled";
 import AlertModal from "@/components/common/Modal/AlertModal";
 import userState from "@/recoils/user";
 import { TradeListType } from "@/interfaces/TradeType";
@@ -100,19 +103,27 @@ function TradeList() {
         })}
       </ToggleContainer>
       <ColumnContainer>
-        {selected === "체결" ? (
-          <ColumnGridDiv $conclude>
-            {concludeColumns.map((column) => (
-              <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
-            ))}
-          </ColumnGridDiv>
-        ) : (
-          <ColumnGridDiv $conclude={false}>
-            {columns.map((column) => (
-              <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
-            ))}
-          </ColumnGridDiv>
-        )}
+        <ColumnGrid
+          column={
+            selected === "체결"
+              ? "6rem 6rem 9rem 8rem"
+              : "5.5rem 6rem 7.2rem 7.1rem 3.5rem"
+          }
+        >
+          {selected === "체결" ? (
+            <>
+              {concludeColumns.map((column) => (
+                <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
+              ))}
+            </>
+          ) : (
+            <>
+              {columns.map((column) => (
+                <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
+              ))}
+            </>
+          )}
+        </ColumnGrid>
       </ColumnContainer>
       <TradeListContainer>
         {!user.user && <NoTradeData>로그인 후 확인할 수 있습니다.</NoTradeData>}

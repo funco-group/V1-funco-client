@@ -20,10 +20,10 @@ const Trade = React.memo(function Trade() {
 
   // 현재가 가져오기
   useEffect(() => {
-    getTickerPrice((response: AxiosResponse<ResTickerType[]>) => {
+    getTickerPrice(coinCode!, (response: AxiosResponse<ResTickerType[]>) => {
       const { data } = response;
       setCurPrice(Math.round(data[0].trade_price));
-    }, coinCode!);
+    });
   }, [coinCode]);
 
   return (

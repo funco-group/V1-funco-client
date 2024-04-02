@@ -59,13 +59,13 @@ function Index() {
   // 티커 가격 요청 및 맵 설정
   const fetchTickerPrice = () => {
     if (tickerList) {
-      getTickerPrice((res: AxiosResponse<ResTickerType[]>) => {
+      getTickerPrice(tickerList, (res: AxiosResponse<ResTickerType[]>) => {
         const mapList: [string, number][] = res.data.map((coin) => [
           coin.market,
           coin.trade_price,
         ]);
         setTickerPriceMap(new Map(mapList));
-      }, tickerList);
+      });
     }
   };
 

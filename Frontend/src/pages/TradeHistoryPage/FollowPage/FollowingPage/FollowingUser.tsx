@@ -13,11 +13,15 @@ import {
   FollowingLeftButtonDiv,
   FollowingUserGraphDiv,
 } from "./FollowingUser.styled";
-import { ColumnContainer, ColumnTitleDiv } from "@/styles/CommonStyled";
+import {
+  ColumnContainer,
+  ColumnGrid,
+  ColumnTitleDiv,
+} from "@/styles/CommonStyled";
 import useParseDate from "@/hooks/useParseDate";
 import BrandButtonComponent from "@/components/common/Button/BrandButtonComponent";
 import palette from "@/lib/palette";
-import MonochromePieChart from "./MonochromePieChart";
+import MonochromePieChart from "@/components/common/MonochromePieChart";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 
 interface FollowingUserProps {
@@ -67,11 +71,11 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
         <FollowingDetailDiv>
           <FollowingDetailInnerDiv>
             <ColumnContainer>
-              <FollowingColumnGridDiv>
+              <ColumnGrid column="7.5rem 1fr 1fr 1fr">
                 {columnList.map((column) => (
                   <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
                 ))}
-              </FollowingColumnGridDiv>
+              </ColumnGrid>
             </ColumnContainer>
             <FollowingContentDiv>
               <FollowingColumnGridDiv>

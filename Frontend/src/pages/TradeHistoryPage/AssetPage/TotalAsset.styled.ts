@@ -5,11 +5,6 @@ export const TotalAssetContainer = styled.div`
   border-bottom: 1px solid ${palette.borderGray};
 `;
 
-export const TotalAssetInfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-`;
-
 export const AssetItemContainer = styled.div<{ $top: boolean }>`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -20,8 +15,8 @@ export const AssetItemContainer = styled.div<{ $top: boolean }>`
 `;
 
 export const AssetItemDiv = styled.div`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  display: flex;
+  justify-content: space-between;
   padding: 1rem 0.5rem;
 `;
 

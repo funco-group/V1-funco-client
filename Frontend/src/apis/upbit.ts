@@ -13,8 +13,8 @@ export async function getCoinList(
 }
 
 export async function getTickerPrice(
-  success: (response: AxiosResponse<ResTickerType[]>) => void,
   markets: string,
+  success: (response: AxiosResponse<ResTickerType[]>) => void,
 ) {
   await axios.get(`${url}/${version}/ticker?markets=${markets}`).then(success);
 }

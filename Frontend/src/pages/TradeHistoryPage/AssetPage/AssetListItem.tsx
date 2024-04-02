@@ -1,71 +1,56 @@
-import { AssetItemContainer, AssetItemDiv } from "./AssetListItem.styled";
+import { ColumnGrid, ListItemContainer } from "@/styles/CommonStyled";
+import { AssetItemDiv, ListItemContainerDiv } from "./AssetListItem.styled";
+import { AssetType } from "@/interfaces/AssetType";
 
-function AssetListItem() {
-  const asset = {
-    memberId: 1,
-    cash: 500000,
-    followingInvestment: 100000,
-    coins: [
-      {
-        ticker: "KRW-BTC",
-        volume: 7.7732,
-        averagePrice: 45000,
-      },
-      {
-        ticker: "KRW-ETH",
-        volume: 4.3324,
-        averagePrice: 45000,
-      },
-    ],
-  };
-
+function AssetListItem({
+  imgSrc,
+  name,
+  volume,
+  averagePrice,
+  price,
+  evaluationAmount,
+  evaluationProfit,
+}: AssetType) {
   return (
-    <div>
-      <AssetItemContainer>
-        <AssetItemDiv>팔로우</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>
-          {asset.followingInvestment.toLocaleString("ko-KR")}
-        </AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-      </AssetItemContainer>
-      <AssetItemContainer>
-        <AssetItemDiv>현금</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-        <AssetItemDiv>
-          {asset.followingInvestment.toLocaleString("ko-KR")}
-        </AssetItemDiv>
-        <AssetItemDiv>-</AssetItemDiv>
-      </AssetItemContainer>
-      {asset.coins.map((coin) => (
-        <AssetItemContainer key={coin.ticker}>
-          <AssetItemDiv>
-            <img
-              src={`https://static.upbit.com/logos/${coin.ticker.split("-")[1]}.png`}
-              alt={coin.ticker}
-              width={20}
-            />
-            {coin.ticker}
+    <ListItemContainer>
+      <ListItemContainerDiv>
+        <ColumnGrid column="repeat(6, 1fr)">
+          <AssetItemDiv align="left" color="black">
+            <img src={imgSrc} alt={name} width={20} />
+            {name}
           </AssetItemDiv>
-          <AssetItemDiv>
-            {coin.volume.toLocaleString("ko-KR")}
-            <span> {coin.ticker.split("-")[1]}</span>
+          <AssetItemDiv align={volume ? "right" : ""} color="black">
+            {volume ? volume : "-"}
+            <span> {volume && name.split("-")[1]}</span>
           </AssetItemDiv>
-          <AssetItemDiv>
-            {coin.averagePrice.toLocaleString("ko-KR")}
+          <AssetItemDiv align={averagePrice ? "right" : ""} color="black">
+            {averagePrice ? averagePrice.toLocaleString("ko-KR") : "-"}
+            {averagePrice && <span> WON</span>}
           </AssetItemDiv>
-          <AssetItemDiv>
-            {(coin.averagePrice * coin.volume).toLocaleString("ko-KR")}
+          <AssetItemDiv align={price != null ? "right" : ""} color="black">
+            {price != null ? price.toLocaleString("ko-KR") : "-"}
+            {price != null && <span> WON</span>}
           </AssetItemDiv>
-          <AssetItemDiv>{}</AssetItemDiv>
-          <AssetItemDiv>-</AssetItemDiv>
-        </AssetItemContainer>
-      ))}
-    </div>
+          <AssetItemDiv align="right" color="black">
+            {evaluationAmount.toLocaleString("ko-KR")}
+            <span>WON</span>
+          </AssetItemDiv>
+          <AssetItemDiv
+            align={evaluationProfit ? "" : ""}
+            color={
+              evaluationProfit && evaluationProfit !== 0
+                ? evaluationProfit.toString().startsWith("-")
+                  ? "blue"
+                  : "red"
+                : "black"
+            }
+          >
+            {evaluationProfit ? evaluationProfit : "-"}
+            {evaluationProfit && <span>%</span>}
+          </AssetItemDiv>
+        </ColumnGrid>
+      </ListItemContainerDiv>
+    </ListItemContainer>
   );
 }
 

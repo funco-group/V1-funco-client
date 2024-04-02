@@ -1,31 +1,6 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
 
-export const TotalReturnDateContainer = styled.div`
-  /* background-color: red; */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid ${palette.borderGray};
-
-  select {
-    margin-left: 1rem;
-    padding: 0.7rem;
-    border: 1px solid ${palette.deactivatedGray};
-    border-radius: 5px;
-    color: #999999;
-  }
-`;
-export const DateDiv = styled.div`
-  font-size: 0.9rem;
-  font-family: "NanumSquareBold";
-`;
-
-export const DateSetDiv = styled.div`
-  display: flex;
-`;
-
 export const ResultContainer = styled.div`
   border-bottom: 1px solid ${palette.borderGray};
 `;

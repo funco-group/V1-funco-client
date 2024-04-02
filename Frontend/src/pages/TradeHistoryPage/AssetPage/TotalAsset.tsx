@@ -1,65 +1,66 @@
 import { GreenContainer } from "@/styles/TradeHistoryStyled";
-// import MonochromePieChart from "../FollowPage/FollowingPage/MonochromePieChart";
 import {
-  TotalAssetInfoContainer,
   AssetItemContainer,
   AssetItemDiv,
   TitleDiv,
   DataDiv,
   TotalAssetContainer,
-  ChartContainer,
 } from "./TotalAsset.styled";
+import { TotalAssetType } from "@/interfaces/AssetType";
 
-function TotalAsset() {
+interface TotalAssetProps {
+  totalAsset: TotalAssetType | undefined;
+}
+
+function TotalAsset({ totalAsset }: TotalAssetProps) {
   return (
     <TotalAssetContainer>
-      <TotalAssetInfoContainer>
-        <GreenContainer>
-          <AssetItemContainer $top>
-            <AssetItemDiv>
-              <TitleDiv>보유</TitleDiv>
-              <DataDiv>
-                0 <span>WON</span>
-              </DataDiv>
-            </AssetItemDiv>
-            <AssetItemDiv>
-              <TitleDiv>총 보유자산</TitleDiv>
-              <DataDiv>
-                0 <span>WON</span>
-              </DataDiv>
-            </AssetItemDiv>
-          </AssetItemContainer>
-          <AssetItemContainer $top={false}>
-            <AssetItemDiv>
-              <TitleDiv>총 매수금액</TitleDiv>
-              <DataDiv>
-                0 <span>WON</span>
-              </DataDiv>
-            </AssetItemDiv>
-            <AssetItemDiv>
-              <TitleDiv>총 평가손익</TitleDiv>
-              <DataDiv>
-                0 <span>WON</span>
-              </DataDiv>
-            </AssetItemDiv>
-          </AssetItemContainer>
-          <AssetItemContainer $top={false}>
-            <AssetItemDiv>
-              <TitleDiv>총 평가금액</TitleDiv>
-              <DataDiv>
-                0 <span>WON</span>
-              </DataDiv>
-            </AssetItemDiv>
-            <AssetItemDiv>
-              <TitleDiv>총 평가수익률</TitleDiv>
-              <DataDiv>
-                0 <span>%</span>
-              </DataDiv>
-            </AssetItemDiv>
-          </AssetItemContainer>
-        </GreenContainer>
-        <ChartContainer>차트</ChartContainer>
-      </TotalAssetInfoContainer>
+      <GreenContainer>
+        <AssetItemContainer $top>
+          <AssetItemDiv>
+            <TitleDiv>보유</TitleDiv>
+            <DataDiv>
+              {totalAsset?.cash.toLocaleString("ko-KR")} <span>WON</span>
+            </DataDiv>
+          </AssetItemDiv>
+          <AssetItemDiv>
+            <TitleDiv>총 보유자산</TitleDiv>
+            <DataDiv>
+              {totalAsset?.asset.toLocaleString("ko-KR")} <span>WON</span>
+            </DataDiv>
+          </AssetItemDiv>
+        </AssetItemContainer>
+        <AssetItemContainer $top={false}>
+          <AssetItemDiv>
+            <TitleDiv>총 매수금액</TitleDiv>
+            <DataDiv>
+              {totalAsset?.price.toLocaleString("ko-KR")} <span>WON</span>
+            </DataDiv>
+          </AssetItemDiv>
+          <AssetItemDiv>
+            <TitleDiv>총 평가손익</TitleDiv>
+            <DataDiv>
+              {totalAsset?.returnResult.toLocaleString("ko-KR")}{" "}
+              <span>WON</span>
+            </DataDiv>
+          </AssetItemDiv>
+        </AssetItemContainer>
+        <AssetItemContainer $top={false}>
+          <AssetItemDiv>
+            <TitleDiv>총 평가금액</TitleDiv>
+            <DataDiv>
+              {totalAsset?.evaluationAmount.toLocaleString("ko-KR")}{" "}
+              <span>WON</span>
+            </DataDiv>
+          </AssetItemDiv>
+          <AssetItemDiv>
+            <TitleDiv>총 평가수익률</TitleDiv>
+            <DataDiv>
+              {totalAsset?.evaluationProfit} <span>%</span>
+            </DataDiv>
+          </AssetItemDiv>
+        </AssetItemContainer>
+      </GreenContainer>
     </TotalAssetContainer>
   );
 }

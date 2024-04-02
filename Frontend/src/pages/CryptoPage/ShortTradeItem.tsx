@@ -91,10 +91,9 @@ function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
       setOrder(Math.round(cash * rate * 0.01));
       setFormatted(Math.round(cash * rate * 0.01).toLocaleString("ko-KR"));
     } else {
-      setOrder(parseFloat((volume * rate * 0.01).toPrecision(10)));
-      setFormatted(
-        parseFloat((volume * rate * 0.01).toPrecision(10)).toString(),
-      );
+      const price = parseFloat((volume * rate * 0.01).toFixed(10));
+      setOrder(price);
+      setFormatted(price.toString());
     }
   };
 
@@ -241,7 +240,7 @@ function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
             <ContentDiv>
               {name === "매도"
                 ? Math.round(expectAmount).toLocaleString("ko-KR")
-                : parseFloat(expectAmount.toPrecision(10))}
+                : parseFloat(expectAmount.toFixed(10))}
               <div>{name === "매도" ? "WON" : coinCode!.split("-")[1]}</div>
             </ContentDiv>
           </TradeItem>

@@ -117,7 +117,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
       );
     } else {
       let newVolume = volume * rate * 0.01;
-      newVolume = parseFloat(newVolume.toPrecision(10));
+      newVolume = parseFloat(newVolume.toFixed(10));
       setOrderVolume(newVolume);
       setFormattedVolume(newVolume.toString());
     }
@@ -236,9 +236,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
         <TradeItem>
           <TitleDiv>주문 가능</TitleDiv>
           <ContentDiv>
-            {name === "매수"
-              ? cash.toLocaleString("ko-KR")
-              : volume.toLocaleString("ko-KR")}
+            {name === "매수" ? cash.toLocaleString("ko-KR") : volume}
             <div>{name === "매수" ? "WON" : coinCode!.split("-")[1]}</div>
           </ContentDiv>
         </TradeItem>
@@ -308,7 +306,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
             <TitleDiv>수수료</TitleDiv>
             <ContentDiv>
               {name === "매수"
-                ? commission
+                ? parseFloat(commission.toFixed(10))
                 : commission.toLocaleString("ko-KR")}
               <div>{name === "매수" ? coinCode!.split("-")[1] : "WON"}</div>
             </ContentDiv>
@@ -319,7 +317,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
             <TitleDiv>총 획득량</TitleDiv>
             <ContentDiv>
               {name === "매수"
-                ? parseFloat(totalAmount.toPrecision(10))
+                ? parseFloat(totalAmount.toFixed(10))
                 : totalAmount.toLocaleString("ko-KR")}
               <div>{name === "매수" ? coinCode!.split("-")[1] : "WON"}</div>
             </ContentDiv>

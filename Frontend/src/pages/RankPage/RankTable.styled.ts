@@ -8,4 +8,5 @@ export const RankTableContainer = styled.div`
 export const RankTableColumnGridDiv = styled.div`
   display: grid;
   grid-template-columns: 6.25rem 1fr 1fr 1fr 1fr;
+  align-items: center;
 `;

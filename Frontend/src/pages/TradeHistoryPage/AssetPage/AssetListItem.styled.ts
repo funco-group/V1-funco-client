@@ -1,20 +1,28 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
 
-export const AssetItemContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-`;
-
-export const AssetItemDiv = styled.div`
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid ${palette.borderGray};
+export const AssetItemDiv = styled.div<{ align: string; color: string }>`
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* font-family: "NanumSquareBold"; */
+  color: ${(props) => {
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+    return palette.brandBlack;
+  }};
+
+  justify-content: ${(props) => {
+    if (props.align === "left") {
+      return "left";
+    }
+    if (props.align === "right") {
+      return "right";
+    }
+    return "center";
+  }};
 
   img {
     margin-right: 0.4rem;
@@ -22,6 +30,19 @@ export const AssetItemDiv = styled.div`
 
   span {
     font-size: 0.7rem;
-    color: ${palette.brandDarkGray};
+    color: ${(props) => {
+      if (props.color === "red") {
+        return palette.brandRed;
+      }
+      if (props.color === "blue") {
+        return palette.brandBlue;
+      }
+      return palette.brandDarkGray;
+    }};
   }
+`;
+
+export const ListItemContainerDiv = styled.div`
+  /* background-color: red; */
+  margin-left: 1.5rem;
 `;
