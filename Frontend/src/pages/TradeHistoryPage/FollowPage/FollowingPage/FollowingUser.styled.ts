@@ -53,9 +53,14 @@ export const FollowingContentMarginDiv = styled.div`
 `;
 
 export const FollowingUserGraphDiv = styled.div`
-  width: 11.25rem;
-  height: 8.125rem;
-  margin: 1.25rem auto auto auto;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FollowingUserGraphInnerDiv = styled.div`
+  width: 70%;
 `;
 
 export const FollowingButtonDiv = styled.div`

@@ -32,5 +32,6 @@ export const StatisticsRowDiv = styled.div`
 `;
 
 export const StatisticsGraphDiv = styled.div`
-  padding: 1.5625rem 0.625rem;
+  display: flex;
+  align-items: center;
 `;

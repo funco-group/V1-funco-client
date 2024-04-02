@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { ToastContainer } from "react-toastify";
 import palette from "@/lib/palette";
 
 export const CommonComponent = css`
@@ -21,6 +22,19 @@ export const ColumnTitleDiv = styled.div`
   font-size: 0.75rem;
   font-family: "NanumSquareAcb";
   color: ${palette.brandDarkGray};
+`;
+
+export const StyledContainer = styled(ToastContainer)`
+  margin-top: 4rem;
+
+  .Toastify__toast-body {
+    background: ${palette.brandWhite} !important;
+    color: ${palette.brandBlack};
+  }
+
+  .Toastify__progress-bar {
+    background: ${palette.brandColor} !important;
+  }
 `;
 
 export const ListItemContainer = styled.div`

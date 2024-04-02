@@ -28,7 +28,7 @@ function FollowerTab({ nowTabName, setNowTabName }: FollowerTabProps) {
       {tabNameList.map((tabName) => (
         <TabButton
           key={tabName[1]}
-          width="4.375rem"
+          width="5rem"
           height="2.1875rem"
           $active={tabName[1] === nowTabName}
           onClick={() => handleTabClick(tabName[1])}

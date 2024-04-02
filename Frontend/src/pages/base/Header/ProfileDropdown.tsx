@@ -27,6 +27,8 @@ function ProfileDropdown({
   const handleLogout = () => {
     logout();
     setIsProfileOpen((prev) => !prev);
+    window.location.reload();
+    window.location.href = "/";
   };
 
   const [open, setOpen] = useState(false);

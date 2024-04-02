@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   NotiDropdownContainer,
   NotiHistoryContentContainer,
@@ -8,11 +8,14 @@ import NotiHistoryType from "@/interfaces/notification/NotiHistoryType";
 import NotiHistoryContent from "./NotiHistoryContent";
 import downArrow from "@/assets/icon/chevron-down.svg";
 import { getNotiHistoryList, sendReadNotiList } from "@/apis/notification";
-import useNotiState from "@/hooks/recoilHooks/useNotiState";
 
-function NotiDropdown({ visible }: { visible: boolean }) {
+interface NotiDropdownProps {
+  visible: boolean;
+  setUnReadCount: Dispatch<SetStateAction<number>>;
+}
+
+function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
   const [notiHistoryList, setNotiHistoryList] = useState<NotiHistoryType[]>();
-  const { isNoti, toggleNoti } = useNotiState();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -30,17 +33,9 @@ function NotiDropdown({ visible }: { visible: boolean }) {
 
   useEffect(() => {
     if (notiHistoryList !== undefined) {
-      const readIds = notiHistoryList.map((notiHistory) => notiHistory.id);
-      sendReadNotiList(
-        {
-          readIds,
-        },
-        () => {
-          if (isNoti) {
-            toggleNoti();
-          }
-        },
-      );
+      sendReadNotiList(() => {
+        setUnReadCount(0);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notiHistoryList]);
@@ -60,7 +55,7 @@ function NotiDropdown({ visible }: { visible: boolean }) {
             />
           ))
         ) : (
-          <>노티없어영~~~₩</>
+          <>노티없어영~~~</>
         )}
       </NotiHistoryContentContainer>
       <NotiMoreButton>
