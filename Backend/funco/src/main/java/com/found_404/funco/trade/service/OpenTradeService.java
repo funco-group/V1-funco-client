@@ -1,7 +1,6 @@
 package com.found_404.funco.trade.service;
 
 import com.found_404.funco.follow.service.FollowTradeService;
-import com.found_404.funco.member.domain.repository.MemberRepository;
 import com.found_404.funco.notification.domain.type.NotificationType;
 import com.found_404.funco.notification.service.NotificationService;
 import com.found_404.funco.trade.domain.HoldingCoin;
@@ -30,7 +29,6 @@ public class OpenTradeService {
     private final OpenTradeRepository openTradeRepository;
     private final FollowTradeService followTradeService;
     private final NotificationService notificationService;
-    private final MemberRepository memberRepository;
 
     @Async
     public void processTrade(List<Long> concludingTradeIds, String ticker, boolean removeTicker) {
@@ -75,8 +73,9 @@ public class OpenTradeService {
     }
 
     private void processAsset(Trade trade) {
+        Optional<HoldingCoin> optionalHoldingCoin = holdingCoinRepository.findByMemberAndTicker(trade.getMember(), trade.getTicker());
+
         if (trade.getTradeType().equals(TradeType.BUY)) { // BUY
-            Optional<HoldingCoin> optionalHoldingCoin = holdingCoinRepository.findByMemberAndTicker(trade.getMember(), trade.getTicker());
             HoldingCoin holdingCoin;
             if (optionalHoldingCoin.isPresent()) {
                 holdingCoin = optionalHoldingCoin.get();
@@ -92,8 +91,12 @@ public class OpenTradeService {
 
             holdingCoinRepository.save(holdingCoin);
         } else { // SELL
-            trade.getMember().increaseCash(trade.getOrderCash());
-            memberRepository.save(trade.getMember());
+            if (optionalHoldingCoin.isEmpty() || optionalHoldingCoin.get().getVolume() <= trade.getVolume()) {
+                log.error("보유 개수 :{}, 팔려는 개수: {}",optionalHoldingCoin.get().getVolume(),trade.getVolume());
+                log.error("member : {}, coin: {}, sell faild 개수 부족", trade.getMember().getId(), trade.getTicker());
+                return;
+            }
+            optionalHoldingCoin.get().decreaseVolume(trade.getVolume());
         }
     }
 
