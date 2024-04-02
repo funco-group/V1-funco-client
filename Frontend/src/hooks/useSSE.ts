@@ -1,7 +1,6 @@
 import { EventSourcePolyfill } from "event-source-polyfill";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
-import { UserType } from "@/interfaces/user/UserType";
 import useUserState from "./recoilHooks/useUserState";
 
 interface ResMessageType {
@@ -17,8 +16,8 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number>>) {
 
     const fetchSSE = () => {
       const userInfo = localStorage.getItem("userInfo");
-      const userInLS: UserType = userInfo ? JSON.parse(userInfo) : null;
-      const accessToken = userInLS ? userInLS.accessToken : null;
+      const userInLS = userInfo ? JSON.parse(userInfo) : null;
+      const accessToken = userInLS ? userInLS.user.accessToken : null;
 
       eventSource = new EventSourcePolyfill(
         `${import.meta.env.VITE_BASE_URL}/v1/notifications/subscribe`,
@@ -35,8 +34,10 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number>>) {
       };
 
       eventSource.onmessage = async (e) => {
-        const res = await e.data;
-        const parsedData = JSON.parse(res) as ResMessageType;
+        const res = (await e.data) as string;
+        const parseRes = res.replace(/\\/g, "");
+        const parseParseRes = parseRes.slice(1, -1);
+        const parsedData = JSON.parse(parseParseRes) as ResMessageType;
 
         const newUnReadCount =
           parsedData.unReadCount > 99 ? 99 : parsedData.unReadCount;
@@ -44,14 +45,15 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number>>) {
         setUnReadCount(newUnReadCount);
 
         toast(parsedData.message);
-        console.log(parsedData);
+        console.log(parsedData.message);
+        console.log(parsedData.unReadCount);
       };
 
       eventSource.onerror = (e) => {
         console.log("Error", e);
         eventSource.close();
         // 재연결 로직: 1초 후에 다시 시도
-        // setTimeout(fetchSSE, 1000);
+        setTimeout(fetchSSE, 1000);
       };
     };
     if (user) {
