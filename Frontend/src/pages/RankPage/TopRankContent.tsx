@@ -18,7 +18,7 @@ function TopRankContent({ topRank, nowTapName }: TopRankContentProps) {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate(`/member/${topRank.member.nickname}`);
+    navigate(`/member/${topRank.member.id}`);
   };
   return (
     <TopRankContentContainer>

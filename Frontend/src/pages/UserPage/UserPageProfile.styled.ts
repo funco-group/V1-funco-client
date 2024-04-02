@@ -38,12 +38,23 @@ export const ProfileDetailContainer = styled.div`
   }
 `;
 
+export const ProfileRankFlexDiv = styled.div`
+  display: flex;
+  gap: 1.25rem;
+`;
+
+export const ProfileRankOuterDiv = styled.div`
+  width: 8rem;
+  text-align: center;
+`;
+
 export const ProfileRankDiv = styled.div`
   font-size: 1.25rem;
   color: ${palette.brandDarkGray};
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   span {
     font-family: "NanumSquareBold";

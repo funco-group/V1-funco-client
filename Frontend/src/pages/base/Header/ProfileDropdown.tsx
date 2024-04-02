@@ -9,10 +9,12 @@ import useUserState from "@/hooks/recoilHooks/useUserState";
 
 function ProfileDropdown({
   nickname,
+  memberId,
   visible,
   setIsProfileOpen,
 }: {
   nickname: string;
+  memberId: number;
   visible: boolean;
   setIsProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -20,7 +22,7 @@ function ProfileDropdown({
   const { logout } = useUserState();
 
   const handleNavigateMypage = () => {
-    navigate(`member/${nickname}`);
+    navigate(`member/${memberId}`);
     setIsProfileOpen((prev) => !prev);
   };
 

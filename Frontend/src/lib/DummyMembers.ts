@@ -2,8 +2,8 @@ import MemberType from "@/interfaces/userPage/MemberType";
 
 const DummyMembers: MemberType[] = [
   {
-    memberId: 3,
-    nickname: "소재열",
+    memberId: 1,
+    nickname: "jaeyeol s",
     profileUrl:
       "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/320/e549ece10c7c8feb2d3feefdfe69bb11_res.jpeg",
     introduction:
@@ -26,7 +26,7 @@ const DummyMembers: MemberType[] = [
     topCoin: ["KRW-BTC", "KRW-ETH", "KRW-DOGE"],
   },
   {
-    memberId: 2,
+    memberId: 3,
     nickname: "황주영",
     profileUrl: "https://www.dummyimage.com/600x400/000/fff&text=3",
     introduction: "재산 100억 가즈아",

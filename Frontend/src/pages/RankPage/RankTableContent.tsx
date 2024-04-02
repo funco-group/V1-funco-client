@@ -20,7 +20,7 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate(`/member/${rank.member.nickname}`);
+    navigate(`/member/${rank.member.id}`);
   };
   return (
     <RankTableContentContainer>

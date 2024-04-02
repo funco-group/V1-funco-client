@@ -6,6 +6,8 @@ import {
   ProfileEditButtonDiv,
   ProfileInput,
   ProfileRankDiv,
+  ProfileRankFlexDiv,
+  ProfileRankOuterDiv,
   ProfileTextArea,
   UserPageProfileContainer,
 } from "./UserPageProfile.styled";
@@ -55,10 +57,22 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
       <ComponentTitleH3>프로필</ComponentTitleH3>
       <ProfileDetailContainer>
         <img src={member.profileUrl} alt="member-profile" />
-        <ProfileRankDiv>
-          <span>{medalMap.get(member.rank) || "🏃‍♂️"}</span>
-          {member.rank}위
-        </ProfileRankDiv>
+        <ProfileRankFlexDiv>
+          <ProfileRankOuterDiv>
+            <div>총 자산 랭킹</div>
+            <ProfileRankDiv>
+              <span>{medalMap.get(member.assetRank) || "🏃‍♂️"}</span>
+              {member.assetRank}위
+            </ProfileRankDiv>
+          </ProfileRankOuterDiv>
+          <ProfileRankOuterDiv>
+            <div>따라오는 금액 랭킹</div>
+            <ProfileRankDiv>
+              <span>{medalMap.get(member.followingCashRank) || "🏃‍♂️"}</span>
+              {member.followingCashRank}위
+            </ProfileRankDiv>
+          </ProfileRankOuterDiv>
+        </ProfileRankFlexDiv>
         <ProfileInput
           type="text"
           value={nickname}

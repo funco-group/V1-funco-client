@@ -73,7 +73,10 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
   return (
     <FollowingUserContainer>
       {onTradeModal && (
-        <TradeHistoryModal handleTradeHistoryClick={handleTradeHistoryClick} />
+        <TradeHistoryModal
+          handleTradeHistoryClick={handleTradeHistoryClick}
+          followId={followingUser.followId}
+        />
       )}
       <FollowingTitleDiv>{followingUser.nickname}</FollowingTitleDiv>
       <FollowingDetailFlexDiv>
