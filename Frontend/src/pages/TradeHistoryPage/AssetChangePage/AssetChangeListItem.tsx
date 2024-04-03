@@ -5,6 +5,7 @@ import { AssetChangeListItemContainer } from "./AssetChangeListItem.styled";
 import useParseDate from "@/hooks/useParseDate";
 import { useRecoilValue } from "recoil";
 import { codeNameMapState } from "@/recoils/crypto";
+import followIcon from "@/assets/icon/follow-icon.png";
 
 interface AssetChangeListItemProps {
   history: AssetHistoryType;
@@ -22,14 +23,26 @@ function AssetChangeListItem({ history }: AssetChangeListItemProps) {
   return (
     <ListItemContainer>
       <AssetChangeListItemContainer>
-        <ColumnGrid column="6rem 5rem 5rem 1.3fr 1fr 1fr 1fr 1fr">
+        <ColumnGrid column="7rem 6rem 5rem 1.3fr 1fr 1fr 1fr 1fr">
           <ListItemDiv align="left" color="black">
             {useParseDate(history.date)}
           </ListItemDiv>
-          <ListItemDiv align="" color="black">
-            {history.assetType === "COIN"
-              ? nameMap.get(history.name)
-              : "팔로우"}
+          <ListItemDiv align="left" color="black">
+            {history.assetType === "COIN" ? (
+              <>
+                <img
+                  src={`https://static.upbit.com/logos/${history.name.split("-")[1]}.png`}
+                  alt={history.name}
+                  width={13}
+                />
+                {nameMap.get(history.name)}
+              </>
+            ) : (
+              <>
+                <img src={followIcon} alt={"팔로우"} width={13} />
+                {"팔로우"}
+              </>
+            )}
           </ListItemDiv>
           <ListItemDiv
             align=""

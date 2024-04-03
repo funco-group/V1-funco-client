@@ -4,7 +4,6 @@ import {
   ColumnTitleDiv,
 } from "@/styles/CommonStyled";
 import AssetListItem from "./AssetListItem";
-import { TitleDiv } from "@/styles/TradeHistoryStyled";
 import { AssetType } from "@/interfaces/AssetType";
 import AssetListContainer from "./AssetList.styled";
 
@@ -24,7 +23,6 @@ function AssetList({ assets }: AssetListProps) {
 
   return (
     <>
-      <TitleDiv>보유자산 목록</TitleDiv>
       <ColumnContainer>
         <ColumnGrid column="repeat(6, 1fr)">
           {columns.map((column) => (

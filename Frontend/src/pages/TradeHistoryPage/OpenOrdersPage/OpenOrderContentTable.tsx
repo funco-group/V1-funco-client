@@ -75,7 +75,7 @@ function OpenOrderContentTable() {
         />
       )}
       <ColumnContainer>
-        <ColumnGrid column="7rem 5rem 6rem 1fr 1fr 1fr 9rem">
+        <ColumnGrid column="7rem 7rem 8rem 1fr 1fr 1fr 9rem">
           {openOrderColumnList.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}

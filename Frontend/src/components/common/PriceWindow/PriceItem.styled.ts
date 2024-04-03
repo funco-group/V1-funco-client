@@ -4,8 +4,8 @@ import palette from "@/lib/palette";
 export const PriceItemContainer = styled.div<{ $selected: boolean }>`
   background-color: ${(props) => props.$selected && "#f4f5f8"};
   display: grid;
-  grid-template-columns: 0.2fr 0.8fr 0.7fr 0.55fr 0.8fr;
-  padding: 0 0.3rem;
+  grid-template-columns: 0.05fr 7.1rem 0.7fr 0.55fr 0.8fr;
+  padding: 0 0.2rem;
   height: 3.5rem;
   border-bottom: 1px solid ${palette.borderGray};
   cursor: default;
@@ -33,6 +33,12 @@ export const NameDiv = styled.div`
 `;
 export const KorNameDiv = styled.div`
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 0.3rem;
+  }
 `;
 
 export const CodeDiv = styled.div`

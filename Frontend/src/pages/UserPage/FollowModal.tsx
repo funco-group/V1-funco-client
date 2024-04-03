@@ -87,7 +87,7 @@ function FollowModal() {
               disabled
               value={cash?.toLocaleString("en-US")}
             />
-            won
+            WON
           </label>
 
           <label htmlFor="investment">
@@ -100,7 +100,7 @@ function FollowModal() {
               onChange={handleInvestmentInput}
               autoComplete="off"
             />
-            won
+            WON
           </label>
         </FollowModalContentDiv>
         <SettleModalContentButtonRowDiv>

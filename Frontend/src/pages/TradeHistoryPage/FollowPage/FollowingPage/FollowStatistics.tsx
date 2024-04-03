@@ -50,7 +50,7 @@ function FollowStatistics({
                       : "red"
                 }
               >
-                {statistic[1]} <span>{idx === 2 ? " %" : " won"}</span>
+                {statistic[1]} <span>{idx === 2 ? " %" : " WON"}</span>
               </GreenDataDiv>
             </StatisticsRowDiv>
           ))}

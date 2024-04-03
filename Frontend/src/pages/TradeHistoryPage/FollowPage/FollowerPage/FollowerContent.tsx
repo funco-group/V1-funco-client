@@ -30,20 +30,28 @@ function FollowerContent({ content }: { content: FollowerContentType }) {
               : "-"}
             {content.settlement && <span>WON</span>}
           </ListItemDiv>
-          <ListItemDiv align={content.returnRate ? "right" : ""} color="black">
+          <ListItemDiv
+            align={content.returnRate ? "right" : ""}
+            color={
+              content.returnRate && content.returnRate > 0 ? "red" : "blue"
+            }
+          >
             {content.returnRate
               ? content.returnRate.toLocaleString("ko-KR")
               : "-"}
             {content.returnRate && <span>%</span>}
           </ListItemDiv>
-          <ListItemDiv align={content.commission ? "right" : ""} color="black">
-            {content.commission
+          <ListItemDiv
+            align={content.commission !== null ? "right" : ""}
+            color="black"
+          >
+            {content.commission !== null
               ? content.commission.toLocaleString("ko-KR")
               : "-"}
-            {content.commission && <span>won</span>}
+            {content.commission !== null && <span>WON</span>}
           </ListItemDiv>
           <ListItemDiv align="center" color="black">
-            {settleDate ? settleDate : "-"}
+            {settleDate}
           </ListItemDiv>
         </ColumnGrid>
       </FollowerContentContainer>

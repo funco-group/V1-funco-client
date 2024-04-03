@@ -34,3 +34,10 @@ export async function getHistory(
 ) {
   await localAxios.get(`/${version}/${domain}/history`).then(success);
 }
+
+export async function getUserAsset(
+  memberId: number,
+  success: (response: AxiosResponse<AssetResponseType>) => void,
+) {
+  await localAxios.get(`/${version}/${domain}/${memberId}`).then(success);
+}
