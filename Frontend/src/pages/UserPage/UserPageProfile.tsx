@@ -30,7 +30,11 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
 
   useEffect(() => {
     setNickname(member.nickname);
-    setIntroduction(member.introduction);
+    if (!member.introduction) {
+      setIntroduction("한 줄 소개를 입력해주세요!");
+    } else {
+      setIntroduction(member.introduction);
+    }
   }, [member]);
 
   const handleNicknameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,11 +56,62 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
       memberId: member.memberId,
     });
   };
+  const handlePortfolioClick = () => {};
+
+  function renderButton() {
+    if (isCurrentUser) {
+      return (
+        <ProfileEditButtonDiv>
+          <BrandButtonComponent
+            content={isEditNickname ? "닉네임 저장" : "닉네임 수정"}
+            color={null}
+            cancel={false}
+            onClick={handleNicknameEditClick}
+            disabled={false}
+          />
+          <BrandButtonComponent
+            content={isEditIntro ? "한 줄 소개 저장" : "한 줄 소개 수정"}
+            color={null}
+            cancel={false}
+            onClick={handleIntroEditClick}
+            disabled={false}
+          />
+        </ProfileEditButtonDiv>
+      );
+    }
+    if (!member.isFollow) {
+      return (
+        <BrandButtonComponent
+          content="팔로우"
+          color={null}
+          cancel={false}
+          onClick={handleFollowClick}
+          disabled={false}
+        />
+      );
+    }
+    return (
+      <BrandButtonComponent
+        content="포폴 보기"
+        color={null}
+        cancel={false}
+        onClick={handlePortfolioClick}
+        disabled={false}
+      />
+    );
+  }
   return (
     <UserPageProfileContainer>
       <ComponentTitleH3>프로필</ComponentTitleH3>
       <ProfileDetailContainer>
         <img src={member.profileUrl} alt="member-profile" />
+        <ProfileInput
+          type="text"
+          value={nickname}
+          onChange={handleNicknameInput}
+          disabled={!isEditNickname}
+          $active={isEditNickname}
+        />
         <ProfileRankFlexDiv>
           <ProfileRankOuterDiv>
             <div>총 자산 랭킹</div>
@@ -66,20 +121,13 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
             </ProfileRankDiv>
           </ProfileRankOuterDiv>
           <ProfileRankOuterDiv>
-            <div>따라오는 금액 랭킹</div>
+            <div>총 팔로워 랭킹</div>
             <ProfileRankDiv>
               <span>{medalMap.get(member.followingCashRank) || "🏃‍♂️"}</span>
               {member.followingCashRank}위
             </ProfileRankDiv>
           </ProfileRankOuterDiv>
         </ProfileRankFlexDiv>
-        <ProfileInput
-          type="text"
-          value={nickname}
-          onChange={handleNicknameInput}
-          disabled={!isEditNickname}
-          $active={isEditNickname}
-        />
         {isEditIntro ? (
           <ProfileTextArea
             value={introduction}
@@ -91,34 +139,7 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
           <p>{introduction}</p>
         )}
       </ProfileDetailContainer>
-      <ProfileButtonDiv>
-        {isCurrentUser ? (
-          <ProfileEditButtonDiv>
-            <BrandButtonComponent
-              content={isEditNickname ? "닉네임 저장" : "닉네임 수정"}
-              color={null}
-              cancel={false}
-              onClick={handleNicknameEditClick}
-              disabled={false}
-            />
-            <BrandButtonComponent
-              content={isEditIntro ? "한 줄 소개 저장" : "한 줄 소개 수정"}
-              color={null}
-              cancel={false}
-              onClick={handleIntroEditClick}
-              disabled={false}
-            />
-          </ProfileEditButtonDiv>
-        ) : (
-          <BrandButtonComponent
-            content="따라 가기"
-            color={null}
-            cancel={false}
-            onClick={handleFollowClick}
-            disabled={false}
-          />
-        )}
-      </ProfileButtonDiv>
+      <ProfileButtonDiv>{renderButton()}</ProfileButtonDiv>
     </UserPageProfileContainer>
   );
 }

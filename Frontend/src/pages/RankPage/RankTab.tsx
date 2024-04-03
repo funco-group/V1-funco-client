@@ -12,7 +12,7 @@ const buttonHeight = "2.1875rem";
 
 function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
   const tabNameList: [string, "asset" | "follow", "right" | "left"][] = [
-    ["따라오는 금액", "follow", "left"],
+    ["총 팔로워 금액", "follow", "left"],
     ["총 자산", "asset", "right"],
   ];
 
@@ -22,10 +22,12 @@ function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
   };
 
   const nowDate = new Date();
-  const hour = nowDate.getHours();
-  const minutes = nowDate.getMinutes();
-  const rankCalDate =
-    minutes >= 30 ? `${hour}시 30분 기준` : `${hour}시 00분 기준`;
+  const year = nowDate.getFullYear();
+  const month = String(nowDate.getMonth() + 1).padStart(2, "0");
+  const day = String(nowDate.getDate()).padStart(2, "0");
+  const hour = String(nowDate.getHours()).padStart(2, "0");
+  const minutes = nowDate.getMinutes() >= 30 ? "30" : "00";
+  const rankCalDate = `${year}-${month}-${day} ${hour}:${minutes} 기준`;
 
   return (
     <RankTabContainer>

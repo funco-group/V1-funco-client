@@ -8,6 +8,7 @@ import NotiHistoryType from "@/interfaces/notification/NotiHistoryType";
 import NotiHistoryContent from "./NotiHistoryContent";
 import downArrow from "@/assets/icon/chevron-down.svg";
 import { getNotiHistoryList, sendReadNotiList } from "@/apis/notification";
+import useUserState from "@/hooks/recoilHooks/useUserState";
 
 interface NotiDropdownProps {
   visible: boolean;
@@ -17,6 +18,7 @@ interface NotiDropdownProps {
 function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
   const [notiHistoryList, setNotiHistoryList] = useState<NotiHistoryType[]>();
   const [open, setOpen] = useState(false);
+  const { checkUnReadNoti } = useUserState();
 
   useEffect(() => {
     if (visible) {
@@ -35,6 +37,7 @@ function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
     if (notiHistoryList !== undefined) {
       sendReadNotiList(() => {
         setUnReadCount(0);
+        checkUnReadNoti();
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

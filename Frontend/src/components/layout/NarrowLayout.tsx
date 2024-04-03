@@ -11,7 +11,7 @@ function NarrowLayout({ children }: ReactNodeProps) {
   return (
     <NarrowLayoutContainer>
       <div />
-      <div style={{ backgroundColor: "red" }}>{children}</div>
+      <div>{children}</div>
       <div />
     </NarrowLayoutContainer>
   );

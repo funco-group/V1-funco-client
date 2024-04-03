@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import palette from "@/lib/palette";
 
 const ColumnLayout = css`
   display: grid;
@@ -7,8 +8,10 @@ const ColumnLayout = css`
 `;
 
 export const ComponentTitleH3 = styled.h3`
-  padding: 0;
+  padding: 0 0 10px 0;
   margin: 0;
+  border-bottom: 1px solid ${palette.deactivatedGray};
+  height: 1.25rem;
 `;
 
 export const UserLayoutContainer = styled.div`
@@ -18,15 +21,9 @@ export const UserLayoutContainer = styled.div`
 `;
 
 export const UserLayoutFirstRowDiv = styled.div`
-  background-color: blue;
   ${ColumnLayout}
 `;
 
 export const UserLayoutSecondRowDiv = styled.div`
-  background-color: green;
   ${ColumnLayout}
-`;
-
-export const UserLayoutThirdRowDiv = styled.div`
-  background-color: gray;
 `;
