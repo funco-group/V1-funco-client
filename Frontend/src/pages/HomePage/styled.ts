@@ -51,11 +51,6 @@ export const PreviewImage = styled.img`
   transition: opacity 0.5s ease; */
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  /* ${({ $display }) =>
-    $display &&
-    css`
-      opacity: 1;
-    `}; */
 `;
 
 export const TextDiv = styled.div`
