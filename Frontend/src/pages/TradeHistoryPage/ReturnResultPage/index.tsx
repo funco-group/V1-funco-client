@@ -9,7 +9,9 @@ import { StatisticsType } from "@/interfaces/StatisticsType";
 
 export default function index() {
   const [activeTab, setActiveTab] = useState<string>("일별");
-  const [options, setOptions] = useState<OptionType[]>([]);
+  const [options, setOptions] = useState<OptionType[]>([
+    { value: "-", name: "-" },
+  ]);
   const [selected, setSelected] = useState<string>();
   const [resultList, setResultList] = useState<StatisticsType[]>([]);
   const [accReturnRate, setAccReturnRate] = useState<(string | number)[][]>();

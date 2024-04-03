@@ -23,6 +23,7 @@ import inputDecimalFormat from "@/utils/inputDecimalFormat";
 import { buyLimit, sellLimit } from "@/apis/trade";
 import AlertModal from "@/components/common/Modal/AlertModal";
 import { CoinVolumeType } from "@/interfaces/AssetType";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 interface NormalTradeItemProps {
   name: string;
@@ -31,6 +32,7 @@ interface NormalTradeItemProps {
 
 function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
   const user = useRecoilValue(userState);
+  const { onLoginAlertModal } = useLoginAlertModalState();
   const { coinCode } = useParams();
   const volumeButtons = [10, 20, 25, 30, 40, 50, 75, 100];
 
@@ -79,14 +81,9 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
   useEffect(() => {
     resetInput();
     if (name === "매수") {
-      if (user.user) {
-        getCashFunc();
-      }
+      getCashFunc();
     } else if (user.user) {
       getCoinVolumeFunc();
-    } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
     }
   }, [curPrice, coinCode, name, user.user]);
 
@@ -155,8 +152,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
         },
       );
     } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
+      onLoginAlertModal();
     }
   };
 
@@ -192,8 +188,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
         },
       );
     } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
+      onLoginAlertModal();
     }
   };
 
@@ -220,8 +215,6 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
       setTotalAmount(resPrice - commission);
     }
   }, [orderVolume, commission]);
-
-  // if (!(cash && volume && formattedOrderPrice)) return null;
 
   return (
     <TradeContainer>

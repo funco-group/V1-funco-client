@@ -2,17 +2,27 @@ import { useState } from "react";
 import NormalTradeItem from "./NormalTradeItem";
 import TradeButton from "@/components/crypto/TradeButtonTab";
 import { ButtonContainer } from "@/styles/Crypto.styled";
+import userState from "@/recoils/user";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
+import { useRecoilValue } from "recoil";
 
 interface NormalTradeProps {
   curPrice: number;
+  getCurPrice: () => void;
 }
 
-function NormalTrade({ curPrice }: NormalTradeProps) {
+function NormalTrade({ curPrice, getCurPrice }: NormalTradeProps) {
   const buttons = ["매수", "매도"];
   const [activeButton, setActiveButton] = useState<string>("매수");
+  const user = useRecoilValue(userState);
+  const { onLoginAlertModal } = useLoginAlertModalState();
 
   const changeButton = (button: string) => {
+    if (!user.user) {
+      onLoginAlertModal();
+    }
     setActiveButton(button);
+    getCurPrice();
   };
 
   return (

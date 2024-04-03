@@ -2,17 +2,27 @@ import { useState } from "react";
 import TradeButton from "@/components/crypto/TradeButtonTab";
 import { ButtonContainer } from "@/styles/Crypto.styled";
 import ShortTradeItem from "./ShortTradeItem";
+import userState from "@/recoils/user";
+import { useRecoilValue } from "recoil";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 interface ShortTradeProps {
   curPrice: number;
+  getCurPrice: () => void;
 }
 
-function ShortTrade({ curPrice }: ShortTradeProps) {
+function ShortTrade({ curPrice, getCurPrice }: ShortTradeProps) {
   const buttons = ["매수", "매도"];
   const [activeButton, setActiveButton] = useState<string>("매수");
+  const user = useRecoilValue(userState);
+  const { onLoginAlertModal } = useLoginAlertModalState();
 
   const changeButton = (button: string) => {
+    if (!user.user) {
+      onLoginAlertModal();
+    }
     setActiveButton(button);
+    getCurPrice();
   };
 
   return (
