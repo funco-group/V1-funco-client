@@ -9,11 +9,14 @@ import RecentInvestment from "./RecentInvestment";
 import UserFollow from "./UserFollow";
 import AssetGraph from "./AssetGraph";
 import ReturnRateGraph from "./ReturnRateGraph";
+import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
+import FollowModal from "@/pages/UserPage/FollowModal";
 
 function Index() {
   const { memberId } = useParams();
   const { user } = useUserState();
   const [member, setMember] = useState<MemberType>();
+  const { followModal } = useFollowModalState();
 
   useEffect(() => {
     if (memberId) {
@@ -32,6 +35,9 @@ function Index() {
   const isCurrentUser = user?.memberId === +memberId;
   return (
     <UserLayoutContainer>
+      {followModal && member && (
+        <FollowModal member={member} setMember={setMember} />
+      )}
       <UserLayoutRowDiv>
         <UserPageProfile isCurrentUser={isCurrentUser} member={member} />
         <AssetGraph member={member} />

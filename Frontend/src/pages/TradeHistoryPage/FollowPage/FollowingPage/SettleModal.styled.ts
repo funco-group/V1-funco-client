@@ -52,7 +52,7 @@ export const SettleModalContentRowDiv = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0;
-  width: 20rem;
+  width: 30rem;
 `;
 
 export const SettleModalContentButtonRowDiv = styled.div`

@@ -10,6 +10,7 @@ import { ComputedFollowingType } from "@/interfaces/tradeHistory/follow/Computed
 import { FollowingType } from "@/interfaces/tradeHistory/follow/FollowingTyps";
 import { getFollowingList } from "@/apis/follow";
 import { ResFollowingType } from "@/interfaces/tradeHistory/follow/ResFollowingType";
+import SettleModal from "@/pages/TradeHistoryPage/FollowPage/FollowingPage/SettleModal";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 
 function Index() {
@@ -28,21 +29,8 @@ function Index() {
   const [investmentList, setInvestmentList] = useState<(string | number)[][]>(
     [],
   );
-  const { settleModal } = useSettleModalState();
 
-  useEffect(() => {
-    if (!settleModal && followings !== undefined) {
-      setIsLoading(true);
-      setTimeout(() => {
-        getFollowingList((res: AxiosResponse<ResFollowingType>) => {
-          const { data } = res;
-          setTotalAsset(data.totalAsset);
-          setFollowings(data.followings);
-        });
-      }, 300); // 1초 뒤에 실행됨
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settleModal]);
+  const { settleModal } = useSettleModalState();
 
   // 코인 리스트 요청 및 설정
   const fetchCoinList = () => {
@@ -86,7 +74,7 @@ function Index() {
   }, [tickerList]);
 
   useEffect(() => {
-    if (tickerPriceMap.size && totalAsset && followings) {
+    if (tickerPriceMap.size && totalAsset && followings !== undefined) {
       let newTotalInvestment = 0;
       let newTotalEstimatedValue = 0;
       const newComputedFollowings: ComputedFollowingType[] = [];
@@ -149,6 +137,9 @@ function Index() {
   }
   return (
     <div>
+      {settleModal && followings !== undefined && (
+        <SettleModal followings={followings} setFollowings={setFollowings} />
+      )}
       {totalInvestment && totalEstimatedValue && totalAsset && (
         <FollowStatistics
           totalAsset={totalAsset}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
 import {
@@ -16,12 +16,22 @@ import palette from "@/lib/palette";
 import BrandButton from "@/components/common/Button/BrandButtonComponent.styled";
 import { addFollow } from "@/apis/follow";
 import { getCash } from "@/apis/asset";
+import AlertModal from "@/components/common/Modal/AlertModal";
+import MemberType from "@/interfaces/userPage/MemberType";
 
-function FollowModal() {
+interface FollowModalProps {
+  member: MemberType;
+  setMember: Dispatch<SetStateAction<MemberType | undefined>>;
+}
+
+function FollowModal({ member, setMember }: FollowModalProps) {
   const { followModal, offFollowModal } = useFollowModalState();
   const [cash, setCash] = useState<number>(0);
   const [investment, setinvestment] = useState("");
   const [isCheckTerms, setIsCheckTerms] = useState(false);
+
+  const [alert, setAlert] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
 
   useEffect(() => {
     getCash((res) => {
@@ -30,9 +40,19 @@ function FollowModal() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!alert && alertContent === "팔로우를 시작합니다.") {
+      offFollowModal();
+    }
+  }, [alert]);
+
   if (!followModal) {
     return null;
   }
+
+  const closeAlert = () => {
+    setAlert(false);
+  };
 
   const handleInvestmentInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInvestment = e.target.value;
@@ -40,7 +60,8 @@ function FollowModal() {
     if (Number.isNaN(newInvestmentNum)) {
       setinvestment("0");
     } else if (newInvestmentNum > cash) {
-      alert("가용 자산을 넘겨서 투자할 수 없습니다.");
+      setAlertContent("가용 자산을 넘겨서 투자할 수 없습니다.");
+      setAlert(true);
       setinvestment("0");
     } else {
       setinvestment(newInvestmentNum.toLocaleString("en-US"));
@@ -56,15 +77,28 @@ function FollowModal() {
   };
 
   const handleFollowClick = () => {
-    addFollow({
-      memberId: followModal?.memberId,
-      investment: Number(investment.replace(/,/g, "")),
-    });
-    offFollowModal();
+    addFollow(
+      {
+        memberId: followModal?.memberId,
+        investment: Number(investment.replace(/,/g, "")),
+      },
+      () => {
+        setMember({ ...member, isFollow: true });
+        setAlertContent("팔로우를 시작합니다.");
+        setAlert(true);
+      },
+    );
   };
 
   return (
     <SettleModalBackgroundContainer>
+      {alert && (
+        <AlertModal
+          title="알림"
+          content={alertContent}
+          closeAlert={closeAlert}
+        />
+      )}
       <SettleModalContainer>
         <SettleModalTitleDiv>팔로우</SettleModalTitleDiv>
         <FollowModalContentDiv>
@@ -124,9 +158,9 @@ function FollowModal() {
           <Tooltip
             id="buttonTooltip"
             style={{ backgroundColor: palette.brandColor }}
-            // arrowColor="transparent"
+            arrowColor="transparent"
             place="top"
-            // float
+            float
           />
         </SettleModalContentButtonRowDiv>
       </SettleModalContainer>
