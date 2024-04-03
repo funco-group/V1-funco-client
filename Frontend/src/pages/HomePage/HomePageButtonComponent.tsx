@@ -51,7 +51,6 @@ function HomePageButtonComponent({
       direction={buttonList[number].direction}
       number={number}
       onMouseEnter={() => handleSetTabNumber(number)}
-      onMouseLeave={() => setNowTabNumber((number + 1) % 4)}
     >
       <HomePageButtonFlexDiv direction={buttonList[number].direction}>
         {buttonList[number].direction === "left" && (
