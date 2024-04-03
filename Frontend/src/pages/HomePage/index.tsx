@@ -1,7 +1,13 @@
+// import { useState } from "react";
 import HomePageButtonComponent from "./HomePageButtonComponent";
 import { HomePageColumnGridDiv, HomePageRowGridDiv } from "./styled";
 
 function Index() {
+  // const [nowTabName, setNowTabName] = useState(0);
+
+  // setInterval(() => {
+  //   setNowTabName();
+  // });
   return (
     <HomePageColumnGridDiv>
       <div></div>
@@ -9,13 +15,13 @@ function Index() {
         <div style={{ backgroundColor: "gray" }}>
           <HomePageButtonComponent
             direction="left"
-            margin="1.875rem auto auto auto"
+            margin="5rem auto auto 1.875rem"
           />
         </div>
         <div style={{ backgroundColor: "blue" }}>
           <HomePageButtonComponent
             direction="left"
-            margin="80px auto auto 2.5rem"
+            margin="5rem auto auto 1.875rem"
           />
         </div>
       </HomePageRowGridDiv>
@@ -24,13 +30,13 @@ function Index() {
         <div style={{ backgroundColor: "green" }}>
           <HomePageButtonComponent
             direction="right"
-            margin="80px auto auto 2.5rem"
+            margin="5rem auto auto 1.875rem"
           />
         </div>
         <div style={{ backgroundColor: "purple" }}>
           <HomePageButtonComponent
             direction="right"
-            margin="80px auto auto 2.5rem"
+            margin="5rem auto auto 1.875rem"
           />
         </div>
       </HomePageRowGridDiv>

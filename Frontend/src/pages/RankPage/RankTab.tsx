@@ -26,7 +26,8 @@ function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
   const month = String(nowDate.getMonth() + 1).padStart(2, "0");
   const day = String(nowDate.getDate()).padStart(2, "0");
   const hour = String(nowDate.getHours()).padStart(2, "0");
-  const minutes = nowDate.getMinutes() >= 30 ? "30" : "00";
+  // const minutes = nowDate.getMinutes() >= 30 ? "30" : "00";
+  const minutes = String(nowDate.getMinutes()).padStart(2, "0");
   const rankCalDate = `${year}-${month}-${day} ${hour}:${minutes} 기준`;
 
   return (
