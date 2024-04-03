@@ -20,7 +20,7 @@ import preview3 from "@/assets/image/preview3.png";
 
 function Index() {
   const [nowTabNumber, setNowTabNumber] = useState(0);
-  const [opacity, setOpacity] = useState(1);
+  // const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     const timer = setTimeout(() => {
