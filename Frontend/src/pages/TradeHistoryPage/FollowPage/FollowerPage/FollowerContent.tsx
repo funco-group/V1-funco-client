@@ -1,5 +1,4 @@
 import { FollowerContentType } from "@/interfaces/tradeHistory/follow/FollowerContentType";
-import { FollowingContentMarginDiv } from "../FollowingPage/FollowingUser.styled";
 import useParseDate from "@/hooks/useParseDate";
 import { FollowerContentContainer } from "./FollowerContent.styled";
 import { ListItemDiv, ColumnGrid } from "@/styles/CommonStyled";

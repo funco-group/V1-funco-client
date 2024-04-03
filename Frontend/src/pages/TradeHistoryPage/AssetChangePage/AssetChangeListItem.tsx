@@ -62,10 +62,10 @@ function AssetChangeListItem({ history }: AssetChangeListItemProps) {
             align={history.commission ? "right" : "center"}
             color="black"
           >
-            {history.commission
+            {history.commission !== null
               ? history.commission.toLocaleString("ko-KR")
               : "-"}
-            {history.commission && <span>WON</span>}
+            {history.commission !== null && <span>WON</span>}
           </ListItemDiv>
           <ListItemDiv
             align={history.settlement ? "right" : "center"}
