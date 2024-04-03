@@ -1,10 +1,20 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
 
-export const HomePageColumnGridDiv = styled.div`
+export const Background = styled.div`
   height: calc(100vh - 10rem);
+  /* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+`;
+
+export const HomePageColumnGridDiv = styled.div`
   display: grid;
-  grid-template-columns: 1fr 28rem 550px 28rem 1fr;
+  grid-template-columns: 1fr 28rem 34rem 28rem 1fr;
+  /* height: 20rem; */
 `;
 
 export const HomePageRowGridDiv = styled.div`
@@ -25,9 +35,9 @@ export const PreviewDiv = styled.div`
 `;
 
 export const PreviewInnerDiv = styled.div`
-  width: 100%;
-  height: 50%;
-  /* background-color: ${palette.brandColor2}; */
+  /* width: 100%; */
+  /* height: 50%; */
+  /* background-color: red; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,8 +45,35 @@ export const PreviewInnerDiv = styled.div`
 `;
 
 export const PreviewImage = styled.img`
-  width: 500px;
-  height: 500px;
+  width: 30rem;
+  /* height: 500px; */
+  /* opacity: 0;
+  transition: opacity 0.5s ease; */
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease-in-out;
+  /* ${({ $display }) =>
+    $display &&
+    css`
+      opacity: 1;
+    `}; */
+`;
+
+export const TextDiv = styled.div`
+  text-align: center;
+  /* padding-bottom: 2rem; */
+`;
+export const MainTextDiv = styled.div`
+  font-family: "NanumSquareBold";
+  font-size: 2rem;
+`;
+export const SubTextDiv = styled.div`
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  color: ${palette.brandDarkGray};
+`;
+
+export const Content = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
