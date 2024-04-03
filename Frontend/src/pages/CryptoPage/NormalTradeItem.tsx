@@ -179,7 +179,7 @@ function NormalTradeItem({ name, curPrice }: NormalTradeItemProps) {
         () => {
           setAlertContent("주문이 등록되었습니다");
           setAlert(true);
-          getCashFunc();
+          getCoinVolumeFunc();
           resetInput();
         },
         ({ response }) => {

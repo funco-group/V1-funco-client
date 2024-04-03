@@ -4,36 +4,38 @@ import palette from "@/lib/palette";
 
 export const FollowingUserContainer = styled.div`
   ${CommonComponent}
-  margin-bottom: .5rem;
   padding-bottom: 1rem;
 `;
 
 export const FollowingTitleDiv = styled.div`
-  padding: 0.6875rem 1.25rem;
+  padding: 1.5rem 0 0 1.3rem;
+  font-family: "NanumSquareBold";
 `;
 
 export const FollowingDetailFlexDiv = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const FollowingDetailDiv = styled.div`
-  padding: 0 1rem;
-  width: 70%;
+  padding-left: 1rem;
+  width: 75%;
 `;
 
 export const FollowingDetailInnerDiv = styled.div`
-  margin-top: 1.5rem;
+  /* margin-top: 1.5rem; */
   ${CommonComponent}
 `;
 
 export const FollowingColumnGridDiv = styled.div`
   display: grid;
   grid-template-columns: 7.5rem 1fr 1fr 1fr;
+  padding: 0 1.4rem;
 `;
 
 export const FollowingContentDiv = styled.div`
   color: ${palette.brandDarkGray};
-  font-size: 1rem;
+  font-size: 0.85rem;
   text-align: end;
 
   span {
@@ -43,28 +45,39 @@ export const FollowingContentDiv = styled.div`
 `;
 
 export const FollowingDateDiv = styled.div`
-  text-align: center;
-  margin: 1.25rem auto;
-  padding: 0.625rem;
+  text-align: left;
+  margin: 1.2rem auto;
+  /* padding-left: 1.4rem; */
 `;
 
-export const FollowingContentMarginDiv = styled.div`
+export const FollowingContentMarginDiv = styled.div<{ color: string }>`
   margin: auto 0.625rem;
+
+  span {
+    color: ${(props) => {
+      if (props.color === "red") {
+        return palette.brandRed;
+      }
+      if (props.color === "blue") {
+        return palette.brandBlue;
+      }
+    }};
+  }
 `;
 
 export const FollowingUserGraphDiv = styled.div`
-  width: 30%;
+  width: 25%;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const FollowingUserGraphInnerDiv = styled.div`
-  width: 70%;
+  width: 90%;
 `;
 
 export const FollowingButtonDiv = styled.div`
-  padding: 1.25rem 4.45rem 0 1rem;
+  padding: 1.25rem 3.6rem 0 1rem;
   display: flex;
   justify-content: space-between;
 `;

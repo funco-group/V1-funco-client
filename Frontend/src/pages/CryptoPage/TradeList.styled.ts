@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
+import { Overflow } from "@/styles/CommonStyled";
 
 export const ToggleContainer = styled.div`
   padding: 1rem 0.7rem;
@@ -36,9 +37,7 @@ export const ColumnGridDiv = styled.div<{ $conclude: boolean }>`
 
 export const TradeListContainer = styled.div`
   height: 30.55rem;
-  overflow-y: auto;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  ${Overflow};
 `;
 
 export const NoTradeData = styled.div`

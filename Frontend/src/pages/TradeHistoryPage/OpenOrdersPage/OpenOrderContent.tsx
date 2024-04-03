@@ -1,17 +1,16 @@
 import useParseDate from "@/hooks/useParseDate";
-import { OpenOrderColumnGridDiv } from "./OpenOrderContentTable.style";
-import {
-  MoneySpan,
-  OpenOrderContentDiv,
-  OrderTypeSpan,
-} from "./OpenOrderContent.styled";
+import { DateDiv } from "./OpenOrderContent.styled";
 import BrandButtonComponent from "@/components/common/Button/BrandButtonComponent";
-import {
-  FollowingContentMarginDiv,
-  FollowingDateDiv,
-} from "../FollowPage/FollowingPage/FollowingUser.styled";
+
 import { TradeListType } from "@/interfaces/TradeType";
 import tradeTypeMap from "@/lib/tradeTypeMap";
+import {
+  ColumnGrid,
+  ListItemContainer,
+  ListItemDiv,
+} from "@/styles/CommonStyled";
+import { useRecoilValue } from "recoil";
+import { codeNameMapState } from "@/recoils/crypto";
 
 interface OpenOrderContentProps {
   content: TradeListType;
@@ -25,28 +24,36 @@ function OpenOrderContent({
   const parseDate = useParseDate;
   const tradeDate = parseDate(content.tradeDate).split(" ").join("\n");
 
+  const nameMap = useRecoilValue(codeNameMapState);
+
   return (
-    <OpenOrderContentDiv>
-      <OpenOrderColumnGridDiv>
-        <FollowingDateDiv>{tradeDate}</FollowingDateDiv>
-        <FollowingContentMarginDiv>
-          <OrderTypeSpan type={content.tradeType}>
-            {tradeTypeMap.get(content.tradeType)}
-          </OrderTypeSpan>
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
-          {content.ticker.split("-")[1]}
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
-          <MoneySpan>{content.price.toLocaleString("en-US")}</MoneySpan> won
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
-          <MoneySpan>{content.orderCash.toLocaleString("en-US")}</MoneySpan> won
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
-          <MoneySpan>{content.volume}</MoneySpan> {content.ticker.split("-")[1]}
-        </FollowingContentMarginDiv>
-        <FollowingContentMarginDiv>
+    <ListItemContainer>
+      <ColumnGrid column="7rem 5rem 6rem 1fr 1fr 1fr 9rem">
+        <ListItemDiv align="left" color="black">
+          <DateDiv>{tradeDate}</DateDiv>
+        </ListItemDiv>
+        <ListItemDiv
+          align="center"
+          color={content.tradeType === "BUY" ? "red" : "blue"}
+        >
+          {tradeTypeMap.get(content.tradeType)}
+        </ListItemDiv>
+        <ListItemDiv align="center" color="black">
+          {nameMap.get(content.ticker)}
+        </ListItemDiv>
+        <ListItemDiv align="right" color="black">
+          {content.price.toLocaleString("en-US")}
+          <span>WON</span>
+        </ListItemDiv>
+        <ListItemDiv align="right" color="black">
+          {content.orderCash.toLocaleString("en-US")}
+          <span>WON</span>
+        </ListItemDiv>
+        <ListItemDiv align="right" color="black">
+          {content.volume}
+          <span>{content.ticker.split("-")[1]}</span>
+        </ListItemDiv>
+        <ListItemDiv align="center" color="black">
           <BrandButtonComponent
             content="취소"
             color={null}
@@ -54,9 +61,9 @@ function OpenOrderContent({
             cancel={false}
             disabled={false}
           />
-        </FollowingContentMarginDiv>
-      </OpenOrderColumnGridDiv>
-    </OpenOrderContentDiv>
+        </ListItemDiv>
+      </ColumnGrid>
+    </ListItemContainer>
   );
 }
 

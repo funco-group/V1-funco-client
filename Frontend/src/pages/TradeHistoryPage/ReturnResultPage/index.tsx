@@ -14,6 +14,7 @@ export default function index() {
   const [resultList, setResultList] = useState<StatisticsType[]>([]);
   const [accReturnRate, setAccReturnRate] = useState<(string | number)[][]>();
   const [returnResult, setReturnResult] = useState<(string | number)[][]>();
+  const [resultData, setResultData] = useState<number[]>([]);
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
@@ -32,6 +33,10 @@ export default function index() {
               data.map((item) => [item.date, item.accReturnRate]),
             );
             setReturnResult(data.map((item) => [item.date, item.returnResult]));
+            setResultData([
+              data[data.length - 1].accReturnResult,
+              data[data.length - 1].accReturnRate,
+            ]);
           },
         );
       } else {
@@ -62,6 +67,7 @@ export default function index() {
         selected={selected}
         setSelected={setSelected}
         handleSelect={handleSelect}
+        resultData={resultData}
       />
       {accReturnRate && returnResult && (
         <ChartGraph
@@ -70,7 +76,6 @@ export default function index() {
           returnResult={returnResult}
         />
       )}
-
       <ReturnResultList resultList={resultList} />
     </div>
   );

@@ -1,7 +1,11 @@
 import { AxiosResponse } from "axios";
 import localAxios from "@/utils/http-commons";
 import { CashType } from "@/interfaces/common/AssetType";
-import { AssetResponseType, CoinVolumeType } from "@/interfaces/AssetType";
+import {
+  AssetHistoryType,
+  AssetResponseType,
+  CoinVolumeType,
+} from "@/interfaces/AssetType";
 
 const domain = "asset";
 const version = "v1";
@@ -23,4 +27,10 @@ export async function getAsset(
   success: (response: AxiosResponse<AssetResponseType>) => void,
 ) {
   await localAxios.get(`/${version}/${domain}`).then(success);
+}
+
+export async function getHistory(
+  success: (response: AxiosResponse<AssetHistoryType[]>) => void,
+) {
+  await localAxios.get(`/${version}/${domain}/history`).then(success);
 }

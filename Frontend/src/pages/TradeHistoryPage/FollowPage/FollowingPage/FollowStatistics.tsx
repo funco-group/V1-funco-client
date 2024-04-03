@@ -1,3 +1,4 @@
+import { GreenDataDiv, GreenTitleDiv } from "@/styles/TradeHistoryStyled";
 import {
   FollowingStatisticsContainer,
   FollowingStatisticsDetailDiv,
@@ -39,18 +40,26 @@ function FollowStatistics({
         <FollowingStatisticsDetailInnerDiv>
           {statisticsList.map((statistic, idx) => (
             <StatisticsRowDiv key={statistic[0]}>
-              <div>{statistic[0]}</div>
-              <div>
+              <GreenTitleDiv>{statistic[0]}</GreenTitleDiv>
+              <GreenDataDiv
+                color={
+                  idx < 2
+                    ? "black"
+                    : statistic[1].startsWith("-")
+                      ? "blue"
+                      : "red"
+                }
+              >
                 {statistic[1]} <span>{idx === 2 ? " %" : " won"}</span>
-              </div>
+              </GreenDataDiv>
             </StatisticsRowDiv>
           ))}
         </FollowingStatisticsDetailInnerDiv>
-        <p>
+        <GreenTitleDiv>
           당신의 총 자산{" "}
-          {(totalAsset + totalInvestment).toLocaleString("ko-KR")}중{" "}
+          {(totalAsset + totalInvestment).toLocaleString("ko-KR")} 중{" "}
           {totalInvestmentAssetRatio}%가 투자 중입니다.
-        </p>
+        </GreenTitleDiv>
       </FollowingStatisticsDetailDiv>
       <StatisticsGraphDiv>
         <MonochromePieChart investmentList={investmentList} isLegend />

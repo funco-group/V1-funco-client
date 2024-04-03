@@ -4,7 +4,10 @@ import {
   ColumnGrid,
   ColumnTitleDiv,
 } from "@/styles/CommonStyled";
-import { FollowerContentTableContainer } from "./FollowerContentTable.styled";
+import {
+  FollowerContentTableContainer,
+  FollowerContentContainer,
+} from "./FollowerContentTable.styled";
 import { FollowerContentType } from "@/interfaces/tradeHistory/follow/FollowerContentType";
 import FollowerContent from "./FollowerContent";
 import { getFollowerList } from "@/apis/follow";
@@ -43,13 +46,11 @@ function FollowerContentTable({
           ))}
         </ColumnGrid>
       </ColumnContainer>
-      {FollowerContentList.length ? (
-        FollowerContentList.map((content) => (
+      <FollowerContentContainer>
+        {FollowerContentList.map((content) => (
           <FollowerContent key={content.followId} content={content} />
-        ))
-      ) : (
-        <div>텅~~~~~~~~~~~</div>
-      )}
+        ))}
+      </FollowerContentContainer>
     </FollowerContentTableContainer>
   );
 }

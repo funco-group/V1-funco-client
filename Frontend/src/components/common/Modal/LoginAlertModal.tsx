@@ -15,7 +15,7 @@ function LoginAlertModal() {
     <div>
       <AlertModal
         title="알림"
-        content="로그인이 필요한 서비스입니다."
+        content="로그인이 필요합니다."
         closeAlert={handleCheckClick}
       />
     </div>

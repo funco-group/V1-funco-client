@@ -12,3 +12,24 @@ export const TitleDiv = styled.div`
   font-family: "NanumSquareBold";
   border-bottom: 1px solid ${palette.borderGray};
 `;
+
+export const GreenTitleDiv = styled.div`
+  font-size: 0.95rem;
+`;
+export const GreenDataDiv = styled.div<{ color: string }>`
+  text-align: right;
+  font-family: "NanumSquareBold";
+  color: ${(props) => {
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+  }};
+  span {
+    font-size: 0.75rem;
+    color: ${palette.brandDarkGray};
+    font-family: "NanumSquare";
+  }
+`;

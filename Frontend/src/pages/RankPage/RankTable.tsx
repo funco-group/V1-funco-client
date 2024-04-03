@@ -72,7 +72,7 @@ function RankTable({
           />
         ))
       ) : (
-        <>텅~~~~~~~~~</>
+        <div></div>
       )}
     </RankTableContainer>
   );

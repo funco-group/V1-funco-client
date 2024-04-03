@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CommonComponent } from "@/styles/CommonStyled";
+import { CommonComponent, Overflow } from "@/styles/CommonStyled";
 import palette from "@/lib/palette";
 
 export const PriceWindowContainer = styled.div`
@@ -22,7 +22,5 @@ export const ColumnTitleDiv = styled.div`
 
 export const PriceItemContainer = styled.div`
   height: 66.55rem;
-  overflow-y: auto;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  ${Overflow};
 `;
