@@ -4,7 +4,7 @@ import palette from "@/lib/palette";
 
 export const UserPageProfileContainer = styled.div`
   ${CommonComponent};
-  padding: 10px;
+  padding: 0.9375rem;
   display: flex;
   flex-direction: column;
   gap: 0.9375rem;
@@ -14,7 +14,7 @@ export const ProfileDetailContainer = styled.div`
   border: none;
   background-color: ${palette.brandColor2};
   padding: 0.9375rem;
-  height: 15.625rem;
+  height: 14.6875rem;
 
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ export const ProfileDetailContainer = styled.div`
   }
 
   p {
-    width: 25rem;
+    width: 21.875rem;
     word-wrap: break-word;
     text-align: center;
     margin: auto;

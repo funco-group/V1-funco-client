@@ -37,7 +37,7 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
               alt="rank-user-profile"
               draggable={false}
             />
-            {rank.member.nickname}
+            <div>{rank.member.nickname}</div>
           </RankTableContentUserDiv>
         </div>
         <RankTableContentMarginDiv>

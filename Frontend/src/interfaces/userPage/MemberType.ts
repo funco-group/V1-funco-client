@@ -15,7 +15,7 @@ export interface MemberType {
   followingCash: number;
   followerCash: number;
   isFollow: boolean;
-  topCoin: string[];
+  topCoins: string[];
 }
 
 export default MemberType;

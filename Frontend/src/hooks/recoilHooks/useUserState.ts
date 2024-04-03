@@ -10,6 +10,11 @@ function useUserState() {
       setUserState({ user: newUser });
     },
     logout: () => setUserState({ user: null }),
+    checkUnReadNoti: () => {
+      if (user) {
+        setUserState({ user: { ...user, unReadCount: 0 } });
+      }
+    },
   };
 }
 

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import palette from "@/lib/palette";
 import UserPageProfile from "./UserPageProfile";
 import {
   UserLayoutContainer,
   UserLayoutFirstRowDiv,
   UserLayoutSecondRowDiv,
-  UserLayoutThirdRowDiv,
 } from "./styled";
 import useUserState from "@/hooks/recoilHooks/useUserState";
 import MemberType from "@/interfaces/userPage/MemberType";
 import getMemberInfo from "@/apis/member";
+import RecentInvestment from "./RecentInvestment";
+import UserFollow from "./UserFollow";
+import AssetGraph from "./AssetGraph";
+import ReturnRateGraph from "./ReturnRateGraph";
 
 function Index() {
   const { memberId } = useParams();
@@ -36,13 +38,16 @@ function Index() {
     <UserLayoutContainer>
       <UserLayoutFirstRowDiv>
         <UserPageProfile isCurrentUser={isCurrentUser} member={member} />
-        <div style={{ backgroundColor: palette.brandColor }}>second</div>
+        <AssetGraph />
       </UserLayoutFirstRowDiv>
       <UserLayoutSecondRowDiv>
-        <div style={{ backgroundColor: palette.brandColor2 }}>third</div>
-        <div style={{ backgroundColor: "darkgrey" }}>fourth</div>
+        <RecentInvestment topCoins={member.topCoins} />
+        <UserFollow
+          followingCash={member.followingCash}
+          followerCash={member.followerCash}
+        />
       </UserLayoutSecondRowDiv>
-      <UserLayoutThirdRowDiv>third</UserLayoutThirdRowDiv>
+      <ReturnRateGraph />
     </UserLayoutContainer>
   );
 }
