@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserPageProfile from "./UserPageProfile";
-import {
-  UserLayoutContainer,
-  UserLayoutFirstRowDiv,
-  UserLayoutSecondRowDiv,
-} from "./styled";
+import { UserLayoutContainer, UserLayoutRowDiv } from "./styled";
 import useUserState from "@/hooks/recoilHooks/useUserState";
 import MemberType from "@/interfaces/userPage/MemberType";
 import getMemberInfo from "@/apis/member";
@@ -36,18 +32,18 @@ function Index() {
   const isCurrentUser = user?.memberId === +memberId;
   return (
     <UserLayoutContainer>
-      <UserLayoutFirstRowDiv>
+      <UserLayoutRowDiv>
         <UserPageProfile isCurrentUser={isCurrentUser} member={member} />
-        <AssetGraph />
-      </UserLayoutFirstRowDiv>
-      <UserLayoutSecondRowDiv>
+        <AssetGraph member={member} />
+      </UserLayoutRowDiv>
+      <UserLayoutRowDiv>
         <RecentInvestment topCoins={member.topCoins} />
         <UserFollow
           followingCash={member.followingCash}
           followerCash={member.followerCash}
         />
-      </UserLayoutSecondRowDiv>
-      <ReturnRateGraph />
+      </UserLayoutRowDiv>
+      <ReturnRateGraph memberId={member.memberId} />
     </UserLayoutContainer>
   );
 }

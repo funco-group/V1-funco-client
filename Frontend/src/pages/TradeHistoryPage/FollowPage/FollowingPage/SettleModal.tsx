@@ -59,14 +59,14 @@ function SettleModal() {
                 <span>
                   {settleModal.estimatedValue.toLocaleString("ko-KR")}
                 </span>{" "}
-                won
+                WON
               </div>
             </SettleModalContentRowDiv>
             <SettleModalContentRowDiv>
               <div>- 수수료</div>
               <div>
                 <span>{settleModal.commission.toLocaleString("ko-KR")}</span>{" "}
-                won
+                WON
               </div>
             </SettleModalContentRowDiv>
             <SettleModalContentRowDiv>
@@ -77,7 +77,7 @@ function SettleModal() {
                     settleModal.estimatedValue - settleModal.commission
                   ).toLocaleString("ko-KR")}
                 </span>{" "}
-                won
+                WON
               </div>
             </SettleModalContentRowDiv>
           </SettleModalContentDiv>

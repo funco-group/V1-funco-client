@@ -51,7 +51,7 @@ function TopRankContent({ topRank, nowTapName }: TopRankContentProps) {
           <MoneySpan $active={nowTapName === "follow"}>
             {topRank.followingAsset.toLocaleString("en-US")}
           </MoneySpan>{" "}
-          won
+          WON
         </div>
       </TopRankContentStatDiv>
       <TopRankContentStatDiv>
@@ -60,7 +60,7 @@ function TopRankContent({ topRank, nowTapName }: TopRankContentProps) {
           <MoneySpan $active={nowTapName === "asset"}>
             {topRank.totalAsset.toLocaleString("en-US")}
           </MoneySpan>{" "}
-          won
+          WON
         </div>
       </TopRankContentStatDiv>
     </TopRankContentContainer>

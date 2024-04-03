@@ -47,7 +47,14 @@ function PriceItem({ price, isFav, onClickFavorite }: PriceItemProps) {
         />
       </StarIconDiv>
       <NameDiv>
-        <KorNameDiv>{price.koreanName}</KorNameDiv>
+        <KorNameDiv>
+          <img
+            src={`https://static.upbit.com/logos/${price.code.split("-")[1]}.png`}
+            alt={price.code}
+            width={13}
+          />
+          {price.koreanName}
+        </KorNameDiv>
         <CodeDiv>{price.code}</CodeDiv>
       </NameDiv>
       <PriceDiv $isDown={price.change === "FALL"}>

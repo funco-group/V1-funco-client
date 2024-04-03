@@ -14,6 +14,7 @@ import cashIcon from "@/assets/icon/cash-icon.png";
 import followIcon from "@/assets/icon/follow-icon.png";
 import { ChartContainer, TotalAssetInfoContainer } from "./styled";
 import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
+import { TitleDiv } from "@/styles/TradeHistoryStyled";
 
 function index() {
   const [assets, setAssets] = useState<AssetType[]>([]);
@@ -152,6 +153,7 @@ function index() {
           <MonochromePieChart investmentList={investmentList} isLegend={true} />
         </ChartContainer>
       </TotalAssetInfoContainer>
+      <TitleDiv>보유자산 목록</TitleDiv>
       <AssetList assets={assets} />
     </div>
   );

@@ -40,7 +40,6 @@ function TradeList() {
     } else if (selected === "체결") {
       getTradeList(
         coinCode!,
-        false,
         0,
         10,
         (response: AxiosResponse<TradeListType[]>) => {

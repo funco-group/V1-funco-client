@@ -26,7 +26,6 @@ import palette from "@/lib/palette";
 import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 import TradeHistoryModal from "./TradeHistoryModal";
-import FollowAssetModal from "./FollowAssetModal";
 
 interface FollowingUserProps {
   followingUser: ComputedFollowingType;
@@ -47,14 +46,9 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
     investmentList.push(coinPrice);
   });
   const [onTradeModal, setOnTradeModal] = useState(false);
-  const [onFollowAssetModal, setOnFollowAssetModal] = useState(false);
 
   const handleTradeHistoryClick = () => {
     setOnTradeModal((prev) => !prev);
-  };
-
-  const handlePortFolioClick = () => {
-    setOnFollowAssetModal((prev) => !prev);
   };
 
   const handleSettleClick = () => {
@@ -79,9 +73,6 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
           followId={followingUser.followId}
         />
       )}
-      {onFollowAssetModal && (
-        <FollowAssetModal handlePortFolioClick={handlePortFolioClick} />
-      )}
       <FollowingTitleDiv>{followingUser.nickname}</FollowingTitleDiv>
       <FollowingDetailFlexDiv>
         <FollowingDetailDiv>
@@ -100,13 +91,13 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
                   <span>
                     {followingUser.investment.toLocaleString("ko-KR")}
                   </span>{" "}
-                  won
+                  WON
                 </FollowingContentMarginDiv>
                 <FollowingContentMarginDiv color="black">
                   <span>
                     {followingUser.estimatedValue.toLocaleString("ko-KR")}
                   </span>{" "}
-                  won
+                  WON
                 </FollowingContentMarginDiv>
                 <FollowingContentMarginDiv
                   color={estimatedProfitRate.startsWith("-") ? "blue" : "red"}
@@ -133,13 +124,6 @@ function FollowingUser({ followingUser }: FollowingUserProps) {
             content="거래 내역 보기"
             cancel={false}
             onClick={handleTradeHistoryClick}
-            disabled={false}
-          />
-          <BrandButtonComponent
-            color={null}
-            content="포트폴리오 보기"
-            cancel={false}
-            onClick={handlePortFolioClick}
             disabled={false}
           />
         </FollowingLeftButtonDiv>

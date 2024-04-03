@@ -1,43 +1,34 @@
-import { useEffect, useState } from "react";
-import FollowingModal from "./FollowingModal";
-import {
-  AssetHistoryType,
-  AssetResponseType,
-  AssetType,
-  TotalAssetType,
-} from "@/interfaces/AssetType";
-import { getAsset, getHistory } from "@/apis/asset";
-import { AxiosResponse } from "axios";
-import {
-  AssetChangeListContainer,
-  HistoryListContainer,
-} from "../../AssetChangePage/AssetChangeList.styled";
-import {
-  ColumnContainer,
-  ColumnGrid,
-  ColumnTitleDiv,
-} from "@/styles/CommonStyled";
-import { AssetChangeListItemContainer } from "../../AssetChangePage/AssetChangeListItem.styled";
-import AssetChangeListItem from "../../AssetChangePage/AssetChangeListItem";
-import { TotalAssetInfoContainer } from "../../AssetPage/styled";
-import TotalAsset from "../../AssetPage/TotalAsset";
-// import MonochromePieChart from "@/components/common/MonochromePieChart";
-import AssetList from "../../AssetPage/AssetList";
+import AssetList from "../TradeHistoryPage/AssetPage/AssetList";
 import { getTickerPrice } from "@/apis/upbit";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import cashIcon from "@/assets/icon/cash-icon.png";
 import followIcon from "@/assets/icon/follow-icon.png";
+import { useEffect, useState } from "react";
+import {
+  AssetResponseType,
+  AssetType,
+  TotalAssetType,
+} from "@/interfaces/AssetType";
+import { getUserAsset } from "@/apis/asset";
+import { AxiosResponse } from "axios";
+import {
+  ChartContainer,
+  TotalAssetInfoContainer,
+} from "../TradeHistoryPage/AssetPage/styled";
+import TotalAsset from "../TradeHistoryPage/AssetPage/TotalAsset";
+import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
+import { ModalTitle } from "./PortfolioModal.styled";
 
-interface FollowAssetModalProps {
-  handlePortFolioClick: () => void;
+interface PortfolioAssetProps {
+  memberId: number;
 }
 
-function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
+function PortfolioAsset({ memberId }: PortfolioAssetProps) {
   // 보유자산
   const [assets, setAssets] = useState<AssetType[]>([]);
   const [totalAsset, setTotalAsset] = useState<TotalAssetType>();
 
-  // const [investmentList, setInvestmentList] = useState<(string | number)[][]>();
+  const [investmentList, setInvestmentList] = useState<(string | number)[][]>();
 
   const getCurPrice = async (assets: AssetResponseType) => {
     const curPrice = new Map<string, number>();
@@ -62,7 +53,6 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
     assetsRes: AssetResponseType,
     curPrice: Map<string, number>,
   ) => {
-    console.log(assetsRes, curPrice);
     setAssets([
       {
         imgSrc: cashIcon,
@@ -102,22 +92,23 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
         },
       ]);
     });
-    // setInvestmentList([
-    //   ["현금", assetsRes.cash],
-    //   ["팔로우", assetsRes.followingInvestment],
-    //   [
-    //     "가상화폐",
-    //     assetsRes.holdingCoinInfos.reduce((acc, coin) => {
-    //       return acc + Math.floor(coin.volume * curPrice.get(coin.ticker)!);
-    //     }, 0),
-    //   ],
-    // ]);
+    setInvestmentList([
+      ["현금", assetsRes.cash],
+      ["팔로우", assetsRes.followingInvestment],
+      [
+        "가상화폐",
+        assetsRes.holdingCoinInfos.reduce((acc, coin) => {
+          return acc + Math.floor(coin.volume * curPrice.get(coin.ticker)!);
+        }, 0),
+      ],
+    ]);
   };
 
   useEffect(() => {
-    getAsset((response: AxiosResponse<AssetResponseType>) => {
+    getUserAsset(memberId, (response: AxiosResponse<AssetResponseType>) => {
       const { data } = response;
       const curPrice = getCurPrice(data);
+      console.log(data);
       curPrice.then((res) => {
         setAssetsInfo(data, res);
       });
@@ -160,63 +151,23 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
     }
   }, [assets]);
 
-  // 자산 변동 내역
-  const [historyList, setHistoryList] = useState<AssetHistoryType[]>([]);
-  const columns = [
-    "체결시간",
-    "보유자산",
-    "종류",
-    "거래수량",
-    "거래단가",
-    "거래금액",
-    "수수료",
-    "정산금액",
-  ];
-
-  useEffect(() => {
-    getHistory((response: AxiosResponse<AssetHistoryType[]>) => {
-      const { data } = response;
-      setHistoryList(data);
-      console.log(data);
-    });
-  }, []);
-
   return (
-    <FollowingModal title="~님의 포트폴리오" handleClick={handlePortFolioClick}>
-      <div>
-        <TotalAssetInfoContainer>
-          <TotalAsset totalAsset={totalAsset} />
-          {/* <ChartContainer>
+    <div>
+      <TotalAssetInfoContainer>
+        <TotalAsset totalAsset={totalAsset} />
+        <ChartContainer>
+          {investmentList && (
             <MonochromePieChart
               investmentList={investmentList}
               isLegend={true}
             />
-          </ChartContainer> */}
-        </TotalAssetInfoContainer>
-        <AssetList assets={assets} />
-      </div>
-      <div>
-        <AssetChangeListContainer>
-          <ColumnContainer>
-            <AssetChangeListItemContainer>
-              <ColumnGrid column="6rem 5rem 5rem 1.3fr 1fr 1fr 1fr 1fr">
-                {columns.map((column) => (
-                  <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
-                ))}
-              </ColumnGrid>
-            </AssetChangeListItemContainer>
-          </ColumnContainer>
-          <HistoryListContainer>
-            {historyList.map((history) => {
-              return (
-                <AssetChangeListItem key={history.date} history={history} />
-              );
-            })}
-          </HistoryListContainer>
-        </AssetChangeListContainer>
-      </div>
-    </FollowingModal>
+          )}
+        </ChartContainer>
+      </TotalAssetInfoContainer>
+      <ModalTitle>보유자산 목록</ModalTitle>
+      <AssetList assets={assets} />
+    </div>
   );
 }
 
-export default FollowAssetModal;
+export default PortfolioAsset;

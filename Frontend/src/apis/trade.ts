@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import localAxios from "@/utils/http-commons";
 import { HoldingCoinResponseType } from "@/interfaces/PriceWindowType";
 import { TradeResultType, TradeListType } from "@/interfaces/TradeType";
+import { AssetHistoryType } from "@/interfaces/AssetType";
 
 const domain = "trade";
 const version = "v1";
@@ -78,14 +79,13 @@ export async function sellLimit(
 
 export async function getTradeList(
   ticker: string,
-  follow: boolean,
   page: number,
   size: number,
   success: (response: AxiosResponse<TradeListType[]>) => void,
 ) {
   await localAxios
     .get(
-      `/${version}/${domain}/orders?ticker=${ticker}&follow=${follow}&page=${page}&size=${size}`,
+      `/${version}/${domain}/orders?ticker=${ticker}&page=${page}&size=${size}`,
     )
     .then(success);
 }
@@ -116,5 +116,16 @@ export async function getAllOpenTradeList(
 export async function cancleOrder(id: number, success: () => void) {
   await localAxios
     .delete(`/${version}/${domain}/open-orders/${id}`)
+    .then(success);
+}
+
+export async function getUserTradeList(
+  memberId: number,
+  page: number,
+  size: number,
+  success: (response: AxiosResponse<AssetHistoryType[]>) => void,
+) {
+  await localAxios
+    .get(`/${version}/${domain}/orders/${memberId}?&page=${page}&size=${size}`)
     .then(success);
 }

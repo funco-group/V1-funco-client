@@ -47,12 +47,12 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
         </RankTableContentMarginDiv>
         <RankTableContentMarginDiv>
           <MoneySpan $active={nowTabName === "follow"}>
-            {rank.followingAsset.toLocaleString("en-US")} won
+            {rank.followingAsset.toLocaleString("en-US")} WON
           </MoneySpan>
         </RankTableContentMarginDiv>
         <RankTableContentMarginDiv>
           <MoneySpan $active={nowTabName === "asset"}>
-            {rank.totalAsset.toLocaleString("en-US")} won
+            {rank.totalAsset.toLocaleString("en-US")} WON
           </MoneySpan>
         </RankTableContentMarginDiv>
       </RankTableColumnGridDiv>

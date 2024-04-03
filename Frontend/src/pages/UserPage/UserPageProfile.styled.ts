@@ -4,23 +4,30 @@ import palette from "@/lib/palette";
 
 export const UserPageProfileContainer = styled.div`
   ${CommonComponent};
+<<<<<<< HEAD
+  padding: 1rem;
+=======
   padding: 0.9375rem;
+>>>>>>> 99f61a61ef73347154ff2d0b1f510d0ff98bd09b
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: 1rem;
 `;
 
 export const ProfileDetailContainer = styled.div`
   border: none;
   background-color: ${palette.brandColor2};
+<<<<<<< HEAD
+  padding: 1rem;
+=======
   padding: 0.9375rem;
   height: 14.6875rem;
 
+>>>>>>> 99f61a61ef73347154ff2d0b1f510d0ff98bd09b
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
 
   img {
     display: block;
@@ -28,6 +35,7 @@ export const ProfileDetailContainer = styled.div`
     height: 3.75rem;
     border-radius: 100%;
     object-fit: cover;
+    margin-bottom: 1rem;
   }
 
   p {
@@ -49,7 +57,7 @@ export const ProfileRankOuterDiv = styled.div`
 `;
 
 export const ProfileRankDiv = styled.div`
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: ${palette.brandDarkGray};
 
   display: flex;
@@ -58,7 +66,7 @@ export const ProfileRankDiv = styled.div`
 
   span {
     font-family: "NanumSquareBold";
-    font-size: 1.5rem;
+    /* font-size: 1.1rem; */
   }
 `;
 
@@ -69,7 +77,7 @@ const InputCss = css<{ $active: boolean }>`
     $active ? palette.brandWhite : "transparent"};
   text-align: center;
   font-family: "NanumSquareBold";
-  font-size: 1.25rem;
+  font-size: 1rem;
 `;
 
 export const ProfileInput = styled.input<{ $active: boolean }>`

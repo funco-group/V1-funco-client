@@ -5,11 +5,13 @@ import palette from "@/lib/palette";
 export const FollowingUserContainer = styled.div`
   ${CommonComponent}
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const FollowingTitleDiv = styled.div`
   padding: 1.5rem 0 0 1.3rem;
   font-family: "NanumSquareBold";
+  font-size: 1.1rem;
 `;
 
 export const FollowingDetailFlexDiv = styled.div`
@@ -77,12 +79,11 @@ export const FollowingUserGraphInnerDiv = styled.div`
 `;
 
 export const FollowingButtonDiv = styled.div`
-  padding: 1.25rem 3.6rem 0 1rem;
+  padding-left: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
 `;
 
 export const FollowingLeftButtonDiv = styled.div`
-  display: flex;
-  gap: 0.75rem;
+  margin-right: 0.5rem;
 `;

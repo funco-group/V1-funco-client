@@ -15,6 +15,7 @@ import { ComponentTitleH3 } from "./styled";
 import MemberType from "@/interfaces/userPage/MemberType";
 import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
 import medalMap from "@/lib/medalMap";
+import PortfolioModal from "./PortfolioModal";
 
 interface UserPageProfileProps {
   isCurrentUser: boolean;
@@ -27,6 +28,8 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
   const [introduction, setIntroduction] = useState(member.introduction);
   const [isEditIntro, setIsEditIntro] = useState(false);
   const { onFollowModal } = useFollowModalState();
+  const [onFollowAssetModal, setOnFollowAssetModal] = useState(false);
+  // const [nameInput, setNameInput] = useState<boolean>(false);
 
   useEffect(() => {
     setNickname(member.nickname);
@@ -56,7 +59,10 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
       memberId: member.memberId,
     });
   };
-  const handlePortfolioClick = () => {};
+
+  const handlePortFolioClick = () => {
+    setOnFollowAssetModal((prev) => !prev);
+  };
 
   function renderButton() {
     if (isCurrentUser) {
@@ -92,16 +98,23 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
     }
     return (
       <BrandButtonComponent
-        content="포폴 보기"
+        content="포트폴리오 보기"
         color={null}
         cancel={false}
-        onClick={handlePortfolioClick}
+        onClick={handlePortFolioClick}
         disabled={false}
       />
     );
   }
   return (
     <UserPageProfileContainer>
+      {onFollowAssetModal && (
+        <PortfolioModal
+          memberId={member.memberId}
+          nickname={member.nickname}
+          handlePortFolioClick={handlePortFolioClick}
+        />
+      )}
       <ComponentTitleH3>프로필</ComponentTitleH3>
       <ProfileDetailContainer>
         <img src={member.profileUrl} alt="member-profile" />

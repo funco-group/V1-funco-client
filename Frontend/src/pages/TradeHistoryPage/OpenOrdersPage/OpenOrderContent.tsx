@@ -28,7 +28,7 @@ function OpenOrderContent({
 
   return (
     <ListItemContainer>
-      <ColumnGrid column="7rem 5rem 6rem 1fr 1fr 1fr 9rem">
+      <ColumnGrid column="7rem 7rem 8rem 1fr 1fr 1fr 9rem">
         <ListItemDiv align="left" color="black">
           <DateDiv>{tradeDate}</DateDiv>
         </ListItemDiv>
@@ -38,7 +38,12 @@ function OpenOrderContent({
         >
           {tradeTypeMap.get(content.tradeType)}
         </ListItemDiv>
-        <ListItemDiv align="center" color="black">
+        <ListItemDiv align="left" color="black">
+          <img
+            src={`https://static.upbit.com/logos/${content.ticker.split("-")[1]}.png`}
+            alt={content.ticker}
+            width={13}
+          />
           {nameMap.get(content.ticker)}
         </ListItemDiv>
         <ListItemDiv align="right" color="black">
