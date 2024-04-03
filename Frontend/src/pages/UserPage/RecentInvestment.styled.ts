@@ -9,7 +9,7 @@ export const RecentInvestmentContainer = styled.div`
 
 export const RecentInvestmentContentDiv = styled.div`
   width: 100%;
-  /* height: calc(100% - 1.25rem); */
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,6 +18,32 @@ export const RecentInvestmentContentDiv = styled.div`
 
 export const RecentInvestmentRowDiv = styled.div`
   width: 100%;
-  font-family: "NanumSquareBold";
   color: ${palette.brandBlack};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+  }
+`;
+
+export const CoinNameDiv = styled.div`
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-family: "NanumSquareBold";
+
+  img {
+    margin-right: 0.3rem;
+  }
+`;
+
+export const DateDiv = styled.div`
+  font-size: 0.8rem;
+`;
+
+export const NumberDiv = styled.div`
+  color: ${palette.brandColor};
+  font-family: "NanumSquareBold";
 `;

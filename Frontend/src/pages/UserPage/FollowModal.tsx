@@ -10,6 +10,10 @@ import {
 import {
   FollowModalContentDiv,
   FollowModalTermsDiv,
+  CashDiv,
+  InputDiv,
+  InvestDiv,
+  ValidationText,
 } from "./FollowModal.styled";
 import BrandButtonComponent from "@/components/common/Button/BrandButtonComponent";
 import palette from "@/lib/palette";
@@ -29,7 +33,7 @@ function FollowModal({ member, setMember }: FollowModalProps) {
   const [cash, setCash] = useState<number>(0);
   const [investment, setinvestment] = useState("");
   const [isCheckTerms, setIsCheckTerms] = useState(false);
-
+  const [validation, setValidation] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
   const [alertContent, setAlertContent] = useState<string>("");
 
@@ -57,16 +61,27 @@ function FollowModal({ member, setMember }: FollowModalProps) {
   const handleInvestmentInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInvestment = e.target.value;
     const newInvestmentNum = Number(newInvestment.replace(/,/g, ""));
+    console.log(newInvestment);
+    console.log(
+      "newNum",
+      Number.isNaN(newInvestmentNum),
+      newInvestmentNum,
+      cash,
+    );
+    if (newInvestmentNum <= cash) {
+      setValidation(false);
+    }
+
     if (Number.isNaN(newInvestmentNum)) {
       setinvestment("0");
     } else if (newInvestmentNum > cash) {
-      setAlertContent("가용 자산을 넘겨서 투자할 수 없습니다.");
-      setAlert(true);
-      setinvestment("0");
-    } else {
-      setinvestment(newInvestmentNum.toLocaleString("en-US"));
+      console.log("Hello");
+      setValidation(true);
     }
+    setinvestment(newInvestmentNum.toLocaleString("ko-KR"));
   };
+
+  useEffect(() => {}, [investment]);
 
   const handleCheckInputClick = () => {
     setIsCheckTerms((prev) => !prev);
@@ -99,43 +114,48 @@ function FollowModal({ member, setMember }: FollowModalProps) {
           closeAlert={closeAlert}
         />
       )}
-      <SettleModalContainer>
+      <SettleModalContainer width="30rem">
         <SettleModalTitleDiv>팔로우</SettleModalTitleDiv>
         <FollowModalContentDiv>
-          <FollowModalTermsDiv>대충 따라가면 너네 책임</FollowModalTermsDiv>
+          <FollowModalTermsDiv>
+            {`[팔로우]
+            '팔로우' 버튼을 클릭하면 입력한 투자 금액만큼 해당 유저를 팔로우합니다. 
+            투자된 금액은 본인이 팔로우한 유저가 직접 거래할 때의 총 자산 대비 비율에 맞추어 자동 투자됩니다.
+            (예시 : 팔로우한 유저가 총 자산 1,000만원을 가지고 있고, 본인이 50만원을 
+            팔로우하는 상황을 가정합니다. 만약 팔로우한 유저가 1,000만원 중 30%만큼 
+            비트코인을 매수/매도하면, 본인의 투자 금액 50만원 중 30%가 그에 맞추어
+            매수/매도됩니다.)\n
+            [정산하기] 
+            '정산하기' 버튼을 통해 정산할 수 있으며, 정산 시 수익금에 대해서 3%의 
+            수수료를 제하고 가용 현금에 반영됩니다. (손실에 대해서는 수수료 없음) 
+            수익금에서 제한 3%의 수수료는 본인이 팔로우한 유저에게 지급됩니다.`}
+          </FollowModalTermsDiv>
           <label htmlFor="check">
             <input
               className="checkInput"
               type="checkbox"
               id="check"
               onChange={handleCheckInputClick}
-            />
+            />{" "}
             약관에 동의합니다.
           </label>
-          <label htmlFor="cash">
-            가용 자산
-            <input
-              className="cash"
-              type="text"
-              id="cash"
-              disabled
-              value={cash?.toLocaleString("en-US")}
-            />
-            WON
-          </label>
-
-          <label htmlFor="investment">
-            투자 금액
-            <input
-              className="investment"
-              type="text"
-              id="investment"
-              value={investment}
-              onChange={handleInvestmentInput}
-              autoComplete="off"
-            />
-            WON
-          </label>
+          <CashDiv>
+            가용 자산 : {cash?.toLocaleString("en-US")} <span>WON</span>{" "}
+          </CashDiv>
+          <InvestDiv>
+            <InputDiv $validation={validation}>
+              <input
+                type="text"
+                value={investment}
+                onChange={handleInvestmentInput}
+                placeholder="투자 금액"
+              />
+              <span>WON</span>
+            </InputDiv>
+          </InvestDiv>
+          <ValidationText $validation={validation}>
+            ※ 가용 자산을 넘겨서 투자할 수 없습니다.
+          </ValidationText>
         </FollowModalContentDiv>
         <SettleModalContentButtonRowDiv>
           <BrandButtonComponent
@@ -150,7 +170,7 @@ function FollowModal({ member, setMember }: FollowModalProps) {
             $cancel={false}
             onClick={handleFollowClick}
             disabled={!isCheckTerms}
-            data-tooltip-content="약관에 동의하여 주세요"
+            data-tooltip-content="약관에 동의해주세요"
             data-tooltip-id={isCheckTerms ? "" : "buttonTooltip"}
           >
             팔로우

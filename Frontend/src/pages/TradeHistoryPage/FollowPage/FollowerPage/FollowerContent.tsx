@@ -31,12 +31,12 @@ function FollowerContent({ content }: { content: FollowerContentType }) {
             {content.settlement && <span>WON</span>}
           </ListItemDiv>
           <ListItemDiv
-            align={content.returnRate ? "right" : ""}
+            align={content.returnRate !== null ? "right" : ""}
             color={
               content.returnRate && content.returnRate > 0 ? "red" : "blue"
             }
           >
-            {content.returnRate
+            {content.returnRate !== null
               ? content.returnRate.toLocaleString("ko-KR")
               : "-"}
             {content.returnRate && <span>%</span>}
