@@ -27,7 +27,7 @@ function ReturnResultList({ resultList }: ReturnResultListProps) {
     <div>
       <TitleDiv>투자손익 상세</TitleDiv>
       <ColumnContainer>
-        <ColumnGrid column="repeat(7, 1fr)">
+        <ColumnGrid column="1fr 0.8fr 0.6fr 1fr 0.6fr 1fr 1fr">
           {columns.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}

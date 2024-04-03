@@ -20,3 +20,7 @@ export const MoneySpan = styled.span`
   font-family: "NanumSquareBold";
   color: ${palette.brandBlack};
 `;
+
+export const DateDiv = styled.div`
+  margin-left: 1rem;
+`;

@@ -10,13 +10,16 @@ import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
 import BrandButtonComponent from "@/components/common/Button/BrandButtonComponent";
 import palette from "@/lib/palette";
 import { removeFollow } from "@/apis/follow";
+import { useState } from "react";
+import AlertModal from "@/components/common/Modal/AlertModal";
 
 function SettleModal() {
+  const [alert, setAlert] = useState<boolean>(false);
   const { settleModal, offModal } = useSettleModalState();
   if (!settleModal) {
     return null;
   }
-  console.log(settleModal.followId);
+  // console.log(settleModal.followId);
 
   const handleCancelClick = () => {
     offModal();
@@ -24,62 +27,79 @@ function SettleModal() {
 
   const handleSettleClick = () => {
     removeFollow(settleModal?.followId, () => {
-      alert("정산 성공!!!!!!!!!!!!!");
+      offModal();
+      setAlert(true);
     });
-    offModal();
+  };
+
+  const closeAlert = () => {
+    setAlert(false);
   };
 
   if (!settleModal) {
     return null;
   }
   return (
-    <SettleModalBackgroundContainer>
-      <SettleModalContainer>
-        <SettleModalTitleDiv>정산</SettleModalTitleDiv>
-        <SettleModalContentDiv>
-          <SettleModalContentRowDiv>
-            <div>금액</div>
-            <div>
-              <span>{settleModal.estimatedValue.toLocaleString("ko-KR")}</span>{" "}
-              won
-            </div>
-          </SettleModalContentRowDiv>
-          <SettleModalContentRowDiv>
-            <div>- 수수료</div>
-            <div>
-              <span>{settleModal.commission.toLocaleString("ko-KR")}</span> won
-            </div>
-          </SettleModalContentRowDiv>
-          <SettleModalContentRowDiv>
-            <div>최종 정산 금액</div>
-            <div>
-              <span>
-                {(
-                  settleModal.estimatedValue - settleModal.commission
-                ).toLocaleString("ko-KR")}
-              </span>{" "}
-              won
-            </div>
-          </SettleModalContentRowDiv>
-        </SettleModalContentDiv>
-        <SettleModalContentButtonRowDiv>
-          <BrandButtonComponent
-            content="취소"
-            color={null}
-            cancel
-            onClick={handleCancelClick}
-            disabled={false}
-          />
-          <BrandButtonComponent
-            content="정산"
-            color={palette.brandBlue}
-            cancel={false}
-            onClick={handleSettleClick}
-            disabled={false}
-          />
-        </SettleModalContentButtonRowDiv>
-      </SettleModalContainer>
-    </SettleModalBackgroundContainer>
+    <>
+      {alert && (
+        <AlertModal
+          title="알림"
+          content="정산이 완료되었습니다."
+          closeAlert={closeAlert}
+        />
+      )}
+
+      <SettleModalBackgroundContainer>
+        <SettleModalContainer>
+          <SettleModalTitleDiv>정산</SettleModalTitleDiv>
+          <SettleModalContentDiv>
+            <SettleModalContentRowDiv>
+              <div>금액</div>
+              <div>
+                <span>
+                  {settleModal.estimatedValue.toLocaleString("ko-KR")}
+                </span>{" "}
+                won
+              </div>
+            </SettleModalContentRowDiv>
+            <SettleModalContentRowDiv>
+              <div>- 수수료</div>
+              <div>
+                <span>{settleModal.commission.toLocaleString("ko-KR")}</span>{" "}
+                won
+              </div>
+            </SettleModalContentRowDiv>
+            <SettleModalContentRowDiv>
+              <div>최종 정산 금액</div>
+              <div>
+                <span>
+                  {(
+                    settleModal.estimatedValue - settleModal.commission
+                  ).toLocaleString("ko-KR")}
+                </span>{" "}
+                won
+              </div>
+            </SettleModalContentRowDiv>
+          </SettleModalContentDiv>
+          <SettleModalContentButtonRowDiv>
+            <BrandButtonComponent
+              content="취소"
+              color={null}
+              cancel
+              onClick={handleCancelClick}
+              disabled={false}
+            />
+            <BrandButtonComponent
+              content="정산"
+              color={palette.brandBlue}
+              cancel={false}
+              onClick={handleSettleClick}
+              disabled={false}
+            />
+          </SettleModalContentButtonRowDiv>
+        </SettleModalContainer>
+      </SettleModalBackgroundContainer>
+    </>
   );
 }
 

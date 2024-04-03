@@ -21,6 +21,7 @@ import NotiDropdown from "./NotiDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import useCloseDropdown from "@/hooks/useCloseDropdown";
 import useSSE from "@/hooks/useSSE";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 function Navbar() {
   const { user } = useUserState();
@@ -33,6 +34,7 @@ function Navbar() {
   );
 
   const [unReadCount, setUnReadCount] = useState(user?.unReadCount);
+  const { onLoginAlertModal } = useLoginAlertModalState();
 
   const handleLoginClick = () => {
     window.location.href =
@@ -48,6 +50,7 @@ function Navbar() {
   };
   const handleProfileDropdown = () => {
     setIsProfileOpen((prev) => !prev);
+    onLoginAlertModal();
   };
 
   useSSE(setUnReadCount);

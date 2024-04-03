@@ -20,29 +20,6 @@ export const AssetItemDiv = styled.div`
   padding: 1rem 0.5rem;
 `;
 
-export const TitleDiv = styled.div`
-  /* background-color: red; */
-  font-size: 0.95rem;
-`;
-export const DataDiv = styled.div<{ color: string }>`
-  /* background-color: blue; */
-  text-align: right;
-  font-family: "NanumSquareBold";
-  color: ${(props) => {
-    if (props.color === "blue") {
-      return palette.brandBlue;
-    }
-    if (props.color === "red") {
-      return palette.brandRed;
-    }
-  }};
-  span {
-    font-size: 0.75rem;
-    color: ${palette.brandDarkGray};
-    font-family: "NanumSquare";
-  }
-`;
-
 export const ChartContainer = styled.div`
   border-left: 1px solid ${palette.borderGray};
 `;

@@ -39,11 +39,52 @@ export const StyledContainer = styled(ToastContainer)`
 `;
 
 export const ListItemContainer = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 0.7rem 0;
   border-bottom: 1px solid ${palette.borderGray};
   /* display: flex; */
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+export const ListItemDiv = styled.div<{ align: string; color: string }>`
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  color: ${(props) => {
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+    return palette.brandBlack;
+  }};
+
+  justify-content: ${(props) => {
+    if (props.align === "left") {
+      return "left";
+    }
+    if (props.align === "right") {
+      return "right";
+    }
+    return "center";
+  }};
+
+  img {
+    margin-right: 0.4rem;
+  }
+
+  span {
+    font-size: 0.7rem;
+    color: ${palette.brandDarkGray};
+  }
+`;
+
+export const Overflow = css`
+  overflow-y: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 `;

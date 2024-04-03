@@ -4,14 +4,15 @@ import palette from "@/lib/palette";
 export const FollowingStatisticsContainer = styled.div`
   border-bottom: 1px solid ${palette.deactivatedGray};
   padding: 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
 `;
 
 export const FollowingStatisticsDetailDiv = styled.div`
-  width: 80%;
+  /* width: 80%; */
   border: none;
   background-color: ${palette.brandColor2};
-  padding: 1.25rem;
+  padding: 1.6rem 1.5rem;
 `;
 
 export const FollowingStatisticsDetailInnerDiv = styled.div`
@@ -20,6 +21,7 @@ export const FollowingStatisticsDetailInnerDiv = styled.div`
   gap: 2rem;
   border-bottom: 1px solid ${palette.brandColor};
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const StatisticsRowDiv = styled.div`
@@ -27,6 +29,7 @@ export const StatisticsRowDiv = styled.div`
   justify-content: space-between;
 
   span {
+    font-size: 0.9rem;
     color: ${palette.brandDarkGray};
   }
 `;

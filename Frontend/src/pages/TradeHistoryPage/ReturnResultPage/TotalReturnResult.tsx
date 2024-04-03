@@ -5,6 +5,7 @@ import {
   TitleDiv,
   DataDiv,
   ResultContainer,
+  TextInfoDiv,
 } from "./TotalReturnResult.styled";
 import { GreenContainer } from "@/styles/TradeHistoryStyled";
 import ReturnResultTab from "@/components/common/ReturnResultTab";
@@ -21,6 +22,7 @@ interface TotalReturnResultProps {
   selected: string | undefined;
   setSelected: React.Dispatch<React.SetStateAction<string | undefined>>;
   handleSelect: (e: any) => void;
+  resultData: number[];
 }
 
 function TotalReturnResult({
@@ -31,10 +33,10 @@ function TotalReturnResult({
   selected,
   setSelected,
   handleSelect,
+  resultData,
 }: TotalReturnResultProps) {
-  const titles = ["기간 누적 수익", "기간 누적 수익률", "투자 금액"];
-  const resultData = [194418, 180.7, 19848400];
-  const unit = ["WON", "%", "WON"];
+  const titles = ["기간 누적 손익", "기간 누적 수익률"];
+  const unit = ["WON", "%"];
   const [startYear, setStartYear] = useState<number>();
   const [startMonth, setStartMonth] = useState<number>();
 
@@ -98,16 +100,25 @@ function TotalReturnResult({
             <ResultItemContainer>
               {titles.map((title, index) => {
                 return (
-                  <ResultItemDiv $right={index < 2} key={title}>
+                  <ResultItemDiv $right={index < 1} key={title}>
                     <TitleDiv>{title}</TitleDiv>
-                    <DataDiv $red={index < 2}>
-                      {resultData[index].toLocaleString("ko-KR")}{" "}
+                    <DataDiv
+                      color={
+                        resultData[index] > 0
+                          ? "red"
+                          : resultData[index] < 0
+                            ? "blue"
+                            : "black"
+                      }
+                    >
+                      {resultData[index]?.toLocaleString("ko-KR")}{" "}
                       <span>{unit[index]}</span>
                     </DataDiv>
                   </ResultItemDiv>
                 );
               })}
             </ResultItemContainer>
+            <TextInfoDiv>※ 기준 금액 : 초기 자금 천 만원</TextInfoDiv>
           </GreenContainer>
         </ResultContainer>
       </div>

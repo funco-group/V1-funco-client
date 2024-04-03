@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import palette from "@/lib/palette";
+import { Overflow } from "@/styles/CommonStyled";
 
 export const SettleModalBackgroundContainer = styled.div`
   position: fixed;
@@ -21,6 +22,8 @@ export const SettleModalContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
   padding: 0.9375rem;
+  max-height: 80%;
+  ${Overflow}
 `;
 
 export const SettleModalTitleDiv = styled.div`
@@ -57,4 +60,5 @@ export const SettleModalContentButtonRowDiv = styled.div`
   display: flex;
   justify-content: end;
   gap: 0.625rem;
+  /* position: fixed; */
 `;

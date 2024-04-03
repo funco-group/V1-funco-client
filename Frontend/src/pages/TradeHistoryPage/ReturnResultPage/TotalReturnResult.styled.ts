@@ -7,7 +7,7 @@ export const ResultContainer = styled.div`
 
 export const ResultItemContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 `;
 export const ResultItemDiv = styled.div<{ $right: boolean }>`
   display: flex;
@@ -18,12 +18,26 @@ export const ResultItemDiv = styled.div<{ $right: boolean }>`
 `;
 
 export const TitleDiv = styled.div``;
-export const DataDiv = styled.div<{ $red: boolean }>`
+export const DataDiv = styled.div<{ color: string }>`
   font-family: "NanumSquareBold";
-  color: ${(props) => props.$red && palette.brandRed};
+  color: ${(props) => {
+    if (props.color === "red") {
+      return palette.brandRed;
+    }
+    if (props.color === "blue") {
+      return palette.brandBlue;
+    }
+  }};
   span {
     font-size: 0.75rem;
     color: ${palette.brandDarkGray};
     font-family: "NanumSquare";
   }
+`;
+
+export const TextInfoDiv = styled.div`
+  font-size: 0.75rem;
+  text-align: right;
+  padding: 0 1rem;
+  color: ${palette.brandDarkGray};
 `;

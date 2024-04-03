@@ -1,6 +1,9 @@
-import { ColumnGrid, ListItemContainer } from "@/styles/CommonStyled";
-import { AssetItemDiv, ListItemContainerDiv } from "./AssetListItem.styled";
+import { ListItemDiv, ColumnGrid } from "@/styles/CommonStyled";
+import { ListItemContainer } from "@/styles/ListItemContainer";
+import { ListItemContainerDiv } from "./AssetListItem.styled";
 import { AssetType } from "@/interfaces/AssetType";
+import { useRecoilValue } from "recoil";
+import { codeNameMapState } from "@/recoils/crypto";
 
 function AssetListItem({
   imgSrc,
@@ -11,31 +14,33 @@ function AssetListItem({
   evaluationAmount,
   evaluationProfit,
 }: AssetType) {
+  const nameMap = useRecoilValue(codeNameMapState);
+
   return (
     <ListItemContainer>
       <ListItemContainerDiv>
         <ColumnGrid column="repeat(6, 1fr)">
-          <AssetItemDiv align="left" color="black">
+          <ListItemDiv align="left" color="black">
             <img src={imgSrc} alt={name} width={20} />
-            {name}
-          </AssetItemDiv>
-          <AssetItemDiv align={volume ? "right" : ""} color="black">
+            {name !== "현금" && name !== "팔로우" ? nameMap.get(name) : name}
+          </ListItemDiv>
+          <ListItemDiv align={volume ? "right" : ""} color="black">
             {volume ? volume : "-"}
             <span> {volume && name.split("-")[1]}</span>
-          </AssetItemDiv>
-          <AssetItemDiv align={averagePrice ? "right" : ""} color="black">
+          </ListItemDiv>
+          <ListItemDiv align={averagePrice ? "right" : ""} color="black">
             {averagePrice ? averagePrice.toLocaleString("ko-KR") : "-"}
             {averagePrice && <span> WON</span>}
-          </AssetItemDiv>
-          <AssetItemDiv align={price != null ? "right" : ""} color="black">
+          </ListItemDiv>
+          <ListItemDiv align={price != null ? "right" : ""} color="black">
             {price != null ? price.toLocaleString("ko-KR") : "-"}
             {price != null && <span> WON</span>}
-          </AssetItemDiv>
-          <AssetItemDiv align="right" color="black">
+          </ListItemDiv>
+          <ListItemDiv align="right" color="black">
             {evaluationAmount.toLocaleString("ko-KR")}
             <span>WON</span>
-          </AssetItemDiv>
-          <AssetItemDiv
+          </ListItemDiv>
+          <ListItemDiv
             align={evaluationProfit ? "" : ""}
             color={
               evaluationProfit && evaluationProfit !== 0
@@ -47,7 +52,7 @@ function AssetListItem({
           >
             {evaluationProfit === null ? "-" : evaluationProfit}
             {evaluationProfit !== null && <span>%</span>}
-          </AssetItemDiv>
+          </ListItemDiv>
         </ColumnGrid>
       </ListItemContainerDiv>
     </ListItemContainer>

@@ -43,3 +43,15 @@ export interface OptionType {
   value: string;
   name: string;
 }
+
+export interface AssetHistoryType {
+  date: string;
+  name: string;
+  assetType: string;
+  tradeType: string;
+  volume: number;
+  price: number | null;
+  orderCash: number;
+  commission: number | null;
+  settlement: number | null;
+}

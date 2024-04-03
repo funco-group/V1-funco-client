@@ -20,13 +20,13 @@ function FollowingModal({ title, handleClick, children }: FollowingModalProps) {
         <SettleModalTitleDiv>{title}</SettleModalTitleDiv>
         <OpenOrderContentDiv>{children}</OpenOrderContentDiv>
         <SettleModalContentButtonRowDiv>
-          <BrandButtonComponent
+          {/* <BrandButtonComponent
             content="취소"
             color={null}
             cancel
             onClick={handleClick}
             disabled={false}
-          />
+          /> */}
           <BrandButtonComponent
             content="확인"
             color={null}

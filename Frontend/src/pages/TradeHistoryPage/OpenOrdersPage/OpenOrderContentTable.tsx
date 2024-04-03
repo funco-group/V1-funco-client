@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { OpenOrderContentTableContainer } from "./OpenOrderContentTable.style";
+import {
+  OpenOrderContentTableContainer,
+  OpenOrderContentListContainer,
+} from "./OpenOrderContentTable.style";
 import {
   ColumnContainer,
   ColumnGrid,
@@ -19,8 +22,8 @@ function OpenOrderContentTable() {
 
   const openOrderColumnList = [
     "주문시간",
-    "거래종류",
-    "코인종류",
+    "거래 종류",
+    "가상화폐",
     "주문단가",
     "주문금액",
     "주문량",
@@ -72,23 +75,21 @@ function OpenOrderContentTable() {
         />
       )}
       <ColumnContainer>
-        <ColumnGrid column="7.5rem 7.5rem 7.5rem 1fr 1fr 1fr 7.5rem">
+        <ColumnGrid column="7rem 5rem 6rem 1fr 1fr 1fr 9rem">
           {openOrderColumnList.map((column) => (
             <ColumnTitleDiv key={column}>{column}</ColumnTitleDiv>
           ))}
         </ColumnGrid>
       </ColumnContainer>
-      {openOrderContentList && openOrderContentList.length > 0 ? (
-        openOrderContentList.map((content) => (
+      <OpenOrderContentListContainer>
+        {openOrderContentList?.map((content) => (
           <OpenOrderContent
             key={content.id}
             content={content}
             handleCancelOpenOrder={handleCancelOpenOrder}
           />
-        ))
-      ) : (
-        <div>텅~~~~~~~~~~~~</div>
-      )}
+        ))}
+      </OpenOrderContentListContainer>
     </OpenOrderContentTableContainer>
   );
 }

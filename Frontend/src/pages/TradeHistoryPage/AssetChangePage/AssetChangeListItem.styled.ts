@@ -1,3 +1,5 @@
 import styled from "styled-components";
 
-export const AssetChangeListItemDiv = styled.div``;
+export const AssetChangeListItemContainer = styled.div`
+  padding: 0 1rem;
+`;
