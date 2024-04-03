@@ -81,8 +81,6 @@ function FollowModal({ member, setMember }: FollowModalProps) {
     setinvestment(newInvestmentNum.toLocaleString("ko-KR"));
   };
 
-  useEffect(() => {}, [investment]);
-
   const handleCheckInputClick = () => {
     setIsCheckTerms((prev) => !prev);
   };

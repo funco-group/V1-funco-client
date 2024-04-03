@@ -3,33 +3,43 @@ import palette from "@/lib/palette";
 
 export const HomePageButton = styled.button<{
   direction: string;
-  margin: string;
+  $active: boolean;
+  number: number;
 }>`
-  width: 25rem;
+  display: block;
+  width: 28rem;
   img {
-    width: 20px;
-    height: 20px;
+    width: ${({ $active }) => ($active ? "40px" : "1.25rem")};
+    height: ${({ $active }) => ($active ? "40px" : "1.25rem")};
     margin: ${({ direction }) =>
-      direction === "left" ? "0 0 50px 50px" : "0 50px 50px 0"};
+      direction === "right" ? "0 0 50px 50px" : "0 50px 50px 0"};
   }
 
-  margin: ${({ margin }) => margin};
-  text-align: ${({ direction }) => (direction === "left" ? "right" : "left")};
+  margin-right: 0;
+  margin-top: ${({ number }) =>
+    number === 2 || number === 3 ? "100px" : null};
+  text-align: ${({ direction }) => direction};
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 `;
 
 export const HomePageButtonFlexDiv = styled.div<{ direction: string }>`
   display: flex;
-  justify-content: ${({ direction }) =>
-    direction === "left" ? "right" : "left"};
+  justify-content: ${({ direction }) => direction};
 `;
 
 export const HomePageButtonTitleDiv = styled.div`
   color: ${palette.mainColor2};
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 1.25rem;
+  margin-bottom: 0.625rem;
 `;
 
-export const HomePageButtonContentDiv = styled.div`
-  color: ${palette.brandColor};
-  font-size: 1rem;
+export const HomePageButtonContentDiv = styled.div<{ $active: boolean }>`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: end; */
+  color: ${({ $active }) =>
+    $active ? palette.brandColor : palette.borderGray};
+  font-size: ${({ $active }) => ($active ? "1.25rem" : "1rem")};
 `;

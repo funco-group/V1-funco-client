@@ -50,7 +50,7 @@ function FollowerContent({ content }: { content: FollowerContentType }) {
               : "-"}
             {content.commission !== null && <span>WON</span>}
           </ListItemDiv>
-          <ListItemDiv align="center" color="black">
+          <ListItemDiv align="right" color="black">
             {settleDate}
           </ListItemDiv>
         </ColumnGrid>

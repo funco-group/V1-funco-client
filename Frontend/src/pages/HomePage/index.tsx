@@ -1,46 +1,78 @@
-// import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomePageButtonComponent from "./HomePageButtonComponent";
-import { HomePageColumnGridDiv, HomePageRowGridDiv } from "./styled";
+import {
+  HomePageColumnGridDiv,
+  HomePageFlexDiv,
+  HomePageRowGridDiv,
+  PreviewDiv,
+  PreviewImage,
+  PreviewInnerDiv,
+} from "./styled";
+import preview0 from "@/assets/icon/preview0.png";
+import preview1 from "@/assets/icon/preview1.png";
+import preview2 from "@/assets/icon/preview2.png";
+import preview3 from "@/assets/icon/preview3.png";
 
 function Index() {
-  // const [nowTabName, setNowTabName] = useState(0);
+  const [nowTabNumber, setNowTabNumber] = useState(0);
 
-  // setInterval(() => {
-  //   setNowTabName();
-  // });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNowTabNumber((nowTabNumber + 1) % 4);
+    }, 4000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [nowTabNumber]);
+
+  const bgList = [preview0, preview1, preview2, preview3];
+
   return (
     <HomePageColumnGridDiv>
-      <div></div>
+      <div />
       <HomePageRowGridDiv>
-        <div style={{ backgroundColor: "gray" }}>
+        <HomePageFlexDiv direction="right">
           <HomePageButtonComponent
-            direction="left"
-            margin="5rem auto auto 1.875rem"
+            nowTabNumber={nowTabNumber}
+            setNowTabNumber={setNowTabNumber}
+            number={0}
           />
-        </div>
-        <div style={{ backgroundColor: "blue" }}>
+        </HomePageFlexDiv>
+        <HomePageFlexDiv direction="right">
           <HomePageButtonComponent
-            direction="left"
-            margin="5rem auto auto 1.875rem"
+            nowTabNumber={nowTabNumber}
+            setNowTabNumber={setNowTabNumber}
+            number={3}
           />
-        </div>
+        </HomePageFlexDiv>
       </HomePageRowGridDiv>
-      <div style={{ backgroundColor: "red" }}>화면 미리보기</div>
+      <PreviewDiv>
+        <PreviewInnerDiv>
+          <PreviewImage
+            src={bgList[nowTabNumber]}
+            alt="home-bg"
+            style={{ opacity: 1 }}
+          />
+        </PreviewInnerDiv>
+      </PreviewDiv>
       <HomePageRowGridDiv>
-        <div style={{ backgroundColor: "green" }}>
+        <HomePageFlexDiv direction="left">
           <HomePageButtonComponent
-            direction="right"
-            margin="5rem auto auto 1.875rem"
+            nowTabNumber={nowTabNumber}
+            setNowTabNumber={setNowTabNumber}
+            number={1}
           />
-        </div>
-        <div style={{ backgroundColor: "purple" }}>
+        </HomePageFlexDiv>
+        <HomePageFlexDiv direction="left">
           <HomePageButtonComponent
-            direction="right"
-            margin="5rem auto auto 1.875rem"
+            nowTabNumber={nowTabNumber}
+            setNowTabNumber={setNowTabNumber}
+            number={2}
           />
-        </div>
+        </HomePageFlexDiv>
       </HomePageRowGridDiv>
-      <div></div>
+      <div />
     </HomePageColumnGridDiv>
   );
 }
