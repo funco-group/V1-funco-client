@@ -10,12 +10,15 @@ import {
   ProfileRankOuterDiv,
   ProfileTextArea,
   UserPageProfileContainer,
+  NicknameDiv,
+  IntroductionDiv,
 } from "./UserPageProfile.styled";
 import { ComponentTitleH3 } from "./styled";
 import MemberType from "@/interfaces/userPage/MemberType";
 import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
 import medalMap from "@/lib/medalMap";
 import PortfolioModal from "./PortfolioModal";
+import { editIntroduction, editNickname } from "@/apis/member";
 
 interface UserPageProfileProps {
   isCurrentUser: boolean;
@@ -29,7 +32,6 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
   const [isEditIntro, setIsEditIntro] = useState(false);
   const { onFollowModal } = useFollowModalState();
   const [onFollowAssetModal, setOnFollowAssetModal] = useState(false);
-  // const [nameInput, setNameInput] = useState<boolean>(false);
 
   useEffect(() => {
     setNickname(member.nickname);
@@ -43,14 +45,19 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
   const handleNicknameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
-  const handleNicknameEditClick = () => {
+  const handleNicknameEditClick = async () => {
+    if (isEditNickname) {
+      await editNickname(nickname);
+    }
     setIsEditNickname((prev) => !prev);
   };
   const handleIntroInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setIntroduction(e.target.value);
-    // 100자 제한 넣어야돼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   };
-  const handleIntroEditClick = () => {
+  const handleIntroEditClick = async () => {
+    if (isEditIntro) {
+      await editIntroduction(introduction);
+    }
     setIsEditIntro((prev) => !prev);
   };
 
@@ -118,13 +125,18 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
       <ComponentTitleH3>프로필</ComponentTitleH3>
       <ProfileDetailContainer>
         <img src={member.profileUrl} alt="member-profile" />
-        <ProfileInput
-          type="text"
-          value={nickname}
-          onChange={handleNicknameInput}
-          disabled={!isEditNickname}
-          $active={isEditNickname}
-        />
+        <NicknameDiv>
+          {isEditNickname ? (
+            <ProfileInput
+              type="text"
+              value={nickname}
+              onChange={handleNicknameInput}
+              maxLength={15}
+            />
+          ) : (
+            nickname
+          )}
+        </NicknameDiv>
         <ProfileRankFlexDiv>
           <ProfileRankOuterDiv>
             <div>총 자산 랭킹</div>
@@ -141,16 +153,17 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
             </ProfileRankDiv>
           </ProfileRankOuterDiv>
         </ProfileRankFlexDiv>
-        {isEditIntro ? (
-          <ProfileTextArea
-            value={introduction}
-            onChange={handleIntroInput}
-            readOnly={!isEditIntro}
-            $active={isEditIntro}
-          />
-        ) : (
-          <p>{introduction}</p>
-        )}
+        <IntroductionDiv>
+          {isEditIntro ? (
+            <ProfileTextArea
+              value={introduction}
+              onChange={handleIntroInput}
+              maxLength={21}
+            />
+          ) : (
+            <div>{introduction}</div>
+          )}
+        </IntroductionDiv>
       </ProfileDetailContainer>
       <ProfileButtonDiv>{renderButton()}</ProfileButtonDiv>
     </UserPageProfileContainer>

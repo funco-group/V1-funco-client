@@ -1,3 +1,8 @@
+export interface TopCoinsType {
+  ticker: string;
+  createdAt: string;
+}
+
 export interface MemberType {
   memberId: number;
   nickname: string;
@@ -15,7 +20,7 @@ export interface MemberType {
   followingCash: number;
   followerCash: number;
   isFollow: boolean;
-  topCoins: string[];
+  topCoins: TopCoinsType[];
 }
 
 export default MemberType;

@@ -72,7 +72,7 @@ function AssetChangeListItem({ history }: AssetChangeListItemProps) {
             <span>WON</span>
           </ListItemDiv>
           <ListItemDiv
-            align={history.commission ? "right" : "center"}
+            align={history.commission !== null ? "right" : "center"}
             color="black"
           >
             {history.commission !== null
@@ -81,11 +81,13 @@ function AssetChangeListItem({ history }: AssetChangeListItemProps) {
             {history.commission !== null && <span>WON</span>}
           </ListItemDiv>
           <ListItemDiv
-            align={history.settlement ? "right" : "center"}
+            align={history.settlement !== null ? "right" : "center"}
             color="black"
           >
-            {history.settlement ? history.settlement.toLocaleString() : "-"}
-            {history.settlement && <span>WON</span>}
+            {history.settlement !== null
+              ? history.settlement.toLocaleString()
+              : "-"}
+            {history.settlement !== null && <span>WON</span>}
           </ListItemDiv>
         </ColumnGrid>
       </AssetChangeListItemContainer>

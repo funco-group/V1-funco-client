@@ -4,7 +4,7 @@ import UserPageProfile from "./UserPageProfile";
 import { UserLayoutContainer, UserLayoutRowDiv } from "./styled";
 import useUserState from "@/hooks/recoilHooks/useUserState";
 import MemberType from "@/interfaces/userPage/MemberType";
-import getMemberInfo from "@/apis/member";
+import { getMemberInfo } from "@/apis/member";
 import RecentInvestment from "./RecentInvestment";
 import UserFollow from "./UserFollow";
 import AssetGraph from "./AssetGraph";

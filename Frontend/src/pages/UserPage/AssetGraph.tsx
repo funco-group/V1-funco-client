@@ -48,8 +48,6 @@ function AssetGraph({ member }: AssetGraphProps) {
     getCurPrice();
   }, []);
 
-  console.log(investmentList);
-
   return (
     <RecentInvestmentContainer>
       <ComponentTitleH3>자산 요약</ComponentTitleH3>

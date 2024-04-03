@@ -8,13 +8,14 @@ import {
 } from "@/apis/statistics";
 import { AxiosResponse } from "axios";
 import { StartDateType, StatisticsType } from "@/interfaces/StatisticsType";
-import { ReturnRateGraphContainer } from "./ReturnRateGraph.styled";
+import { ReturnRateGraphContainer, NoDataDiv } from "./ReturnRateGraph.styled";
 import {
   ChartDiv,
   ChartGraphContainer,
 } from "../TradeHistoryPage/ReturnResultPage/ChartGraph.styled";
 import AreaChart from "@/components/common/Chart/AreaChart";
 import ColumnChart from "@/components/common/Chart/ColumnChart";
+import { ComponentTitleH3 } from "./styled";
 
 interface ReturnRateGraphProps {
   memberId: number;
@@ -113,6 +114,7 @@ function ReturnRateGraph({ memberId }: ReturnRateGraphProps) {
 
   return (
     <ReturnRateGraphContainer>
+      <ComponentTitleH3>수익률</ComponentTitleH3>
       <ReturnResultTab
         activeTab={activeTab}
         handleTabClick={handleTabClick}
@@ -120,7 +122,7 @@ function ReturnRateGraph({ memberId }: ReturnRateGraphProps) {
         selected={selected}
         handleSelect={handleSelect}
       />
-      {accReturnRate && returnResult && (
+      {accReturnRate && returnResult ? (
         <ChartGraphContainer>
           <ChartDiv $left>
             <AreaChart
@@ -139,6 +141,8 @@ function ReturnRateGraph({ memberId }: ReturnRateGraphProps) {
             />
           </ChartDiv>
         </ChartGraphContainer>
+      ) : (
+        <NoDataDiv>집계된 투자 내역 없습니다.</NoDataDiv>
       )}
     </ReturnRateGraphContainer>
   );

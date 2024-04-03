@@ -14,7 +14,8 @@ export const RankTableContentUserDiv = styled.div`
   justify-content: left;
   align-items: center;
   gap: 0.625rem;
-  margin-left: 4.0625rem;
+  margin-left: 3rem;
+  /* background-color: red; */
 
   img {
     width: 1.5rem;

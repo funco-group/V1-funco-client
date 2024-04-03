@@ -18,4 +18,5 @@ export const UserFollowRowDiv = styled.div`
 
 export const ColorSpan = styled.span<{ color: string }>`
   color: ${({ color }) => color};
+  font-size: 0.8rem;
 `;

@@ -16,8 +16,9 @@ export const SettleModalBackgroundContainer = styled.div`
   z-index: 2000;
 `;
 
-export const SettleModalContainer = styled.div`
+export const SettleModalContainer = styled.div<{ width?: string }>`
   background-color: ${palette.brandWhite};
+  width: ${(props) => props.width};
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
@@ -27,7 +28,7 @@ export const SettleModalContainer = styled.div`
 `;
 
 export const SettleModalTitleDiv = styled.div`
-  padding: 1rem;
+  padding: 1rem 0.3rem;
   border-bottom: 1px solid ${palette.borderGray};
   text-align: left;
   font-family: "NanumSquareBold";
@@ -56,7 +57,7 @@ export const SettleModalContentRowDiv = styled.div`
 `;
 
 export const SettleModalContentButtonRowDiv = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   justify-content: end;
   gap: 0.625rem;

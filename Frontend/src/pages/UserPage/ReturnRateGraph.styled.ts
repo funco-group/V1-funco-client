@@ -6,3 +6,10 @@ export const ReturnRateGraphContainer = styled.div`
   ${CommonComponent};
   padding: 1rem;
 `;
+
+export const NoDataDiv = styled.div`
+  color: #dfe1e6;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 25rem;
+`;
