@@ -19,18 +19,14 @@ import {
 } from "@/styles/CommonStyled";
 import { AssetChangeListItemContainer } from "../../AssetChangePage/AssetChangeListItem.styled";
 import AssetChangeListItem from "../../AssetChangePage/AssetChangeListItem";
-import {
-  ChartContainer,
-  TotalAssetInfoContainer,
-} from "../../AssetPage/styled";
+import { TotalAssetInfoContainer } from "../../AssetPage/styled";
 import TotalAsset from "../../AssetPage/TotalAsset";
-import MonochromePieChart from "@/components/common/MonochromePieChart";
+// import MonochromePieChart from "@/components/common/MonochromePieChart";
 import AssetList from "../../AssetPage/AssetList";
 import { getTickerPrice } from "@/apis/upbit";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import cashIcon from "@/assets/icon/cash-icon.png";
 import followIcon from "@/assets/icon/follow-icon.png";
-import { TitleDiv } from "@/styles/TradeHistoryStyled";
 
 interface FollowAssetModalProps {
   handlePortFolioClick: () => void;
@@ -41,7 +37,7 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
   const [assets, setAssets] = useState<AssetType[]>([]);
   const [totalAsset, setTotalAsset] = useState<TotalAssetType>();
 
-  const [investmentList, setInvestmentList] = useState<(string | number)[][]>();
+  // const [investmentList, setInvestmentList] = useState<(string | number)[][]>();
 
   const getCurPrice = async (assets: AssetResponseType) => {
     const curPrice = new Map<string, number>();
@@ -106,16 +102,16 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
         },
       ]);
     });
-    setInvestmentList([
-      ["현금", assetsRes.cash],
-      ["팔로우", assetsRes.followingInvestment],
-      [
-        "가상화폐",
-        assetsRes.holdingCoinInfos.reduce((acc, coin) => {
-          return acc + Math.floor(coin.volume * curPrice.get(coin.ticker)!);
-        }, 0),
-      ],
-    ]);
+    // setInvestmentList([
+    //   ["현금", assetsRes.cash],
+    //   ["팔로우", assetsRes.followingInvestment],
+    //   [
+    //     "가상화폐",
+    //     assetsRes.holdingCoinInfos.reduce((acc, coin) => {
+    //       return acc + Math.floor(coin.volume * curPrice.get(coin.ticker)!);
+    //     }, 0),
+    //   ],
+    // ]);
   };
 
   useEffect(() => {

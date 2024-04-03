@@ -25,7 +25,7 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
   return (
     <RankTableContentContainer>
       <RankTableColumnGridDiv>
-        <FollowingContentMarginDiv>
+        <FollowingContentMarginDiv color="">
           <RankSpan $isTopRank={medalMap.get(rank.rank)}>
             {medalMap.get(rank.rank) || rank.rank}
           </RankSpan>
