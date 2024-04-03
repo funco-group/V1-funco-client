@@ -6,10 +6,6 @@ import RoutesComponent from "@/routes/Routes";
 import priceListState from "@/recoils/crypto/atoms";
 import { getCoinList } from "@/apis/upbit";
 import { PriceType, ResMarketCodeType } from "@/interfaces/PriceWindowType";
-import SettleModal from "@/pages/TradeHistoryPage/FollowPage/FollowingPage/SettleModal";
-import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
-import useFollowModalState from "@/hooks/recoilHooks/useFollowModalState";
-import FollowModal from "@/pages/UserPage/FollowModal";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledContainer } from "./styles/CommonStyled";
 import useLoginAlertModalState from "./hooks/recoilHooks/useLoginAlertModalState";
@@ -35,8 +31,6 @@ const toPriceType = (coinData: ResMarketCodeType[]): PriceType[] => {
 
 export default function App() {
   const setPriceList = useSetRecoilState(priceListState);
-  const { settleModal } = useSettleModalState();
-  const { followModal } = useFollowModalState();
   const { loginAlertModal } = useLoginAlertModalState();
 
   useEffect(() => {
@@ -59,8 +53,6 @@ export default function App() {
         draggablePercent={80}
       />
       <RoutesComponent />
-      {settleModal && <SettleModal />}
-      {followModal && <FollowModal />}
       {loginAlertModal && <LoginAlertModal />}
     </>
   );

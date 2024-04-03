@@ -62,7 +62,11 @@ function FollowStatistics({
         </GreenTitleDiv>
       </FollowingStatisticsDetailDiv>
       <StatisticsGraphDiv>
-        <MonochromePieChart investmentList={investmentList} isLegend />
+        <MonochromePieChart
+          key={investmentList.length}
+          investmentList={investmentList}
+          isLegend
+        />
       </StatisticsGraphDiv>
     </FollowingStatisticsContainer>
   );

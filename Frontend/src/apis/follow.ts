@@ -21,11 +21,14 @@ export async function getFollowerList(
     .then(success);
 }
 
-export async function addFollow(body: {
-  memberId: number;
-  investment: number;
-}) {
-  await localAxios.post(`/${version}/${domain}`, body);
+export async function addFollow(
+  body: {
+    memberId: number;
+    investment: number;
+  },
+  success: () => void,
+) {
+  await localAxios.post(`/${version}/${domain}`, body).then(success);
 }
 
 export async function getFollowingList(
