@@ -24,6 +24,8 @@ import Tab from "@/components/crypto/Tab";
 import codeListState from "@/recoils/crypto/withCodeList";
 import { getHoldingCoin } from "@/apis/trade";
 import { ColumnContainer, ColumnGrid } from "@/styles/CommonStyled";
+import userState from "@/recoils/user";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 interface PriceWindowProps {
   priceList: PriceType[];
@@ -42,6 +44,8 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
   const [holdingCoins, setHoldingCoins] = useState<string[]>([]);
   const [status, setStatus] = useState<number | undefined>(-1);
   const [search, setSearch] = useState<string>("");
+  const { onLoginAlertModal } = useLoginAlertModalState();
+  const user = useRecoilValue(userState);
 
   useMemo(() => {
     // 1. 소켓 연결
@@ -49,16 +53,20 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
     setSocket(tickerSocket);
 
     // 2. 보유 코인 갖고 오기
-    getHoldingCoin((response: AxiosResponse<HoldingCoinResponseType>) => {
-      const { data } = response;
-      setHoldingCoins(data.holdingCoins);
-    });
+    if (user.user) {
+      getHoldingCoin((response: AxiosResponse<HoldingCoinResponseType>) => {
+        const { data } = response;
+        setHoldingCoins(data.holdingCoins);
+      });
 
-    // 3. 관심 코인 갖고 오기
-    getFavoriteCoinList((response: AxiosResponse<FavoriteCoinResponseType>) => {
-      const { data } = response;
-      setFavCoins(data.tickers);
-    });
+      // 3. 관심 코인 갖고 오기
+      getFavoriteCoinList(
+        (response: AxiosResponse<FavoriteCoinResponseType>) => {
+          const { data } = response;
+          setFavCoins(data.tickers);
+        },
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -90,17 +98,27 @@ function PriceWindow({ priceList, setPriceList }: PriceWindowProps) {
   ]);
 
   const changeTab = (tab: string) => {
-    setActiveTab(tab);
+    if (user.user) {
+      setActiveTab(tab);
+    } else {
+      if (tab === "보유" || tab === "관심") {
+        onLoginAlertModal();
+      }
+    }
   };
 
   const clickFavorite = (code: string, e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    if (favCoins.includes(code)) {
-      removeFavoriteCoin(code);
-      setFavCoins(favCoins.filter((favCoin) => favCoin !== code));
+    if (user.user) {
+      if (favCoins.includes(code)) {
+        removeFavoriteCoin(code);
+        setFavCoins(favCoins.filter((favCoin) => favCoin !== code));
+      } else {
+        addFavoriteCoin(code);
+        setFavCoins([...favCoins, code]);
+      }
     } else {
-      addFavoriteCoin(code);
-      setFavCoins([...favCoins, code]);
+      onLoginAlertModal();
     }
   };
 

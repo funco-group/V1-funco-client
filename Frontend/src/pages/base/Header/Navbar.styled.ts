@@ -25,9 +25,25 @@ export const NavBarLeftDiv = styled.div`
   display: flex;
 `;
 
+export const NavComponent = styled.div<{ $active: boolean }>`
+  text-decoration: none;
+  color: ${(props) => {
+    if (props.$active) {
+      return palette.brandColor;
+    } else {
+      return "black";
+    }
+  }};
+  font-family: ${(props) => props.$active && "NanumSquareBold"};
+  font-size: 1rem;
+  margin-right: 1.5rem;
+  cursor: pointer;
+`;
+
 export const NavBarLeftLinkDiv = styled.div`
   margin: auto;
   margin-left: 1.5rem;
+  display: flex;
 
   .nav-link {
     text-decoration: none;

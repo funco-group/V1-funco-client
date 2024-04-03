@@ -26,10 +26,12 @@ function ReturnResultTab({
   return (
     <ReturnResultTabContainer>
       <DateDiv>
-        {selected?.includes("-")
-          ? `${selected.split("-")[0]}년 ${selected.split("-")[1]}월`
-          : `${selected}년`}{" "}
-        투자 손익
+        {selected
+          ? selected?.includes("-")
+            ? `${selected.split("-")[0]}년 ${selected.split("-")[1]}월`
+            : `${selected}년`
+          : ""}
+        {} 투자 손익
       </DateDiv>
       <DateSetDiv>
         {tabs.map((tab) => {

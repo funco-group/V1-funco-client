@@ -21,7 +21,7 @@ import NotiDropdown from "./NotiDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import useCloseDropdown from "@/hooks/useCloseDropdown";
 import useSSE from "@/hooks/useSSE";
-import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
+import AssetHistoryNav from "./AssetHistoryNav";
 
 function Navbar() {
   const { user } = useUserState();
@@ -34,7 +34,6 @@ function Navbar() {
   );
 
   const [unReadCount, setUnReadCount] = useState(user?.unReadCount);
-  const { onLoginAlertModal } = useLoginAlertModalState();
 
   const handleLoginClick = () => {
     window.location.href =
@@ -50,7 +49,6 @@ function Navbar() {
   };
   const handleProfileDropdown = () => {
     setIsProfileOpen((prev) => !prev);
-    onLoginAlertModal();
   };
 
   useSSE(setUnReadCount);
@@ -63,7 +61,8 @@ function Navbar() {
         </NavLink>
         <NavBarLeftLinkDiv>
           <NavLinkComponent path="/trade/KRW-BTC" name="거래소" />
-          <NavLinkComponent path="/history/asset" name="투자내역" />
+          {/* <NavLinkComponent path="/history/asset" name="투자내역" /> */}
+          <AssetHistoryNav path="/history/asset" name="투자내역" />
           <NavLinkComponent path="/rank" name="랭킹" />
         </NavBarLeftLinkDiv>
       </NavBarLeftDiv>

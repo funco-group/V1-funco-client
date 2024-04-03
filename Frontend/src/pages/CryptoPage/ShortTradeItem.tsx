@@ -24,6 +24,7 @@ import { TradeResultType } from "@/interfaces/TradeType";
 import { CoinVolumeType } from "@/interfaces/AssetType";
 import AlertModal from "@/components/common/Modal/AlertModal";
 import inputDecimalFormat from "@/utils/inputDecimalFormat";
+import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 interface ShortTradeItemProps {
   name: string;
@@ -32,6 +33,7 @@ interface ShortTradeItemProps {
 
 function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
   const user = useRecoilValue(userState);
+  const { onLoginAlertModal } = useLoginAlertModalState();
   const { coinCode } = useParams();
   const volumeButtons = [10, 20, 25, 30, 40, 50, 75, 100];
   const [concludedModal, setConcludedModal] = useState<boolean>(false);
@@ -73,8 +75,7 @@ function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
         getCoinVolumeFunc();
       }
     } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
+      onLoginAlertModal();
     }
   }, [name, coinCode]);
 
@@ -130,8 +131,7 @@ function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
         },
       );
     } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
+      onLoginAlertModal();
     }
   };
 
@@ -168,8 +168,7 @@ function ShortTradeItem({ name, curPrice }: ShortTradeItemProps) {
         },
       );
     } else {
-      setAlertContent("로그인이 필요합니다.");
-      setAlert(true);
+      onLoginAlertModal();
     }
   };
 

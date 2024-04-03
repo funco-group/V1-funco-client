@@ -111,7 +111,9 @@ function TotalReturnResult({
                             : "black"
                       }
                     >
-                      {resultData[index]?.toLocaleString("ko-KR")}{" "}
+                      {resultData[index]
+                        ? resultData[index].toLocaleString("ko-KR")
+                        : "-"}{" "}
                       <span>{unit[index]}</span>
                     </DataDiv>
                   </ResultItemDiv>
