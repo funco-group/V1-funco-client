@@ -12,8 +12,8 @@ const buttonHeight = "2.1875rem";
 
 function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
   const tabNameList: [string, "asset" | "follow", "right" | "left"][] = [
-    ["총 팔로워 금액", "follow", "left"],
-    ["총 자산", "asset", "right"],
+    ["총 자산", "asset", "left"],
+    ["총 팔로워 금액", "follow", "right"],
   ];
 
   const handleTabClick = (selectedTabName: "asset" | "follow") => {
@@ -36,7 +36,7 @@ function RankTab({ nowTabName, setNowTabName, setNowPage }: RankTabProps) {
         {tabNameList.map((tabName, idx) => (
           <TabButton
             key={tabName[1]}
-            width={idx === 1 ? "4.5rem" : null}
+            width={idx === 0 ? "4.5rem" : null}
             height={buttonHeight}
             $active={nowTabName === tabName[1]}
             onClick={() => handleTabClick(tabName[1])}
