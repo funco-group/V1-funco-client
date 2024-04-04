@@ -61,13 +61,7 @@ function FollowModal({ member, setMember }: FollowModalProps) {
   const handleInvestmentInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInvestment = e.target.value;
     const newInvestmentNum = Number(newInvestment.replace(/,/g, ""));
-    console.log(newInvestment);
-    console.log(
-      "newNum",
-      Number.isNaN(newInvestmentNum),
-      newInvestmentNum,
-      cash,
-    );
+
     if (newInvestmentNum <= cash) {
       setValidation(false);
     }

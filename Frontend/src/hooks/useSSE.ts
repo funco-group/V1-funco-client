@@ -45,8 +45,8 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number | undefined>>) {
         setUnReadCount(newUnReadCount);
 
         toast(parsedData.message);
-        console.log(parsedData.message);
-        console.log(parsedData.unReadCount);
+        // console.log(parsedData.message);
+        // console.log(parsedData.unReadCount);
       };
 
       eventSource.onerror = (e) => {

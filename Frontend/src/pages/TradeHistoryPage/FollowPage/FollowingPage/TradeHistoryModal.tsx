@@ -33,7 +33,6 @@ function TradeHistoryModal({
     setIsLoading(true);
     getFollowingTradeList(followId, 0, 100, (res) => {
       const { data } = res;
-      console.log(data);
       setTradeHistoryList(data);
     });
   }, []);

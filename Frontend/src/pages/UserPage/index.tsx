@@ -22,7 +22,6 @@ function Index() {
     if (memberId) {
       getMemberInfo(+memberId, (res) => {
         const { data } = res;
-        console.log(data);
         setMember(data);
       });
     }

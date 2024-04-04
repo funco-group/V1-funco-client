@@ -34,7 +34,6 @@ function OpenOrderContentTable() {
     setIsLoading(true);
     getAllOpenTradeList(0, 100, (res) => {
       const { data } = res;
-      console.log(data);
       setOpenOrderContentList(data);
     });
   }, []);

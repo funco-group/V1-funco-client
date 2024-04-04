@@ -31,7 +31,6 @@ function AssetChangeList() {
     getHistory((response: AxiosResponse<AssetHistoryType[]>) => {
       const { data } = response;
       setHistoryList(data);
-      console.log(data);
     });
   }, []);
 

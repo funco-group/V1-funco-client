@@ -45,7 +45,6 @@ function index() {
     assetsRes: AssetResponseType,
     curPrice: Map<string, number>,
   ) => {
-    console.log(assetsRes, curPrice);
     setAssets([
       {
         imgSrc: cashIcon,
