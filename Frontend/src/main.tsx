@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil";
 import App from "@/App.tsx";
 import "./index.css";
 import ScrollToTop from "./styles/ScrollToTop";
+import Footer from "./pages/base/Footer";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -11,5 +12,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ScrollToTop />
       <App />
     </RecoilRoot>
+    <Footer />
   </BrowserRouter>,
 );
