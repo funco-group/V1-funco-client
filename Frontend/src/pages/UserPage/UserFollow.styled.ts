@@ -7,6 +7,7 @@ export const UserFollowContentDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 1.875rem;
+  min-height: 6rem;
 `;
 
 export const UserFollowRowDiv = styled.div`

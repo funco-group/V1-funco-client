@@ -14,7 +14,7 @@ export const Background = styled.div`
 export const HomePageColumnGridDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 28rem 34rem 28rem 1fr;
-  /* height: 20rem; */
+  height: 25rem;
 `;
 
 export const HomePageRowGridDiv = styled.div`

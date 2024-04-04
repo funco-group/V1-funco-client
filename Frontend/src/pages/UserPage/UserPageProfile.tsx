@@ -141,15 +141,29 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
           <ProfileRankOuterDiv>
             <div>총 자산 랭킹</div>
             <ProfileRankDiv>
-              <span>{medalMap.get(member.assetRank) || "🏃‍♂️"}</span>
-              {member.assetRank}위
+              {member.assetRank ? (
+                <>
+                  <span>{medalMap.get(member.assetRank) || "🏃‍♂️"}</span>
+                  {member.assetRank}
+                </>
+              ) : (
+                "-"
+              )}
+              위
             </ProfileRankDiv>
           </ProfileRankOuterDiv>
           <ProfileRankOuterDiv>
             <div>총 팔로워 랭킹</div>
             <ProfileRankDiv>
-              <span>{medalMap.get(member.followingCashRank) || "🏃‍♂️"}</span>
-              {member.followingCashRank}위
+              {member.followingCashRank ? (
+                <>
+                  <span>{medalMap.get(member.followingCashRank) || "🏃‍♂️"}</span>
+                  {member.followingCashRank}
+                </>
+              ) : (
+                "-"
+              )}
+              위
             </ProfileRankDiv>
           </ProfileRankOuterDiv>
         </ProfileRankFlexDiv>

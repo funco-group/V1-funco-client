@@ -47,3 +47,10 @@ export const NumberDiv = styled.div`
   color: ${palette.brandColor};
   font-family: "NanumSquareBold";
 `;
+
+export const RecentInvestmentContentContainer = styled.div`
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
