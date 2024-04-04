@@ -7,6 +7,7 @@ import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import { ChartDiv } from "./AssetGraph.styled";
 import MemberType from "@/interfaces/userPage/MemberType";
 import MonochromePieChart from "@/components/common/Chart/MonochromePieChart";
+import { NoDataDiv } from "./ReturnRateGraph.styled";
 
 interface AssetGraphProps {
   member: MemberType;
@@ -51,12 +52,16 @@ function AssetGraph({ member }: AssetGraphProps) {
   return (
     <RecentInvestmentContainer>
       <ComponentTitleH3>자산 요약</ComponentTitleH3>
-      <ChartDiv>
-        <MonochromePieChart
-          key={investmentList.length}
-          investmentList={investmentList}
-          isLegend={true}
-        />
+      <ChartDiv $flex={investmentList.length === 0}>
+        {investmentList.length !== 0 ? (
+          <MonochromePieChart
+            key={investmentList.length}
+            investmentList={investmentList}
+            isLegend={true}
+          />
+        ) : (
+          <NoDataDiv>자산 내역이 없습니다.</NoDataDiv>
+        )}
       </ChartDiv>
     </RecentInvestmentContainer>
   );

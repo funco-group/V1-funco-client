@@ -8,7 +8,11 @@ import {
 } from "@/apis/statistics";
 import { AxiosResponse } from "axios";
 import { StartDateType, StatisticsType } from "@/interfaces/StatisticsType";
-import { ReturnRateGraphContainer, NoDataDiv } from "./ReturnRateGraph.styled";
+import {
+  ReturnRateGraphContainer,
+  NoDataDiv,
+  ReturnRateGraphContentContainer,
+} from "./ReturnRateGraph.styled";
 import {
   ChartDiv,
   ChartGraphContainer,
@@ -122,28 +126,37 @@ function ReturnRateGraph({ memberId }: ReturnRateGraphProps) {
         selected={selected}
         handleSelect={handleSelect}
       />
-      {accReturnRate && returnResult ? (
-        <ChartGraphContainer>
-          <ChartDiv $left>
-            <AreaChart
-              key={accReturnRate?.length}
-              chartName="누적 수익률"
-              unit="%"
-              dataSet={accReturnRate}
-            />
-          </ChartDiv>
-          <ChartDiv $left={false}>
-            <ColumnChart
-              key={returnResult?.length}
-              chartName="손익"
-              unit="WON"
-              dataSet={returnResult}
-            />
-          </ChartDiv>
-        </ChartGraphContainer>
-      ) : (
-        <NoDataDiv>집계된 투자 내역 없습니다.</NoDataDiv>
-      )}
+      <ReturnRateGraphContentContainer
+        $flex={
+          accReturnRate !== undefined &&
+          accReturnRate.length !== 0 &&
+          returnResult !== undefined &&
+          returnResult.length !== 0
+        }
+      >
+        {accReturnRate && returnResult ? (
+          <ChartGraphContainer>
+            <ChartDiv $left>
+              <AreaChart
+                key={accReturnRate?.length}
+                chartName="누적 수익률"
+                unit="%"
+                dataSet={accReturnRate}
+              />
+            </ChartDiv>
+            <ChartDiv $left={false}>
+              <ColumnChart
+                key={returnResult?.length}
+                chartName="손익"
+                unit="WON"
+                dataSet={returnResult}
+              />
+            </ChartDiv>
+          </ChartGraphContainer>
+        ) : (
+          <NoDataDiv>집계된 투자 내역 없습니다.</NoDataDiv>
+        )}
+      </ReturnRateGraphContentContainer>
     </ReturnRateGraphContainer>
   );
 }

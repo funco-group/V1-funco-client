@@ -8,8 +8,8 @@ export interface MemberType {
   nickname: string;
   profileUrl: string;
   introduction: string;
-  assetRank: number;
-  followingCashRank: number;
+  assetRank: number | null;
+  followingCashRank: number | null;
   memberAssetInfo: {
     cash: number;
     coins: {

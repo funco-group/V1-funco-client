@@ -9,7 +9,6 @@ const ColumnLayout = css`
 
 export const ComponentTitleH3 = styled.div`
   padding-bottom: 1rem;
-  padding-left: 0.3rem;
   font-size: 1.2rem;
   font-family: "NanumSquareBold";
   border-bottom: 1px solid ${palette.deactivatedGray};
