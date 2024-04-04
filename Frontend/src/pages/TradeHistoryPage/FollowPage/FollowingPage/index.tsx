@@ -62,7 +62,6 @@ function Index() {
     fetchCoinList();
     getFollowingList((res: AxiosResponse<ResFollowingType>) => {
       const { data } = res;
-      console.log(data);
       setTotalAsset(data.totalAsset);
       setFollowings(data.followings);
     });
@@ -102,7 +101,6 @@ function Index() {
             };
           }),
         };
-        console.log(following.followId);
         newComputedFollowings.push(computedFollowing);
         newInvestmentList.push([following.nickname, following.investment]);
         newTotalInvestment += following.investment;

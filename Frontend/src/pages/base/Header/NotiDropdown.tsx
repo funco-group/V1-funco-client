@@ -25,7 +25,6 @@ function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
       setOpen(true);
       getNotiHistoryList((res) => {
         const { data } = res;
-        console.log(data);
         setNotiHistoryList(data);
       });
     } else {

@@ -40,7 +40,6 @@ function PortfolioAssetChange({ memberId }: PortfolioAssetChangeProps) {
       (response: AxiosResponse<AssetHistoryType[]>) => {
         const { data } = response;
         setHistoryList(data);
-        console.log(data);
       },
     );
   }, []);

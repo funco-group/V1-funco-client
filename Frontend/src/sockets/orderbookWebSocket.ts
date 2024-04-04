@@ -42,7 +42,6 @@ export default function orderbookWebSockets(
           const decoder = new TextDecoder("utf-8");
           const priceData = decoder.decode(data);
           const priceJson = JSON.parse(priceData);
-          // console.log(priceJson);
           setOrderList(priceJson.orderbook_units.slice(0, 9));
         });
       }

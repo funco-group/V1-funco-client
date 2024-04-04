@@ -62,7 +62,6 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
     assetsRes: AssetResponseType,
     curPrice: Map<string, number>,
   ) => {
-    console.log(assetsRes, curPrice);
     setAssets([
       {
         imgSrc: cashIcon,
@@ -177,7 +176,6 @@ function FollowAssetModal({ handlePortFolioClick }: FollowAssetModalProps) {
     getHistory((response: AxiosResponse<AssetHistoryType[]>) => {
       const { data } = response;
       setHistoryList(data);
-      console.log(data);
     });
   }, []);
 

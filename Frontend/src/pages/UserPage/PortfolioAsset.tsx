@@ -108,7 +108,6 @@ function PortfolioAsset({ memberId }: PortfolioAssetProps) {
     getUserAsset(memberId, (response: AxiosResponse<AssetResponseType>) => {
       const { data } = response;
       const curPrice = getCurPrice(data);
-      console.log(data);
       curPrice.then((res) => {
         setAssetsInfo(data, res);
       });
