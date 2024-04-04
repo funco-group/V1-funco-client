@@ -8,7 +8,7 @@ import RankPagination from "./RankPagination";
 
 function Index() {
   const [topRankList, setTopRankList] = useState<RankType[]>();
-  const [nowTabName, setNowTabName] = useState("follow");
+  const [nowTabName, setNowTabName] = useState("asset");
   const [totalPage, setTotalPage] = useState(1);
   const [nowPage, setNowPage] = useState(0);
   return (

@@ -39,9 +39,15 @@ export const TopRankContentStatDiv = styled.div`
   font-size: 0.75rem;
 `;
 
-export const RateSpan = styled.span<{ $isProfit: boolean }>`
-  color: ${({ $isProfit }) =>
-    $isProfit ? palette.brandRed : palette.brandBlue};
+export const RateSpan = styled.span<{ $isProfit: string }>`
+  color: ${({ $isProfit }) => {
+    if ($isProfit === "red") {
+      return palette.brandRed;
+    }
+    if ($isProfit === "blue") {
+      return palette.brandBlue;
+    }
+  }};
   font-family: "NanumSquareBold";
   font-size: 0.875rem;
 `;

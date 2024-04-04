@@ -41,7 +41,15 @@ function RankTableContent({ rank, nowTabName }: RankTableContentProps) {
           </RankTableContentUserDiv>
         </div>
         <RankTableContentMarginDiv>
-          <RateSpan $isProfit={rank.returnRate > 0}>
+          <RateSpan
+            $isProfit={
+              rank.returnRate > 0
+                ? "red"
+                : rank.returnRate < 0
+                  ? "blue"
+                  : "black"
+            }
+          >
             {rank.returnRate} %
           </RateSpan>
         </RankTableContentMarginDiv>

@@ -39,7 +39,15 @@ function TopRankContent({ topRank, nowTapName }: TopRankContentProps) {
       <TopRankContentStatDiv>
         <div>수익률</div>
         <div>
-          <RateSpan $isProfit={topRank.returnRate > 0}>
+          <RateSpan
+            $isProfit={
+              topRank.returnRate > 0
+                ? "red"
+                : topRank.returnRate < 0
+                  ? "blue"
+                  : "black"
+            }
+          >
             {topRank.returnRate}
           </RateSpan>{" "}
           %
