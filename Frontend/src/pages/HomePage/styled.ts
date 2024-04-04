@@ -63,8 +63,12 @@ export const MainTextDiv = styled.div`
 `;
 export const SubTextDiv = styled.div`
   font-size: 1.1rem;
-  padding: 0.5rem;
+  padding: 0.7rem;
   color: ${palette.brandDarkGray};
+  span {
+    font-family: "NanumSquareBold";
+    color: ${palette.brandColor};
+  }
 `;
 
 export const Content = styled.div`
