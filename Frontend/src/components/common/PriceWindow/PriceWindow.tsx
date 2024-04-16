@@ -24,7 +24,7 @@ import Tab from "@/components/crypto/Tab";
 import codeListState from "@/recoils/crypto/withCodeList";
 import { getHoldingCoin } from "@/apis/trade";
 import { ColumnContainer, ColumnGrid } from "@/styles/CommonStyled";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 interface PriceWindowProps {

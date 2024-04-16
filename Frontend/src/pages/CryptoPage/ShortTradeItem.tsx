@@ -15,7 +15,7 @@ import {
   GreenDiv,
   TradeInfo,
 } from "@/styles/Crypto.styled";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import { getCash, getCoinVolume } from "@/apis/asset";
 import { CashType } from "@/interfaces/common/AssetType";
 import { buyMarket, sellMarket } from "@/apis/trade";

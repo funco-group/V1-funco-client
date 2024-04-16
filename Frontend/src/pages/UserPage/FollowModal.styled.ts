@@ -10,14 +10,60 @@ export const FollowModalContentDiv = styled.div`
   border-bottom: 1px solid ${palette.borderGray};
   gap: 0.3125rem;
 
-  label {
+  /* 커스텀 체크박스 스타일 */
+  .custom-checkbox {
     margin: 5px 0 auto auto;
-    user-select: none;
+    display: inline-block;
+    position: relative;
+    padding-left: 24px; /* 체크박스 크기와 여백을 고려하여 적절한 크기 설정 */
+    cursor: pointer;
+    user-select: none; /* 텍스트 선택 방지 */
   }
 
-  .checkInput {
-    position: relative;
-    top: 0.0938rem;
+  /* 실제 체크박스 요소 숨기기 */
+  .custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* 가상 체크박스 디자인 */
+  .custom-checkbox .checkmark {
+    position: absolute;
+    top: -0.7px;
+    left: 0;
+    height: 0.9375rem; /* 체크박스 크기 */
+    width: 0.9375rem; /* 체크박스 크기 */
+    border: 1px solid ${palette.brandColor};
+    border-radius: 0.25rem; /* 둥근 모서리 */
+  }
+
+  /* 체크박스 체크 시 스타일 */
+  .custom-checkbox input:checked ~ .checkmark {
+    background-color: ${palette.brandColor}; /* 체크 시 배경색 */
+  }
+
+  /* 체크 표시 스타일 */
+  .custom-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .custom-checkbox .checkmark:after {
+    left: 0.3438rem;
+    top: 0.1rem;
+    width: 0.1875rem;
+    height: 0.4375rem;
+    border: solid ${palette.brandWhite}; /* 체크 표시 색상 */
+    border-width: 0 0.125rem 0.125rem 0;
+    transform: rotate(45deg); /* 체크 표시 각도 */
   }
 `;
 
