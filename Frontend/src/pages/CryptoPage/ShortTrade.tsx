@@ -2,7 +2,7 @@ import { useState } from "react";
 import TradeButton from "@/components/crypto/TradeButtonTab";
 import { ButtonContainer } from "@/styles/Crypto.styled";
 import ShortTradeItem from "./ShortTradeItem";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import { useRecoilValue } from "recoil";
 import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 

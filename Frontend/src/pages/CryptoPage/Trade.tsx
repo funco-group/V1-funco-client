@@ -9,7 +9,7 @@ import TradeList from "./TradeList";
 import { getTickerPrice } from "@/apis/upbit";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import { useRecoilValue } from "recoil";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
 
 const Trade = React.memo(function Trade() {

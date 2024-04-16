@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   NavBarContainer,
   NavBarLeftDiv,
@@ -24,7 +24,7 @@ import useSSE from "@/hooks/useSSE";
 import AssetHistoryNav from "./AssetHistoryNav";
 
 function Navbar() {
-  const { user } = useUserState();
+  const { user, unReadCount } = useUserState();
   const notiDropDownRef = useRef(null);
   const profileDropdownRef = useRef(null);
   const [isNotiOpen, setIsNotiOpen] = useCloseDropdown(notiDropDownRef, false);
@@ -32,8 +32,6 @@ function Navbar() {
     profileDropdownRef,
     false,
   );
-
-  const [unReadCount, setUnReadCount] = useState(user?.unReadCount);
 
   const handleLoginClick = () => {
     window.location.href =
@@ -51,7 +49,7 @@ function Navbar() {
     setIsProfileOpen((prev) => !prev);
   };
 
-  useSSE(setUnReadCount);
+  useSSE();
 
   return (
     <NavBarContainer>
@@ -83,7 +81,7 @@ function Navbar() {
             </NavBarNotiProfileDiv>
             <NotiDropdown
               visible={isNotiOpen}
-              setUnReadCount={setUnReadCount}
+              // setUnReadCount={setUnReadCount}
             />
           </div>
           <div ref={profileDropdownRef}>

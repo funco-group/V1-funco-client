@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   NotiDropdownContainer,
   NotiHistoryContentContainer,
@@ -12,13 +12,12 @@ import useUserState from "@/hooks/recoilHooks/useUserState";
 
 interface NotiDropdownProps {
   visible: boolean;
-  setUnReadCount: Dispatch<SetStateAction<number | undefined>>;
 }
 
-function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
+function NotiDropdown({ visible }: NotiDropdownProps) {
   const [notiHistoryList, setNotiHistoryList] = useState<NotiHistoryType[]>();
   const [open, setOpen] = useState(false);
-  const { checkUnReadNoti } = useUserState();
+  const { updateUnReadNoti } = useUserState();
 
   useEffect(() => {
     if (visible) {
@@ -35,8 +34,8 @@ function NotiDropdown({ visible, setUnReadCount }: NotiDropdownProps) {
   useEffect(() => {
     if (notiHistoryList !== undefined) {
       sendReadNotiList(() => {
-        setUnReadCount(0);
-        checkUnReadNoti();
+        // setUnReadCount(0);
+        updateUnReadNoti(0);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

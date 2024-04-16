@@ -1,5 +1,5 @@
 import { EventSourcePolyfill } from "event-source-polyfill";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import useUserState from "./recoilHooks/useUserState";
 
@@ -9,8 +9,8 @@ interface ResMessageType {
   notificationDate: string;
 }
 
-function useSSE(setUnReadCount: Dispatch<SetStateAction<number | undefined>>) {
-  const { user } = useUserState();
+function useSSE() {
+  const { user, updateUnReadNoti } = useUserState();
   useEffect(() => {
     let eventSource: EventSourcePolyfill;
 
@@ -42,7 +42,7 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number | undefined>>) {
         const newUnReadCount =
           parsedData.unReadCount > 99 ? 99 : parsedData.unReadCount;
 
-        setUnReadCount(newUnReadCount);
+        updateUnReadNoti(newUnReadCount);
 
         toast(parsedData.message);
         // console.log(parsedData.message);
@@ -53,7 +53,7 @@ function useSSE(setUnReadCount: Dispatch<SetStateAction<number | undefined>>) {
         console.log("Error", e);
         eventSource.close();
         // 재연결 로직: 1초 후에 다시 시도
-        setTimeout(fetchSSE, 1000);
+        // setTimeout(fetchSSE, 1000);
       };
     };
     if (user) {

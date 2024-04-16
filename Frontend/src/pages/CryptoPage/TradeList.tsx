@@ -17,7 +17,7 @@ import {
   ColumnTitleDiv,
 } from "@/styles/CommonStyled";
 import AlertModal from "@/components/common/Modal/AlertModal";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import { TradeListType } from "@/interfaces/TradeType";
 import { cancleOrder, getOpenTradeList, getTradeList } from "@/apis/trade";
 

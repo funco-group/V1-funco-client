@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavComponent } from "./Navbar.styled";
 import useLoginAlertModalState from "@/hooks/recoilHooks/useLoginAlertModalState";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import { useRecoilValue } from "recoil";
 
 interface NavLinkProps {

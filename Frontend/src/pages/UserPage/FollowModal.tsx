@@ -124,15 +124,16 @@ function FollowModal({ member, setMember }: FollowModalProps) {
             수수료를 제하고 가용 현금에 반영됩니다. (손실에 대해서는 수수료 없음) 
             수익금에서 제한 3%의 수수료는 본인이 팔로우한 유저에게 지급됩니다.`}
           </FollowModalTermsDiv>
-          <label htmlFor="check">
+          <label className="custom-checkbox" htmlFor="check">
             <input
               className="checkInput"
               type="checkbox"
               id="check"
               onChange={handleCheckInputClick}
-            />{" "}
-            약관에 동의합니다.
+            />
+            <span className="checkmark" /> 약관에 동의합니다.
           </label>
+
           <CashDiv>
             가용 자산 : {cash?.toLocaleString("en-US")} <span>WON</span>{" "}
           </CashDiv>

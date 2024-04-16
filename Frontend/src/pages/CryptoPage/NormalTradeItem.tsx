@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { useParams } from "react-router-dom";
 import TradeButton from "@/components/crypto/TradeButton";
-import userState from "@/recoils/user";
+import { userState } from "@/recoils/user";
 import {
   TradeContainer,
   TradeItem,
