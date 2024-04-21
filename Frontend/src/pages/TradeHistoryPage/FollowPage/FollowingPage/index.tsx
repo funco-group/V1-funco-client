@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { getCoinList, getTickerPrice } from "@/apis/upbit";
+import { useRecoilValue } from "recoil";
+import { getTickerPrice } from "@/apis/upbit";
 import FollowStatistics from "./FollowStatistics";
-import { ResMarketCodeType } from "@/interfaces/PriceWindowType";
 import { ResTickerType } from "@/interfaces/tradeHistory/follow/ResTickerType";
 import FollowingUserListContainer from "./styled";
 import FollowingUser from "./FollowingUser";
@@ -12,9 +12,10 @@ import { getFollowingList } from "@/apis/follow";
 import { ResFollowingType } from "@/interfaces/tradeHistory/follow/ResFollowingType";
 import SettleModal from "@/pages/TradeHistoryPage/FollowPage/FollowingPage/SettleModal";
 import useSettleModalState from "@/hooks/recoilHooks/useSettleModalState";
+import { codeListState } from "@/recoils/crypto";
 
 function Index() {
-  const [tickerList, setTickerList] = useState("");
+  const tickerList = useRecoilValue(codeListState).join(",");
   const [tickerPriceMap, setTickerPriceMap] = useState<Map<string, number>>(
     new Map(null),
   );
@@ -29,24 +30,13 @@ function Index() {
   const [investmentList, setInvestmentList] = useState<(string | number)[][]>(
     [],
   );
+  const [isNoFollowings, setIsNoFollowings] = useState(false);
 
   const { settleModal } = useSettleModalState();
 
-  // 코인 리스트 요청 및 설정
-  const fetchCoinList = () => {
-    getCoinList((res: AxiosResponse<ResMarketCodeType[]>) => {
-      const newTickerList = res.data
-        .filter((coin) => coin.market.startsWith("KRW"))
-        .map((coin) => coin.market)
-        .join(",");
-
-      setTickerList(newTickerList);
-    });
-  };
-
-  // 티커 가격 요청 및 맵 설정
-  const fetchTickerPrice = () => {
-    if (tickerList) {
+  useEffect(() => {
+    // 티커 가격 요청 및 맵 설정
+    const fetchTickerPrice = () => {
       getTickerPrice(tickerList, (res: AxiosResponse<ResTickerType[]>) => {
         const mapList: [string, number][] = res.data.map((coin) => [
           coin.market,
@@ -54,64 +44,73 @@ function Index() {
         ]);
         setTickerPriceMap(new Map(mapList));
       });
-    }
-  };
+    };
 
-  useEffect(() => {
     setIsLoading(true);
-    fetchCoinList();
+    fetchTickerPrice();
     getFollowingList((res: AxiosResponse<ResFollowingType>) => {
       const { data } = res;
       setTotalAsset(data.totalAsset);
       setFollowings(data.followings);
     });
-  }, []);
-
-  useEffect(() => {
-    fetchTickerPrice();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerList]);
 
   useEffect(() => {
-    if (tickerPriceMap.size && totalAsset && followings !== undefined) {
-      let newTotalInvestment = 0;
-      let newTotalEstimatedValue = 0;
-      const newComputedFollowings: ComputedFollowingType[] = [];
-      const newInvestmentList: (string | number)[][] = [];
-      followings.forEach((following) => {
-        const computedFollowing = {
-          followId: following.followId,
-          nickname: following.nickname,
-          date: following.followedAt,
-          investment: following.investment,
-          estimatedValue: Math.round(
-            following.cash +
-              following.coins.reduce((total, coin) => {
-                const price = tickerPriceMap.get(coin.ticker) || 0;
-                const value = coin.volume * price;
-                return total + value;
-              }, 0),
-          ),
-          cash: following.cash,
-          coins: following.coins.map((coin) => {
-            const tickerPrice = tickerPriceMap.get(coin.ticker) || 0;
-            return {
-              ticker: coin.ticker,
-              price: tickerPrice * coin.volume,
-            };
-          }),
+    // 팔로잉된 사용자 정보를 계산하는 함수
+    const computeFollowingInfo = (following: FollowingType) => {
+      const estimatedValue =
+        following.cash +
+        following.coins.reduce((total, coin) => {
+          const price = tickerPriceMap.get(coin.ticker) || 0;
+          return total + coin.volume * price;
+        }, 0);
+
+      const coinsInfo = following.coins.map((coin) => {
+        const tickerPrice = tickerPriceMap.get(coin.ticker) || 0;
+        return {
+          ticker: coin.ticker,
+          price: tickerPrice * coin.volume,
         };
-        newComputedFollowings.push(computedFollowing);
-        newInvestmentList.push([following.nickname, following.investment]);
-        newTotalInvestment += following.investment;
-        newTotalEstimatedValue += computedFollowing.estimatedValue;
       });
-      setTotalInvesment(newTotalInvestment);
-      setTotalEstimatedValue(newTotalEstimatedValue);
-      setComputedFollowings(newComputedFollowings);
-      setInvestmentList(newInvestmentList);
+
+      return {
+        followId: following.followId,
+        nickname: following.nickname,
+        date: following.followedAt,
+        investment: following.investment,
+        estimatedValue: Math.round(estimatedValue),
+        cash: following.cash,
+        coins: coinsInfo,
+      };
+    };
+
+    if (!followings?.length) {
+      setIsLoading(false);
+      setIsNoFollowings(true);
+      return; // 더 이상 실행할 필요가 없으므로 이후 코드 실행을 막습니다.
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (!tickerPriceMap.size || !totalAsset) {
+      return; // 가격 정보나 자산 정보가 없으면 계산을 할 수 없으므로 종료합니다.
+    }
+
+    let newTotalInvestment = 0;
+    let newTotalEstimatedValue = 0;
+    const newComputedFollowings: ComputedFollowingType[] = [];
+    const newInvestmentList: (string | number)[][] = [];
+
+    followings.forEach((following) => {
+      const computedFollowing = computeFollowingInfo(following);
+      newComputedFollowings.push(computedFollowing);
+      newInvestmentList.push([following.nickname, following.investment]);
+      newTotalInvestment += following.investment;
+      newTotalEstimatedValue += computedFollowing.estimatedValue;
+    });
+
+    setTotalInvesment(newTotalInvestment);
+    setTotalEstimatedValue(newTotalEstimatedValue);
+    setComputedFollowings(newComputedFollowings);
+    setInvestmentList(newInvestmentList);
   }, [totalAsset, followings, tickerPriceMap]);
 
   useEffect(() => {
@@ -122,6 +121,7 @@ function Index() {
       computedFollowings
     ) {
       setIsLoading(false);
+      setIsNoFollowings(false);
     }
   }, [
     totalInvestment,
@@ -131,7 +131,10 @@ function Index() {
   ]);
 
   if (isLoading) {
-    return <></>;
+    return <>Loading</>;
+  }
+  if (isNoFollowings) {
+    return <>팔로잉하고 있는 유저가 없습니다.</>;
   }
   return (
     <div>

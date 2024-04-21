@@ -42,17 +42,6 @@ function HistoryTab() {
         </TabItemDiv>
       ))}
     </TabContainer>
-    // <HistoryTabContainer>
-    //   {tabList.map((tab) => (
-    //     <HistoryTabDiv
-    //       key={tab[1]}
-    //       $active={tab[1] === nowTabName}
-    //       onClick={() => handleTabClick(tab[1])}
-    //     >
-    //       {tab[0]}
-    //     </HistoryTabDiv>
-    //   ))}
-    // </HistoryTabContainer>
   );
 }
 

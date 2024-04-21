@@ -14,7 +14,8 @@ export const HistoryTabContainer = styled.div`
 export const HistoryTabDiv = styled.div<HistoryTabDivProps>`
   border-bottom: ${({ $active }) =>
     $active ? `4px solid ${palette.brandColor}` : ""};
-  font-family: ${({ $active }) => ($active ? "NanumSquareBold" : "")};
+  font-family: ${({ $active }) =>
+    $active ? "NanumSquareBold" : "NanumSquare"};
   color: ${({ $active }) => ($active ? `${palette.brandColor}` : "")};
   text-align: center;
   font-size: 1rem;
