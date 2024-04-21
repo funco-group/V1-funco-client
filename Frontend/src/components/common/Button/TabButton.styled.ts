@@ -49,7 +49,8 @@ const TabButton = styled.button<TabButtonProps>`
     }
     return null;
   }};
-  font-family: ${({ $active }) => ($active ? "NanumSquareBold" : null)};
+  font-family: ${({ $active }) =>
+    $active ? "NanumSquareBold" : "NanumSquare"};
   cursor: pointer;
 `;
 

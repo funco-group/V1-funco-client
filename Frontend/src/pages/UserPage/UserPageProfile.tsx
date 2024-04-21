@@ -45,15 +45,20 @@ function UserPageProfile({ isCurrentUser, member }: UserPageProfileProps) {
   const handleNicknameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
+
   const handleNicknameEditClick = async () => {
     if (isEditNickname) {
       await editNickname(nickname);
     }
     setIsEditNickname((prev) => !prev);
+
+    // 여기에 recoil에 저장된 닉네임 바꾸는 것도 넣어줘야돼요!!!!!!!!!!!!!!!!!!!!!!!!!!!
   };
+
   const handleIntroInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setIntroduction(e.target.value);
   };
+
   const handleIntroEditClick = async () => {
     if (isEditIntro) {
       await editIntroduction(introduction);
