@@ -40,9 +40,7 @@ function Index() {
         <TextDiv>
           <MainTextDiv>가상 모의투자 플랫폼</MainTextDiv>
           <SubTextDiv>
-            뻔하게 투자하지 말고
-            <span> FUN </span>
-            하게 투자하자!
+            뻔하게 투자하지 않고 <span>FUN</span>하게 투자
           </SubTextDiv>
         </TextDiv>
         <HomePageColumnGridDiv>

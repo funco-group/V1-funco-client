@@ -66,8 +66,8 @@ export const SubTextDiv = styled.div`
   padding: 0.7rem;
   color: ${palette.brandDarkGray};
   span {
-    font-family: "NanumSquareBold";
     color: ${palette.brandColor};
+    font-family: "NanumSquareBold";
   }
 `;
 

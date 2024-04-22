@@ -31,7 +31,7 @@ export const HomePageButtonFlexDiv = styled.div<{ direction: string }>`
 
 export const HomePageButtonTitleDiv = styled.div`
   color: ${palette.mainColor2};
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin-bottom: 0.625rem;
 `;
 
